@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<!-- saved from url=(0069)file:///C:/Users/Jamica%20Ho/Downloads/gemini-code-1780586789781.html -->
-<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>🎈 Magic Maths Quest! 🎈</title>
     <style>
         :root {
@@ -20,53 +20,78 @@
         }
 
         body {
-            background-color: var(--bg-color);
+            background-color: #E2E8F0; /* Soft background desktop view */
             color: var(--text-color);
             margin: 0;
-            padding: 20px;
+            padding: 10px;
             display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
             min-height: 100vh;
         }
 
+        /* iPhone Canvas Box Wrapper */
+        .iphone-screen {
+            background-color: var(--bg-color);
+            width: 100%;
+            max-width: 412px; /* Emulates standard iPhone width */
+            height: 840px;
+            max-height: 92vh;
+            border-radius: 40px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border: 8px solid #1e293b; /* Sleek bezel */
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            position: relative;
+        }
+
         header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 12px;
             background: white;
-            padding: 15px 30px;
-            border-radius: 25px;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.05);
-            border: 4px solid var(--sunny-yellow);
+            padding: 8px 15px;
+            border-radius: 18px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            border: 3px solid var(--sunny-yellow);
         }
 
         h1 {
             color: var(--happy-pink);
             margin: 0;
-            font-size: 2.3rem;
-            text-shadow: 2px 2px 0px var(--sunny-yellow);
+            font-size: 1.5rem;
+            text-shadow: 1px 1px 0px var(--sunny-yellow);
         }
 
-        /* Set Selection Bar */
+        /* Set Selection Bar Horizontal Scrollable on iPhone */
         .set-selector-bar {
             display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
-            flex-wrap: wrap;
-            justify-content: center;
-            max-width: 950px;
+            gap: 8px;
+            margin-bottom: 12px;
+            overflow-x: auto;
+            padding-bottom: 6px;
+            -webkit-overflow-scrolling: touch;
+            width: 100%;
+        }
+        .set-selector-bar::-webkit-scrollbar {
+            height: 4px;
+        }
+        .set-selector-bar::-webkit-scrollbar-thumb {
+            background: #CBD5E1;
+            border-radius: 10px;
         }
 
         .set-btn {
             background: white;
-            border: 3px solid var(--primary-blue);
-            padding: 10px 18px;
-            font-size: 1.1rem;
+            border: 2px solid var(--primary-blue);
+            padding: 6px 12px;
+            font-size: 0.85rem;
             font-weight: bold;
-            border-radius: 18px;
+            border-radius: 12px;
             cursor: pointer;
-            box-shadow: 0 4px 0 var(--primary-blue);
-            transition: all 0.1s ease;
+            box-shadow: 0 3px 0 var(--primary-blue);
+            white-space: nowrap;
             color: var(--primary-blue);
         }
 
@@ -74,123 +99,123 @@
             background: var(--sunny-yellow);
             color: var(--text-color);
             border-color: #E2A000;
-            box-shadow: 0 4px 0 #E2A000;
-            transform: translateY(2px);
+            box-shadow: 0 3px 0 #E2A000;
+            transform: translateY(1px);
         }
 
-        /* Twin Workspace Layout */
+        /* Smartphone Dynamic Workspace Stack */
         .workspace-layout {
             display: flex;
-            gap: 25px;
-            max-width: 750px;
-            width: 100%;
-            align-items: stretch;
-        }
-
-        @media (max-width: 600px) {
-            .workspace-layout { flex-direction: column; }
-        }
-
-        /* LEFT SIDE PROGRESS REWARD TRACKER PILLAR */
-        .achievement-pillar {
-            width: 110px;
-            background: white;
-            border: 4px solid var(--primary-blue);
-            border-radius: 25px;
-            padding: 20px 5px;
-            display: flex;
             flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            flex-grow: 1;
+        }
+
+        /* HORIZONTAL REWARD TRACKER PILLAR */
+        .achievement-pillar {
+            width: 100%;
+            background: white;
+            border: 3px solid var(--primary-blue);
+            border-radius: 20px;
+            padding: 10px 15px;
+            display: flex;
+            flex-direction: row;
             align-items: center;
             position: relative;
-            min-height: 420px;
-            flex-shrink: 0;
-            box-shadow: 0 8px 16px rgba(0,0,0,0.05);
+            height: 65px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            gap: 12px;
         }
 
         .track-rail-bg {
-            width: 24px;
+            height: 16px;
             background: #E2E8F0;
             border-radius: 12px;
             flex-grow: 1;
             position: relative;
             border: 2px solid #CBD5E1;
+            margin-right: 25px; /* Give room for the crown */
         }
 
         .track-rail-fill {
-            width: 100%;
-            height: 0%;
-            background: linear-gradient(to top, var(--happy-pink), var(--sunny-yellow));
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(to right, var(--happy-pink), var(--sunny-yellow));
             border-radius: 12px;
             position: absolute;
-            bottom: 0;
-            transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            left: 0;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .avatar-rider {
             position: absolute;
-            bottom: 0%;
-            left: 50%;
-            transform: translate(-50%, 40%);
-            font-size: 2.5rem;
-            transition: bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            left: 0%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.8rem;
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 10;
-            filter: drop-shadow(0px 4px 4px rgba(0,0,0,0.1));
+            filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.1));
             user-select: none;
         }
 
         .goal-post {
             position: absolute;
-            top: -20px;
-            font-size: 2rem;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.6rem;
             z-index: 5;
             animation: floatBounce 1.5s infinite ease-in-out;
         }
 
         @keyframes floatBounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-6px); }
+            0%, 100% { transform: translateY(-50%) translateY(0); }
+            50% { transform: translateY(-50%) translateY(-4px); }
         }
 
         .pillar-label {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             font-weight: bold;
-            text-align: center;
-            margin-top: 12px;
             color: #4A5568;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            min-width: 65px;
+            text-align: left;
+            line-height: 1.1;
         }
 
         /* Right Side Gameboard Panel */
         .gameboard {
             background: white;
-            border-radius: 30px;
+            border-radius: 24px;
             flex-grow: 1;
-            padding: 25px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            border: 4px solid #E2E8F0;
+            padding: 16px;
+            box-shadow: 0 6px 16px rgba(0,0,0,0.05);
+            border: 3px solid #E2E8F0;
             text-align: center;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
         }
 
         /* Star Tracker Bar */
         .star-tracker {
             display: flex;
             justify-content: center;
-            gap: 4px;
-            margin-bottom: 15px;
+            gap: 2px;
+            margin-bottom: 8px;
             background: #F0F4F8;
-            padding: 8px;
-            border-radius: 20px;
+            padding: 6px;
+            border-radius: 14px;
             flex-wrap: wrap;
             width: 100%;
         }
 
         .star {
-            font-size: 1.2rem;
+            font-size: 0.85rem;
             color: #CBD5E1;
             transition: transform 0.2s ease;
         }
@@ -202,43 +227,44 @@
 
         .badge-info {
             background: #EBF5FF;
-            padding: 5px 15px;
-            border-radius: 12px;
+            padding: 4px 12px;
+            border-radius: 10px;
             font-weight: bold;
+            font-size: 0.85rem;
             display: inline-block;
-            margin-bottom: 15px;
+            margin-bottom: 8px;
             color: var(--primary-blue);
         }
 
-        /* Vertical column presentation setup */
+        /* Vertical column presentation setup optimized for mobile viewport */
         .column-math-container {
             display: inline-block;
-            font-size: 4.5rem;
+            font-size: 3.5rem;
             font-weight: bold;
             font-family: monospace;
             color: var(--primary-blue);
-            margin: 15px auto;
+            margin: 10px auto;
             text-align: right;
             position: relative;
-            padding-right: 20px;
+            padding-right: 15px;
         }
 
         .math-row {
-            letter-spacing: 5px;
+            letter-spacing: 4px;
             line-height: 1.1;
         }
 
         .plus-sign {
             position: absolute;
-            left: -60px;
-            bottom: 75px;
+            left: -45px;
+            bottom: 55px;
             color: var(--happy-pink);
         }
 
         .equals-bar {
-            border-bottom: 6px solid var(--text-color);
-            margin-top: 5px;
-            margin-bottom: 10px;
+            border-bottom: 5px solid var(--text-color);
+            margin-top: 2px;
+            margin-bottom: 5px;
             width: 120%;
             display: inline-block;
         }
@@ -246,53 +272,53 @@
         .question-mark-box {
             color: #CBD5E1;
             text-align: right;
-            font-size: 4.5rem;
+            font-size: 3.5rem;
             font-weight: bold;
-            letter-spacing: 5px;
+            letter-spacing: 4px;
         }
 
-        /* Answer Buttons Selection Layout Grid */
+        /* Answer Buttons Selection Grid layout adjusted for mobile finger taps */
         .options-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 20px;
+            gap: 12px;
+            margin-top: 10px;
             width: 100%;
         }
 
         .ans-btn {
             background: white;
-            border: 4px solid #64748B;
-            border-radius: 20px;
-            padding: 12px;
-            font-size: 2.2rem;
+            border: 3px solid #64748B;
+            border-radius: 16px;
+            padding: 10px;
+            font-size: 1.8rem;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 6px 0 #64748B;
+            box-shadow: 0 4px 0 #64748B;
             transition: all 0.1s;
         }
 
         .ans-btn:active {
-            transform: translateY(3px);
-            box-shadow: 0 3px 0 #64748B;
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #64748B;
         }
 
-        /* Feedback Elements Display text */
+        /* Feedback Display Text block */
         .cheer-msg {
             background: #E8F5E9;
             color: var(--bright-green);
             border: 2px solid #A5D6A7;
-            padding: 12px;
-            border-radius: 15px;
-            margin-top: 15px;
+            padding: 8px;
+            border-radius: 12px;
+            margin-top: 10px;
             font-weight: bold;
-            font-size: 1.2rem;
+            font-size: 0.95rem;
             display: none;
             width: 100%;
         }
 
         .finish-screen {
-            padding: 20px 10px;
+            padding: 15px 5px;
             width: 100%;
         }
 
@@ -300,17 +326,17 @@
             background: var(--bright-green);
             color: white;
             border: none;
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             font-weight: bold;
-            padding: 15px 40px;
-            border-radius: 25px;
+            padding: 12px 30px;
+            border-radius: 20px;
             cursor: pointer;
-            box-shadow: 0 6px 0 #2E7D32;
+            box-shadow: 0 4px 0 #2E7D32;
         }
 
         .start-btn:active {
-            transform: translateY(3px);
-            box-shadow: 0 3px 0 #2E7D32;
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #2E7D32;
         }
 
         .correct-flash {
@@ -318,234 +344,3 @@
         }
 
         @keyframes successFlash {
-            0%, 100% { background-color: white; }
-            50% { background-color: #E8F5E9; }
-        }
-    </style>
-</head>
-<body>
-
-    <header>
-        <h1>🎈 Magic Maths Quest! 🎈</h1>
-        <p style="margin:5px 0 0 0; font-weight:bold; color:#64748B;">Watch your balloon fly to the crown with every correct answer!</p>
-    </header>
-
-    <!-- Interactive Level Selector Links Node Elements -->
-    <div class="set-selector-bar">
-        <button class="set-btn active" onclick="selectSetRange(this, 1, 10)">Numbers 1 - 10</button>
-        <button class="set-btn" onclick="selectSetRange(this, 10, 20)">Numbers 10 - 20</button>
-        <button class="set-btn" onclick="selectSetRange(this, 20, 40)">Numbers 20 - 40</button>
-        <button class="set-btn" onclick="selectSetRange(this, 40, 60)">Numbers 40 - 60</button>
-        <button class="set-btn" onclick="selectSetRange(this, 60, 80)">Numbers 60 - 80</button>
-        <button class="set-btn" onclick="selectSetRange(this, 80, 100)">Numbers 80 - 100</button>
-    </div>
-
-    <!-- Active Sandbox Workspace Layout Split -->
-    <div class="workspace-layout">
-        
-        <!-- VISUAL REWARD PILLAR BAR -->
-        <div class="achievement-pillar">
-            <div class="goal-post">👑</div>
-            <div class="track-rail-bg">
-                <div id="rewardRailFill" class="track-rail-fill" style="height: 15%;"></div>
-                <div id="rewardAvatar" class="avatar-rider" style="bottom: 15%;">🎈</div>
-            </div>
-            <div class="pillar-label" id="rewardLabel">Rising up!</div>
-        </div>
-
-        <!-- MAIN GAME PANEL -->
-        <div class="gameboard" id="gameArena">
-                    <div class="star-tracker"><span class="star earned">⭐</span><span class="star earned">⭐</span><span class="star earned">⭐</span><span class="star ">⭐</span><span class="star ">⭐</span><span class="star ">⭐</span><span class="star ">⭐</span><span class="star ">⭐</span><span class="star ">⭐</span><span class="star ">⭐</span><span class="star ">⭐</span><span class="star ">⭐</span><span class="star ">⭐</span><span class="star ">⭐</span><span class="star ">⭐</span><span class="star ">⭐</span><span class="star ">⭐</span><span class="star ">⭐</span><span class="star ">⭐</span><span class="star ">⭐</span></div>
-                    <div class="badge-info">Puzzle 4 of 20</div>
-                    
-                    <div class="column-math-container">
-                        <div class="math-row">1</div>
-                        <div class="math-row"><span class="plus-sign">+</span>5</div>
-                        <div class="equals-bar"></div>
-                        <div class="question-mark-box">?</div>
-                    </div>
-
-                    <div class="options-grid"><button class="ans-btn" onclick="checkChildChoice(2, 6)">2</button><button class="ans-btn" onclick="checkChildChoice(3, 6)">3</button><button class="ans-btn" onclick="checkChildChoice(4, 6)">4</button><button class="ans-btn" onclick="checkChildChoice(6, 6)">6</button></div>
-                    <div class="cheer-msg" id="alertCheer"></div>
-                </div>
-
-    </div>
-
-    <script>
-        let currentMin = 1;
-        let currentMax = 10;
-
-        let gameState = {
-            questionIndex: 0,
-            starCount: 0,
-            totalNeeded: 20,
-            pool: []
-        };
-
-        const rewardsCheers = [
-            "⭐ Brilliant! You are super smart! ⭐",
-            "🌈 Wow! Magic math power! 🌈",
-            "🎉 Yay! You got it completely right! 🎉",
-            "🎈 Pop! Awesome job! 🎈",
-            "🍩 Sweet calculation! Keep going! 🍩",
-            "🚀 High five! Flying higher! 🚀"
-        ];
-
-        function selectSetRange(element, minVal, maxVal) {
-            document.querySelectorAll('.set-selector-bar .set-btn').forEach(b => b.classList.remove('active'));
-            if(element) element.classList.add('active');
-
-            currentMin = minVal;
-            currentMax = maxVal;
-            startNewSetSession();
-        }
-
-        function startNewSetSession() {
-            gameState.questionIndex = 0;
-            gameState.starCount = 0;
-            gameState.pool = buildSetQuestions(currentMin, currentMax, gameState.totalNeeded);
-            
-            renderWorkspaceScreen();
-            updateRewardPillarGraphic();
-        }
-
-        function buildSetQuestions(min, max, count) {
-            let questions = [];
-            for (let i = 0; i < count; i++) {
-                let num1, num2, answer;
-
-                if (max <= 20) {
-                    num1 = Math.floor(Math.random() * (max - min)) + min;
-                    num2 = Math.floor(Math.random() * 9) + 1;
-                } else {
-                    num1 = Math.floor(Math.random() * (max - min)) + min;
-                    num2 = Math.floor(Math.random() * 12) + 1;
-                }
-                answer = num1 + num2;
-
-                let options = new Set([answer]);
-                while(options.size < 4) {
-                    let randomOffset = (Math.floor(Math.random() * 4) + 1) * (Math.random() < 0.5 ? 1 : -1);
-                    let decoy = answer + randomOffset;
-                    if(decoy > 0 && decoy !== answer) options.add(decoy);
-                }
-
-                questions.push({
-                    topNum: num1,
-                    bottomNum: num2,
-                    ans: answer,
-                    choices: Array.from(options).sort((x, y) => x - y)
-                });
-            }
-            return questions;
-        }
-
-        function renderWorkspaceScreen() {
-            const container = document.getElementById('gameArena');
-            
-            let starsHTML = '';
-            for(let s=0; s<gameState.totalNeeded; s++) {
-                let activeClass = s < gameState.starCount ? 'earned' : '';
-                starsHTML += `<span class="star ${activeClass}">⭐</span>`;
-            }
-
-            if(gameState.questionIndex < gameState.totalNeeded) {
-                let currentQ = gameState.pool[gameState.questionIndex];
-                
-                let optionButtonsHTML = '';
-                currentQ.choices.forEach(val => {
-                    optionButtonsHTML += `<button class="ans-btn" onclick="checkChildChoice(${val}, ${currentQ.ans})">${val}</button>`;
-                });
-
-                container.innerHTML = `
-                    <div class="star-tracker">${starsHTML}</div>
-                    <div class="badge-info">Puzzle ${gameState.questionIndex + 1} of ${gameState.totalNeeded}</div>
-                    
-                    <div class="column-math-container">
-                        <div class="math-row">${currentQ.topNum}</div>
-                        <div class="math-row"><span class="plus-sign">+</span>${currentQ.bottomNum}</div>
-                        <div class="equals-bar"></div>
-                        <div class="question-mark-box">?</div>
-                    </div>
-
-                    <div class="options-grid">${optionButtonsHTML}</div>
-                    <div class="cheer-msg" id="alertCheer"></div>
-                `;
-            } else {
-                container.innerHTML = `
-                    <div class="finish-screen">
-                        <span style="font-size: 5rem;">🏆</span>
-                        <h2 style="color:var(--bright-green); font-size:2.5rem; margin:15px 0;">YOU DID IT!</h2>
-                        <p style="font-size:1.3rem;">You collected all 20 stars for the <b>${currentMin} to ${currentMax}</b> addition set!</p>
-                        <br>
-                        <button class="start-btn" onclick="startNewSetSession()">Play This Set Again 🔄</button>
-                    </div>
-                `;
-            }
-        }
-
-        function checkChildChoice(picked, correct) {
-            const board = document.getElementById('gameArena');
-            const feedback = document.getElementById('alertCheer');
-
-            if (picked === correct) {
-                gameState.starCount++;
-                board.classList.add('correct-flash');
-                setTimeout(() => board.classList.remove('correct-flash'), 300);
-
-                feedback.innerText = rewardsCheers[Math.floor(Math.random() * rewardsCheers.length)];
-                feedback.style.display = "block";
-                feedback.style.backgroundColor = "#E8F5E9";
-                feedback.style.color = "var(--bright-green)";
-                feedback.style.borderColor = "#A5D6A7";
-
-                gameState.questionIndex++;
-                updateRewardPillarGraphic();
-
-                setTimeout(() => {
-                    renderWorkspaceScreen();
-                }, 1000);
-            } else {
-                feedback.innerText = "🌸 Let's try counting that one again! You can do it! 🌸";
-                feedback.style.display = "block";
-                feedback.style.backgroundColor = "#FFF3F3";
-                feedback.style.color = "#FF006E";
-                feedback.style.borderColor = "#FFB3C6";
-            }
-        }
-
-        function updateRewardPillarGraphic() {
-            const barFill = document.getElementById('rewardRailFill');
-            const avatar = document.getElementById('rewardAvatar');
-            const textLabel = document.getElementById('rewardLabel');
-
-            if(!barFill || !avatar) return;
-
-            let percentage = Math.round((gameState.starCount / gameState.totalNeeded) * 100);
-            barFill.style.height = `${percentage}%`;
-            avatar.style.bottom = `${percentage}%`;
-
-            if(gameState.starCount === 0) {
-                avatar.innerText = "🎈";
-                textLabel.innerText = "Ready!";
-            } else if (percentage < 40) {
-                avatar.innerText = "🎈";
-                textLabel.innerText = "Rising up!";
-            } else if (percentage < 75) {
-                avatar.innerText = "🚀";
-                textLabel.innerText = "Zooming!";
-            } else if (percentage < 100) {
-                avatar.innerText = "✨";
-                textLabel.innerText = "Almost there!";
-            } else {
-                avatar.innerText = "👑";
-                textLabel.innerText = "WINNER!!";
-            }
-        }
-
-        window.onload = () => {
-            startNewSetSession();
-        };
-    </script>
-
-</body></html>
