@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<!-- saved from url=(0069)file:///C:/Users/Jamica%20Ho/Downloads/gemini-code-1780571231587.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🌟 Kids Learning Arcade Portal 🌟</title>
+    <style>
+        :root {
+            --primary-blue: #3B4CCA;
+            --success-green: #4CAF50;
+            --pika-yellow: #FFDE00;
+            --bg-gradient: linear-gradient(135deg, #FFFDEB 0%, #EBF5FF 100%);
+            --text-dark: #2A2E45;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial', sans-serif;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 50px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Portal Main Header */
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+            background: white;
+            padding: 20px 50px;
+            border-radius: 40px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border: 4px solid var(--primary-blue);
+            max-width: 700px;
+            animation: bounceIn 1s ease-out;
+        }
+
+        h1 {
+            color: var(--primary-blue);
+            margin: 0;
+            font-size: 2.8rem;
+            text-shadow: 2px 2px 0px var(--pika-yellow);
+        }
+
+        .subtitle {
+            margin: 8px 0 0 0;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #4A5568;
+        }
+
+        /* Menu Grid Layout */
+        .menu-grid {
+            display: flex;
+            gap: 35px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        /* Individual Interactive Game Cards */
+        .portal-card {
+            background: white;
+            border-radius: 35px;
+            padding: 35px;
+            width: 340px;
+            text-align: center;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.06);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portal-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.1);
+        }
+
+        /* Specific Card Theme Borders */
+        .phonics-theme {
+            border: 5px solid var(--success-green);
+        }
+
+        .math-theme {
+            border: 5px solid var(--pika-yellow);
+        }
+
+        /* Animated Card Icons */
+        .card-icon {
+            font-size: 4.5rem;
+            margin-bottom: 15px;
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+
+        .portal-card:hover .card-icon {
+            transform: scale(1.2) rotate(5deg);
+        }
+
+        h2 {
+            margin: 10px 0;
+            font-size: 1.8rem;
+            color: var(--text-dark);
+        }
+
+        .card-description {
+            font-size: 1.1rem;
+            color: #64748B;
+            line-height: 1.5;
+            margin-bottom: 25px;
+        }
+
+        /* Play Buttons Configuration */
+        .launch-btn {
+            display: block;
+            text-decoration: none;
+            padding: 15px 30px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 20px;
+            transition: all 0.1s ease;
+            box-shadow: 0 6px 0 rgba(0,0,0,0.15);
+        }
+
+        .phonics-color {
+            background-color: var(--success-green);
+        }
+        .phonics-color:hover {
+            background-color: #43A047;
+        }
+
+        .math-color {
+            background-color: var(--primary-blue);
+        }
+        .math-color:hover {
+            background-color: #2F3EAF;
+        }
+
+        .launch-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 rgba(0,0,0,0.15);
+        }
+
+        /* Entry Animation */
+        @keyframes bounceIn {
+            0% { transform: scale(0.9); opacity: 0; }
+            70% { transform: scale(1.02); opacity: 1; }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🌟 Kids Learning Portal 🌟</h1>
+        <p class="subtitle">Choose your adventure and start playing!</p>
+    </header>
+
+    <div class="menu-grid">
+
+        <div class="portal-card phonics-theme">
+            <div>
+                <span class="card-icon">📚</span>
+                <h2>Phonics Academy</h2>
+                <p class="card-description">Master alphabet sounds, blending, and reading skills with interactive vocal challenges!</p>
+            </div>
+            <a href="file:///C:/Users/Jamica%20Ho/Downloads/phonics.html" class="launch-btn phonics-color">Let's Read! 🚀</a>
+        </div>
+
+        <div class="portal-card math-theme">
+            <div>
+                <span class="card-icon">⚡</span>
+                <h2>Multiplication Land</h2>
+                <p class="card-description">Learn your 2 to 5 timetables with Pikachu, practice guiding questions, or tackle the 40 Qs Mega Quiz!</p>
+            </div>
+            <a href="file:///C:/Users/Jamica%20Ho/Downloads/multiplication.html" class="launch-btn math-color">Start Math! 🎯</a>
+        </div>
+
+    </div>
+
+
+</body></html>

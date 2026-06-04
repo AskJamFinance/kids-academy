@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<!-- saved from url=(0069)file:///C:/Users/Jamica%20Ho/Downloads/gemini-code-1780568944470.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ Pikachu Multiplication Land! ⚡</title>
+    <style>
+        :root {
+            --pika-yellow: #FFDE00;
+            --pika-orange: #F3A01C;
+            --pika-blue: #3B4CCA;
+            --pika-red: #CC0000;
+            --bg-light: #F0F4F8;
+            --text-dark: #2A2E45;
+            --success-green: #4CAF50;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            background: white;
+            padding: 15px 40px;
+            border-radius: 30px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.06);
+            border: 4px solid var(--pika-yellow);
+        }
+
+        h1 {
+            color: var(--pika-blue);
+            margin: 0;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 0px var(--pika-yellow);
+        }
+
+        /* Nav Tabs Layout */
+        .nav-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            justify-content: center;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        .tab-btn {
+            background: white;
+            border: 3px solid var(--pika-blue);
+            padding: 12px 24px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 5px 0 var(--pika-blue);
+            transition: all 0.1s ease;
+            color: var(--pika-blue);
+        }
+
+        .tab-btn:hover {
+            background: #F9FBFD;
+        }
+
+        .tab-btn.active {
+            background: var(--pika-yellow);
+            color: var(--text-dark);
+            border-color: var(--pika-orange);
+            box-shadow: 0 5px 0 var(--pika-orange);
+            transform: translateY(3px);
+        }
+
+        .tab-btn.final-tab {
+            border-color: var(--pika-red);
+            color: var(--pika-red);
+            box-shadow: 0 5px 0 var(--pika-red);
+            animation: pulse-border 2s infinite ease-in-out;
+        }
+
+        @keyframes pulse-border {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+        }
+
+        .tab-btn.final-tab.active {
+            background: var(--pika-red);
+            color: white;
+            border-color: #B70000;
+            box-shadow: 0 5px 0 #B70000;
+            animation: none;
+        }
+
+        /* Workspace Frame */
+        .workspace-card {
+            background: white;
+            border-radius: 30px;
+            max-width: 1000px;
+            width: 100%;
+            padding: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border: 4px solid #E2E8F0;
+        }
+
+        .view-pane {
+            display: none;
+        }
+
+        .view-pane.active {
+            display: block;
+        }
+
+        /* Learning Layout Grid */
+        .learning-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .learning-grid { grid-template-columns: 1fr; }
+        }
+
+        .chart-box {
+            background: #FFFDEB;
+            border: 3px solid var(--pika-yellow);
+            border-radius: 20px;
+            padding: 20px;
+        }
+
+        .chart-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 15px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            border-bottom: 1px dashed #FFEFA6;
+        }
+
+        .chart-row:last-child { border: none; }
+
+        /* Guiding Questions Layout */
+        .guiding-box {
+            background: #EBF5FF;
+            border: 3px solid #90CAF9;
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .guide-scroller {
+            max-height: 480px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+
+        .guide-item {
+            background: white;
+            padding: 12px 15px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 2px solid #CFD8DC;
+            transition: all 0.2s ease;
+        }
+
+        .guide-expr {
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        .guide-action-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .guide-input {
+            width: 80px;
+            padding: 8px;
+            font-size: 1.3rem;
+            text-align: center;
+            border: 3px solid #90CAF9;
+            border-radius: 10px;
+            font-weight: bold;
+        }
+
+        .check-btn {
+            background: #2196F3;
+            color: white;
+            border: none;
+            padding: 8px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+        }
+
+        .guide-item.passed {
+            border-color: var(--success-green);
+            background: #E8F5E9;
+        }
+
+        /* Quiz Split Workspace Interface */
+        .quiz-workspace {
+            display: flex;
+            gap: 30px;
+            margin-top: 15px;
+        }
+
+        @media (max-width: 650px) {
+            .quiz-workspace { flex-direction: column; }
+        }
+
+        /* LEFT SIDE PROGRESS REWARD TRACKER BAR */
+        .achievement-pillar {
+            width: 110px;
+            background: #F1F5F9;
+            border: 3px solid var(--pika-blue);
+            border-radius: 25px;
+            padding: 15px 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            min-height: 400px;
+            flex-shrink: 0;
+            box-shadow: inset 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .track-rail-bg {
+            width: 24px;
+            background: #CBD5E1;
+            border-radius: 12px;
+            flex-grow: 1;
+            position: relative;
+            border: 1px solid #94A3B8;
+            overflow: visible;
+        }
+
+        .track-rail-fill {
+            width: 100%;
+            height: 0%;
+            background: linear-gradient(to top, var(--pika-orange), var(--pika-yellow));
+            border-radius: 12px;
+            position: absolute;
+            bottom: 0;
+            transition: height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .pikachu-rider {
+            position: absolute;
+            bottom: 0%;
+            left: 50%;
+            transform: translate(-50%, 40%);
+            font-size: 2.5rem;
+            transition: bottom 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10;
+            filter: drop-shadow(0px 4px 4px rgba(0,0,0,0.15));
+            user-select: none;
+        }
+
+        .goal-post {
+            position: absolute;
+            top: -15px;
+            font-size: 1.8rem;
+            z-index: 5;
+            animation: bounce 1.5s infinite ease-in-out;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        .pillar-label {
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 10px;
+            color: #475569;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Quiz Content Window Right Node */
+        .quiz-content-node {
+            flex-grow: 1;
+            background: #FAFAFA;
+            border: 3px dashed #CBD5E1;
+            border-radius: 20px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .quiz-intro-screen {
+            text-align: center;
+            padding: 30px 10px;
+        }
+
+        .start-btn {
+            background: var(--success-green);
+            color: white;
+            border: none;
+            font-size: 1.4rem;
+            font-weight: bold;
+            padding: 15px 35px;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 6px 0 #2E7D32;
+            transition: transform 0.1s;
+        }
+
+        .start-btn:active {
+            transform: translateY(3px);
+            box-shadow: 0 3px 0 #2E7D32;
+        }
+
+        .card-question-box {
+            text-align: center;
+        }
+
+        .question-number-badge {
+            background: #E2E8F0;
+            padding: 4px 12px;
+            border-radius: 10px;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .math-statement {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--pika-blue);
+            margin: 15px 0;
+        }
+
+        .quiz-options-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .option-btn {
+            background: white;
+            border: 3px solid #64748B;
+            border-radius: 15px;
+            padding: 15px;
+            font-size: 1.6rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #64748B;
+            transition: all 0.1s;
+        }
+
+        .option-btn:hover { background: #F8FAFC; }
+        .option-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #64748B; }
+
+        .quiz-finished-screen {
+            text-align: center;
+            padding: 20px;
+        }
+
+        /* Encouragement Banner Alert style */
+        .cheer-box {
+            background: #E8F5E9;
+            color: #2E7D32;
+            border: 2px solid #A5D6A7;
+            padding: 10px;
+            border-radius: 12px;
+            margin-top: 15px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            text-align: center;
+            animation: pulse 0.5s ease-in-out;
+            display: none;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.9); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pika-flash-lightning {
+            animation: lightningFlash 0.3s ease-in-out 2;
+        }
+
+        @keyframes lightningFlash {
+            0%, 100% { background-color: white; }
+            50% { background-color: #FFFDEB; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>⚡ Pikachu Multiplication Land! ⚡</h1>
+        <p style="margin:5px 0 0 0; font-weight:bold; color:#4A5568;">Practice individual tables OR jump straight to the Mega Quiz anytime you want!</p>
+    </header>
+
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="activateTab(this, &#39;tab2&#39;, 2)">2 Times Table</button>
+        <button class="tab-btn" onclick="activateTab(this, &#39;tab3&#39;, 3)">3 Times Table</button>
+        <button class="tab-btn" onclick="activateTab(this, &#39;tab4&#39;, 4)">4 Times Table</button>
+        <button class="tab-btn" onclick="activateTab(this, &#39;tab5&#39;, 5)">5 Times Table</button>
+        <button class="tab-btn final-tab" onclick="activateTab(this, &#39;tabFinal&#39;, &#39;mixed&#39;)">🏆 Mixed Mega Quiz (40 Qs)</button>
+    </div>
+
+    <div class="workspace-card" id="appWorkspace">
+                    <div class="view-pane active">
+                        <h2 style="margin-top:0; color:var(--pika-blue);">✨ Learning Channel: The 2 Times Table</h2>
+                        
+                        <div class="learning-grid">
+                            <div>
+                                <h3 style="margin-top:0; color:var(--pika-orange);">📋 1. Study the Chart</h3>
+                                <div class="chart-box">
+                        <div class="chart-row">
+                            <span>1 × 2</span>
+                            <span>=</span>
+                            <span style="color:var(--pika-blue);">2</span>
+                        </div>
+                    
+                        <div class="chart-row">
+                            <span>2 × 2</span>
+                            <span>=</span>
+                            <span style="color:var(--pika-blue);">4</span>
+                        </div>
+                    
+                        <div class="chart-row">
+                            <span>3 × 2</span>
+                            <span>=</span>
+                            <span style="color:var(--pika-blue);">6</span>
+                        </div>
+                    
+                        <div class="chart-row">
+                            <span>4 × 2</span>
+                            <span>=</span>
+                            <span style="color:var(--pika-blue);">8</span>
+                        </div>
+                    
+                        <div class="chart-row">
+                            <span>5 × 2</span>
+                            <span>=</span>
+                            <span style="color:var(--pika-blue);">10</span>
+                        </div>
+                    
+                        <div class="chart-row">
+                            <span>6 × 2</span>
+                            <span>=</span>
+                            <span style="color:var(--pika-blue);">12</span>
+                        </div>
+                    
+                        <div class="chart-row">
+                            <span>7 × 2</span>
+                            <span>=</span>
+                            <span style="color:var(--pika-blue);">14</span>
+                        </div>
+                    
+                        <div class="chart-row">
+                            <span>8 × 2</span>
+                            <span>=</span>
+                            <span style="color:var(--pika-blue);">16</span>
+                        </div>
+                    
+                        <div class="chart-row">
+                            <span>9 × 2</span>
+                            <span>=</span>
+                            <span style="color:var(--pika-blue);">18</span>
+                        </div>
+                    
+                        <div class="chart-row">
+                            <span>10 × 2</span>
+                            <span>=</span>
+                            <span style="color:var(--pika-blue);">20</span>
+                        </div>
+                    
+                        <div class="chart-row">
+                            <span>11 × 2</span>
+                            <span>=</span>
+                            <span style="color:var(--pika-blue);">22</span>
+                        </div>
+                    
+                        <div class="chart-row">
+                            <span>12 × 2</span>
+                            <span>=</span>
+                            <span style="color:var(--pika-blue);">24</span>
+                        </div>
+                    </div>
+                            </div>
+
+                            <div>
+                                <h3 style="margin-top:0; color:var(--pika-orange);">⌨️ 2. Guiding Warm-Up (10 Questions)</h3>
+                                <div class="guiding-box">
+                                    <p style="margin:0 0 12px 0; font-size:0.95rem; font-weight:bold; color:#1E3A8A;">Type your answer inside the side boxes below:</p>
+                                    <div class="guide-scroller">
+                        <div class="guide-item" id="g-item-2-0">
+                            <div class="guide-expr">8 × 2 = </div>
+                            <div class="guide-action-row">
+                                <input type="number" class="guide-input" id="g-input-2-0" placeholder="?">
+                                <button class="check-btn" id="g-btn-2-0" onclick="verifySideGuidingAnswer(2, 0, 16)">Check</button>
+                            </div>
+                        </div>
+                    
+                        <div class="guide-item" id="g-item-2-1">
+                            <div class="guide-expr">1 × 2 = </div>
+                            <div class="guide-action-row">
+                                <input type="number" class="guide-input" id="g-input-2-1" placeholder="?">
+                                <button class="check-btn" id="g-btn-2-1" onclick="verifySideGuidingAnswer(2, 1, 2)">Check</button>
+                            </div>
+                        </div>
+                    
+                        <div class="guide-item" id="g-item-2-2">
+                            <div class="guide-expr">12 × 2 = </div>
+                            <div class="guide-action-row">
+                                <input type="number" class="guide-input" id="g-input-2-2" placeholder="?">
+                                <button class="check-btn" id="g-btn-2-2" onclick="verifySideGuidingAnswer(2, 2, 24)">Check</button>
+                            </div>
+                        </div>
+                    
+                        <div class="guide-item" id="g-item-2-3">
+                            <div class="guide-expr">9 × 2 = </div>
+                            <div class="guide-action-row">
+                                <input type="number" class="guide-input" id="g-input-2-3" placeholder="?">
+                                <button class="check-btn" id="g-btn-2-3" onclick="verifySideGuidingAnswer(2, 3, 18)">Check</button>
+                            </div>
+                        </div>
+                    
+                        <div class="guide-item" id="g-item-2-4">
+                            <div class="guide-expr">2 × 2 = </div>
+                            <div class="guide-action-row">
+                                <input type="number" class="guide-input" id="g-input-2-4" placeholder="?">
+                                <button class="check-btn" id="g-btn-2-4" onclick="verifySideGuidingAnswer(2, 4, 4)">Check</button>
+                            </div>
+                        </div>
+                    
+                        <div class="guide-item" id="g-item-2-5">
+                            <div class="guide-expr">7 × 2 = </div>
+                            <div class="guide-action-row">
+                                <input type="number" class="guide-input" id="g-input-2-5" placeholder="?">
+                                <button class="check-btn" id="g-btn-2-5" onclick="verifySideGuidingAnswer(2, 5, 14)">Check</button>
+                            </div>
+                        </div>
+                    
+                        <div class="guide-item" id="g-item-2-6">
+                            <div class="guide-expr">3 × 2 = </div>
+                            <div class="guide-action-row">
+                                <input type="number" class="guide-input" id="g-input-2-6" placeholder="?">
+                                <button class="check-btn" id="g-btn-2-6" onclick="verifySideGuidingAnswer(2, 6, 6)">Check</button>
+                            </div>
+                        </div>
+                    
+                        <div class="guide-item" id="g-item-2-7">
+                            <div class="guide-expr">4 × 2 = </div>
+                            <div class="guide-action-row">
+                                <input type="number" class="guide-input" id="g-input-2-7" placeholder="?">
+                                <button class="check-btn" id="g-btn-2-7" onclick="verifySideGuidingAnswer(2, 7, 8)">Check</button>
+                            </div>
+                        </div>
+                    
+                        <div class="guide-item" id="g-item-2-8">
+                            <div class="guide-expr">5 × 2 = </div>
+                            <div class="guide-action-row">
+                                <input type="number" class="guide-input" id="g-input-2-8" placeholder="?">
+                                <button class="check-btn" id="g-btn-2-8" onclick="verifySideGuidingAnswer(2, 8, 10)">Check</button>
+                            </div>
+                        </div>
+                    
+                        <div class="guide-item" id="g-item-2-9">
+                            <div class="guide-expr">10 × 2 = </div>
+                            <div class="guide-action-row">
+                                <input type="number" class="guide-input" id="g-input-2-9" placeholder="?">
+                                <button class="check-btn" id="g-btn-2-9" onclick="verifySideGuidingAnswer(2, 9, 20)">Check</button>
+                            </div>
+                        </div>
+                    </div>
+                                    <div class="cheer-box" id="cheer-guide-2"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:40px; border-top:4px dashed #E2E8F0; padding-top:25px;">
+                            <h3 style="color:var(--pika-blue); margin-top:0;">⚡ 3. The official Catch Challenge (15 Questions)</h3>
+                            
+                            <div class="quiz-workspace">
+                                <div class="achievement-pillar">
+                                    <div class="goal-post">🍅</div>
+                                    <div class="track-rail-bg">
+                                        <div id="pika-rail-fill-2" class="track-rail-fill"></div>
+                                        <div id="pika-avatar-2" class="pikachu-rider">🐹</div>
+                                    </div>
+                                    <div class="pillar-label" id="pika-label-2">Hidden</div>
+                                </div>
+
+                                <div class="quiz-content-node">
+                                    <div id="quiz-box-2">
+                                        <div class="quiz-intro-screen">
+                                            <span style="font-size:3.5rem;">⭐</span>
+                                            <h3>Prove your skills to unlock Pikachu!</h3>
+                                            <p>You will face 15 randomized multiplication questions.</p><br>
+                                            <button class="start-btn" onclick="startQuizSession(2, 15)">Start Local Quiz</button>
+                                        </div>
+                                    </div>
+                                    <div class="cheer-box" id="cheer-quiz-2"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+    <script>
+        let activeTabId = "tab2";
+        let activeNum = 2;
+
+        let quizState = {
+            currentQuestionIdx: 0,
+            scoreCount: 0,
+            totalQuestions: 15,
+            questionsArray: [],
+            targetTable: 2
+        };
+
+        const standardCheers = [
+            "⭐ High Five! Outstanding job! ⭐",
+            "⚡ You are pure electric! Amazing! ⚡",
+            "🔴 Pokéball power! Perfect answer! 🔴",
+            "🎉 Brilliant calculation! Keep it up! 🎉",
+            "💪 You are becoming a master! 💪",
+            "✨ Boom! Got it right! ✨"
+        ];
+
+        const completionCheers = [
+            "🏆 Mission Completed! You crushed that challenge! 🏆",
+            "👑 Spectacular! Your brain power is off the charts! 👑",
+            "🚀 Epic finish! Pikachu is cheering for you! 🚀",
+            "🎈 Hooray! You crossed the finish line beautifully! 🎈"
+        ];
+
+        function getRandomCheer(isCompletion = false) {
+            const list = isCompletion ? completionCheers : standardCheers;
+            return list[Math.floor(Math.random() * list.length)];
+        }
+
+        function triggerCheerAlert(elementId, text) {
+            const el = document.getElementById(elementId);
+            if(el) {
+                el.innerText = text;
+                el.style.display = "block";
+                setTimeout(() => { el.style.opacity = '1'; }, 10);
+            }
+        }
+
+        function getTableArray(num) {
+            let arr = [];
+            for(let i=1; i<=12; i++) {
+                arr.push({ factorA: i, factorB: num, product: i * num });
+            }
+            return arr;
+        }
+
+        function generate10GuidingQuestions(num) {
+            let questions = [];
+            let possibleMultipliers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+            possibleMultipliers.sort(() => Math.random() - 0.5);
+            
+            for(let i = 0; i < 10; i++) {
+                let multiplier = possibleMultipliers[i];
+                questions.push({
+                    a: multiplier,
+                    b: num,
+                    ans: multiplier * num
+                });
+            }
+            return questions;
+        }
+
+        function generateQuizPool(tableNum, count) {
+            let pool = [];
+            for (let i = 0; i < count; i++) {
+                let factorA, factorB;
+                if(tableNum === 'mixed') {
+                    factorB = Math.floor(Math.random() * 4) + 2; 
+                } else {
+                    factorB = tableNum;
+                }
+                factorA = Math.floor(Math.random() * 12) + 1; 
+                let correctAns = factorA * factorB;
+
+                let optionsSet = new Set([correctAns]);
+                while(optionsSet.size < 4) {
+                    let deviation = Math.floor(Math.random() * 10) - 5;
+                    let fakeAns = correctAns + deviation;
+                    if(fakeAns > 0 && fakeAns !== correctAns) {
+                        optionsSet.add(fakeAns);
+                    }
+                }
+                pool.push({
+                    qStr: `${factorA} × ${factorB} = ?`,
+                    ans: correctAns,
+                    opts: Array.from(optionsSet).sort((x,y) => x - y)
+                });
+            }
+            return pool;
+        }
+
+        function activateTab(element, tabId, num) {
+            document.querySelectorAll('.nav-tabs .tab-btn').forEach(btn => btn.classList.remove('active'));
+            
+            if (element) {
+                element.classList.add('active');
+            }
+
+            activeTabId = tabId;
+            activeNum = num;
+            renderWorkspaceView();
+        }
+
+        function renderWorkspaceView() {
+            const container = document.getElementById('appWorkspace');
+            container.className = "workspace-card"; 
+            
+            if(activeNum === 'mixed') {
+                container.innerHTML = `
+                    <div class="view-pane active">
+                        <h2 style="color:var(--pika-red); margin-top:0;">🏆 Ultimate Mixed Mega Arena Challenge</h2>
+                        <p style="background:#FFF3F3; padding:10px 15px; border-radius:12px; border-left:5px solid var(--pika-red); font-weight:bold; color:#CC0000;">
+                            🚀 Shortcut Active: You didn't need to finish anything else to get here. Prove your skills right now!
+                        </p>
+                        <p>This final arena tests your speed across all <b>2, 3, 4, and 5 times tables</b>. Face 40 ultimate questions to secure the Master Pokéball!</p>
+                        
+                        <div class="quiz-workspace">
+                            <div class="achievement-pillar">
+                                <div class="goal-post">🍒</div>
+                                <div class="track-rail-bg">
+                                    <div id="pika-rail-fill-final" class="track-rail-fill"></div>
+                                    <div id="pika-avatar-final" class="pikachu-rider">⚡</div>
+                                </div>
+                                <div class="pillar-label" id="pika-label-final">Wild Pika</div>
+                            </div>
+
+                            <div class="quiz-content-node">
+                                <div id="quiz-box-final">
+                                    <div class="quiz-intro-screen">
+                                        <span style="font-size:4rem;">🎒</span>
+                                        <h3>Ready for the 40-Question Mega Challenge?</h3>
+                                        <p>Pikachu is waiting at the very top of the pillar track arena!</p><br>
+                                        <button class="start-btn" style="background:var(--pika-red); box-shadow: 0 6px 0 #900;" onclick="startQuizSession('mixed', 40)">Enter Mega Arena</button>
+                                    </div>
+                                </div>
+                                <div class="cheer-box" id="cheer-final"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                let tableRowsHTML = '';
+                getTableArray(activeNum).forEach(row => {
+                    tableRowsHTML += `
+                        <div class="chart-row">
+                            <span>${row.factorA} × ${row.factorB}</span>
+                            <span>=</span>
+                            <span style="color:var(--pika-blue);">${row.product}</span>
+                        </div>
+                    `;
+                });
+
+                let guidingItemsHTML = '';
+                generate10GuidingQuestions(activeNum).forEach((q, idx) => {
+                    guidingItemsHTML += `
+                        <div class="guide-item" id="g-item-${activeNum}-${idx}">
+                            <div class="guide-expr">${q.a} × ${q.b} = </div>
+                            <div class="guide-action-row">
+                                <input type="number" class="guide-input" id="g-input-${activeNum}-${idx}" placeholder="?">
+                                <button class="check-btn" id="g-btn-${activeNum}-${idx}" onclick="verifySideGuidingAnswer(${activeNum}, ${idx}, ${q.ans})">Check</button>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                container.innerHTML = `
+                    <div class="view-pane active">
+                        <h2 style="margin-top:0; color:var(--pika-blue);">✨ Learning Channel: The ${activeNum} Times Table</h2>
+                        
+                        <div class="learning-grid">
+                            <div>
+                                <h3 style="margin-top:0; color:var(--pika-orange);">📋 1. Study the Chart</h3>
+                                <div class="chart-box">${tableRowsHTML}</div>
+                            </div>
+
+                            <div>
+                                <h3 style="margin-top:0; color:var(--pika-orange);">⌨️ 2. Guiding Warm-Up (10 Questions)</h3>
+                                <div class="guiding-box">
+                                    <p style="margin:0 0 12px 0; font-size:0.95rem; font-weight:bold; color:#1E3A8A;">Type your answer inside the side boxes below:</p>
+                                    <div class="guide-scroller">${guidingItemsHTML}</div>
+                                    <div class="cheer-box" id="cheer-guide-${activeNum}"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:40px; border-top:4px dashed #E2E8F0; padding-top:25px;">
+                            <h3 style="color:var(--pika-blue); margin-top:0;">⚡ 3. The official Catch Challenge (15 Questions)</h3>
+                            
+                            <div class="quiz-workspace">
+                                <div class="achievement-pillar">
+                                    <div class="goal-post">🍅</div>
+                                    <div class="track-rail-bg">
+                                        <div id="pika-rail-fill-${activeNum}" class="track-rail-fill"></div>
+                                        <div id="pika-avatar-${activeNum}" class="pikachu-rider">🐹</div>
+                                    </div>
+                                    <div class="pillar-label" id="pika-label-${activeNum}">Hidden</div>
+                                </div>
+
+                                <div class="quiz-content-node">
+                                    <div id="quiz-box-${activeNum}">
+                                        <div class="quiz-intro-screen">
+                                            <span style="font-size:3.5rem;">⭐</span>
+                                            <h3>Prove your skills to unlock Pikachu!</h3>
+                                            <p>You will face 15 randomized multiplication questions.</p><br>
+                                            <button class="start-btn" onclick="startQuizSession(${activeNum}, 15)">Start Local Quiz</button>
+                                        </div>
+                                    </div>
+                                    <div class="cheer-box" id="cheer-quiz-${activeNum}"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function verifySideGuidingAnswer(tableNum, index, targetAns) {
+            const inputField = document.getElementById(`g-input-${tableNum}-${index}`);
+            const actionBtn = document.getElementById(`g-btn-${tableNum}-${index}`);
+            const wrapperBox = document.getElementById(`g-item-${tableNum}-${index}`);
+            const typedVal = parseInt(inputField.value);
+
+            if (typedVal === targetAns) {
+                wrapperBox.classList.add('passed');
+                inputField.disabled = true;
+                actionBtn.disabled = true;
+                actionBtn.innerText = "✨ Yes!";
+                
+                triggerCheerAlert(`cheer-guide-${tableNum}`, getRandomCheer(false));
+                checkWarmUpCompletion(tableNum);
+            } else {
+                inputField.style.borderColor = "var(--pika-red)";
+                inputField.style.backgroundColor = "#FFEBEE";
+                setTimeout(() => {
+                    inputField.style.borderColor = "#90CAF9";
+                    inputField.style.backgroundColor = "white";
+                }, 800);
+            }
+        }
+
+        function checkWarmUpCompletion(tableNum) {
+            let passCount = 0;
+            for(let i=0; i<10; i++) {
+                let box = document.getElementById(`g-item-${tableNum}-${i}`);
+                if(box && box.classList.contains('passed')) passCount++;
+            }
+            if(passCount === 10) {
+                triggerCheerAlert(`cheer-guide-${tableNum}`, getRandomCheer(true));
+            }
+        }
+
+        function startQuizSession(tableKey, totalQCount) {
+            quizState.currentQuestionIdx = 0;
+            quizState.scoreCount = 0;
+            quizState.totalQuestions = totalQCount;
+            quizState.targetTable = tableKey;
+            quizState.questionsArray = generateQuizPool(tableKey, totalQCount);
+
+            renderActiveQuestionCard();
+            refreshPikachuBarGraphic();
+        }
+
+        function renderActiveQuestionCard() {
+            const targetBoxId = quizState.targetTable === 'mixed' ? 'quiz-box-final' : `quiz-box-${quizState.targetTable}`;
+            const targetContainer = document.getElementById(targetBoxId);
+            const data = quizState.questionsArray[quizState.currentQuestionIdx];
+
+            let optionsButtonsHTML = '';
+            data.opts.forEach(opt => {
+                optionsButtonsHTML += `
+                    <button class="option-btn" onclick="submitQuizChoiceAnswer(${opt}, ${data.ans})">${opt}</button>
+                `;
+            });
+
+            targetContainer.innerHTML = `
+                <div class="card-question-box">
+                    <div class="question-number-badge">Question ${quizState.currentQuestionIdx + 1} of ${quizState.totalQuestions}</div>
+                    <div class="math-statement">${data.qStr}</div>
+                    <div class="quiz-options-layout">${optionsButtonsHTML}</div>
+                </div>
+            `;
+        }
+
+        function submitQuizChoiceAnswer(chosenValue, actualCorrectValue) {
+            const workspaceCard = document.getElementById('appWorkspace');
+            const targetCheerId = quizState.targetTable === 'mixed' ? 'cheer-final' : `cheer-quiz-${quizState.targetTable}`;
+            
+            if(chosenValue === actualCorrectValue) {
+                quizState.scoreCount++;
+                workspaceCard.classList.add('pika-flash-lightning');
+                setTimeout(() => workspaceCard.classList.remove('pika-flash-lightning'), 300);
+                
+                triggerCheerAlert(targetCheerId, getRandomCheer(false));
+            } else {
+                document.getElementById(targetCheerId).style.display = "none";
+            }
+
+            quizState.currentQuestionIdx++;
+            refreshPikachuBarGraphic();
+
+            if(quizState.currentQuestionIdx < quizState.totalQuestions) {
+                renderActiveQuestionCard();
+            } else {
+                renderQuizEndingSummaryReport();
+            }
+        }
+
+        function refreshPikachuBarGraphic() {
+            const targetSuffix = quizState.targetTable === 'mixed' ? 'final' : quizState.targetTable;
+            const barFill = document.getElementById(`pika-rail-fill-${targetSuffix}`);
+            const avatar = document.getElementById(`pika-avatar-${targetSuffix}`);
+            const textLabel = document.getElementById(`pika-label-${targetSuffix}`);
+
+            if(!barFill || !avatar) return;
+
+            let percentage = Math.round((quizState.scoreCount / quizState.totalQuestions) * 100);
+            barFill.style.height = `${percentage}%`;
+            avatar.style.bottom = `${percentage}%`;
+
+            if(quizState.scoreCount === 0) {
+                avatar.innerText = "🍃";
+                textLabel.innerText = "Wild Area";
+            } else if (percentage < 50) {
+                avatar.innerText = "🐹";
+                textLabel.innerText = "Spotted!";
+            } else if (percentage < 90) {
+                avatar.innerText = "⚡";
+                textLabel.innerText = "Chasing!";
+            } else if (percentage < 100) {
+                avatar.innerText = "💖";
+                textLabel.innerText = "Friendly!";
+            } else {
+                avatar.innerText = "🔴";
+                textLabel.innerText = "CAUGHT!!";
+            }
+        }
+
+        function renderQuizEndingSummaryReport() {
+            const targetBoxId = quizState.targetTable === 'mixed' ? 'quiz-box-final' : `quiz-box-${quizState.targetTable}`;
+            const targetContainer = document.getElementById(targetBoxId);
+            const targetCheerId = quizState.targetTable === 'mixed' ? 'cheer-final' : `cheer-quiz-${quizState.targetTable}`;
+            
+            let percentageSuccess = Math.round((quizState.scoreCount / quizState.totalQuestions) * 100);
+            let endingNarrationHTML = '';
+
+            triggerCheerAlert(targetCheerId, getRandomCheer(true));
+
+            if(percentageSuccess === 100) {
+                endingNarrationHTML = `
+                    <span style="font-size:4rem;">⚡🔴⚡</span>
+                    <h2 style="color:var(--success-green); margin:10px 0;">PERFECT CAPTURE!</h2>
+                    <p style="font-size:1.2rem;">Amazing! You scored ${quizState.scoreCount}/${quizState.totalQuestions}. Pikachu was safely caught in your Pokéball!</p>
+                `;
+            } else if (percentageSuccess >= 70) {
+                endingNarrationHTML = `
+                    <span style="font-size:4rem;">🍎🐹</span>
+                    <h2 style="color:var(--pika-orange); margin:10px 0;">SO CLOSE!</h2>
+                    <p style="font-size:1.2rem;">Great job! You scored ${quizState.scoreCount}/${quizState.totalQuestions}. Pikachu loved your treats! Try again to catch him!</p>
+                `;
+            } else {
+                endingNarrationHTML = `
+                    <span style="font-size:4rem;">💨🍃</span>
+                    <h2 style="color:var(--pika-red); margin:10px 0;">PIKACHU FLED!</h2>
+                    <p style="font-size:1.2rem;">You scored ${quizState.scoreCount}/${quizState.totalQuestions}. Review the learning chart on the left and try again!</p>
+                `;
+            }
+
+            targetContainer.innerHTML = `
+                <div class="quiz-finished-screen">
+                    ${endingNarrationHTML}
+                    <br>
+                    <button class="start-btn" onclick="startQuizSession('${quizState.targetTable}', ${quizState.totalQuestions})">🔄 Restart Challenge</button>
+                </div>
+            `;
+        }
+
+        window.onload = () => {
+            renderWorkspaceView();
+        };
+    </script>
+
+</body></html>

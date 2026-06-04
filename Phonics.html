@@ -1,0 +1,3091 @@
+<!DOCTYPE html>
+<!-- saved from url=(0069)file:///C:/Users/Jamica%20Ho/Downloads/gemini-code-1780567352259.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phonics Story &amp; Game Land! 📚✨</title>
+    <style>
+        :root {
+            --primary: #FF5964;
+            --secondary: #35A7FF;
+            --success: #38B000;
+            --accent: #FFE66D;
+            --bg: #F4F7F6;
+            --dark: #2E3A44;
+            --category-bg: #E0F2FE;
+            --story-bg: #F5F3FF;
+            --story-border: #DDD6FE;
+        }
+
+        * {
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--dark);
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            color: var(--primary);
+            font-size: 2.8rem;
+            margin: 0;
+            text-shadow: 2px 2px 0px var(--accent);
+        }
+
+        .subtitle {
+            font-size: 1.2rem;
+            color: #555;
+            margin: 5px 0 15px 0;
+        }
+
+        /* Active Target Sound Progress Reward System */
+        .reward-container {
+            width: 100%;
+            max-width: 950px;
+            background: white;
+            border: 3px solid var(--secondary);
+            border-radius: 20px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .reward-status {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+
+        .reward-bar-bg {
+            width: 100%;
+            height: 28px;
+            background: #E2E8F0;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid #CBD5E1;
+            position: relative;
+        }
+
+        .reward-bar-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, #38B000, #70E000);
+            border-radius: 13px;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+
+        /* Category Bar */
+        .category-bar {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .cat-btn {
+            background-color: var(--category-bg);
+            border: 3px solid var(--secondary);
+            border-radius: 25px;
+            padding: 12px 25px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 0px var(--secondary);
+            transition: all 0.2s;
+        }
+
+        .cat-btn.active {
+            background-color: var(--accent);
+            border-color: var(--primary);
+            box-shadow: 0 5px 0px var(--primary);
+            transform: translateY(3px);
+        }
+
+        /* Sound Tabs Selector Links */
+        .sound-tabs {
+            display: none;
+            gap: 8px;
+            max-width: 950px;
+            overflow-x: auto;
+            padding: 10px 5px;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .sound-tabs.active {
+            display: flex;
+        }
+
+        .sound-btn {
+            background: white;
+            border: 2px solid var(--dark);
+            border-radius: 15px;
+            padding: 8px 16px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .sound-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* Main Window Card Frame */
+        .main-window {
+            width: 100%;
+            max-width: 950px;
+            background: white;
+            border-radius: 25px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
+            border: 4px solid #E2E8F0;
+        }
+
+        .pane {
+            display: none;
+        }
+
+        .pane.active {
+            display: block;
+        }
+
+        /* Top Sound Accent Row */
+        .sound-banner {
+            background: #EDF6F9;
+            border-radius: 20px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            border: 3px dashed var(--secondary);
+            margin-bottom: 25px;
+        }
+
+        .sound-banner h2 {
+            font-size: 3rem;
+            margin: 0;
+            color: var(--primary);
+            text-transform: uppercase;
+        }
+
+        /* Flashcards Display */
+        .word-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .word-card {
+            background: #F8FAFC;
+            border: 2px solid #E2E8F0;
+            border-radius: 15px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .word-card:hover {
+            transform: scale(1.03);
+            background: #FFF;
+            border-color: var(--accent);
+        }
+
+        .word-card .emoji { font-size: 2.2rem; }
+        .word-card h3 { margin: 0; font-size: 1.5rem; }
+        .word-card h3 span { color: var(--primary); text-decoration: underline; }
+
+        /* Story Poem Box Styles */
+        .story-box {
+            background-color: var(--story-bg);
+            border: 3px solid var(--story-border);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            position: relative;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .story-box:hover {
+            background-color: #EDE9FE;
+        }
+
+        .story-box h4 {
+            margin: 0 0 10px 0;
+            color: #6D28D9;
+            font-size: 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .story-text {
+            font-size: 1.25rem;
+            line-height: 1.8rem;
+            color: #4C1D95;
+            margin: 0;
+            white-space: pre-line;
+            font-style: italic;
+        }
+
+        .story-text span {
+            background-color: var(--accent);
+            padding: 0 4px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-style: normal;
+        }
+
+        /* Game System Engine Grid */
+        .game-section {
+            background: #FFFCEB;
+            border: 3px solid #FFE082;
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 25px;
+        }
+
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 2px dashed #FFE082;
+            padding-bottom: 10px;
+        }
+
+        .quiz-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        @media (max-width: 768px) {
+            .quiz-container { grid-template-columns: 1fr; }
+        }
+
+        .quiz-item {
+            background: white;
+            border: 2px solid #E2E8F0;
+            border-radius: 12px;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .quiz-item.correct-item {
+            border-color: var(--success);
+            background: #E8F5E9;
+        }
+
+        .quiz-emoji { font-size: 2.5rem; min-width: 45px; }
+        
+        .quiz-word-display {
+            font-size: 1.6rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: #475569;
+        }
+
+        .quiz-input-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        .quiz-input {
+            width: 140px;
+            font-size: 1.3rem;
+            text-transform: uppercase;
+            text-align: center;
+            padding: 5px;
+            border: 2px solid var(--secondary);
+            border-radius: 8px;
+            font-family: monospace;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+
+        .quiz-input:disabled {
+            border-color: var(--success);
+            background: #C8E6C9;
+            color: #1B5E20;
+            width: auto;
+            border: none;
+            font-family: 'Comic Sans MS', sans-serif;
+            font-size: 1.4rem;
+        }
+
+        .check-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .reset-btn {
+            background: var(--dark);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-size: 1rem;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Success Module Overlay Box */
+        .celebration-box {
+            display: none;
+            text-align: center;
+            background: white;
+            border: 4px solid var(--success);
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 15px;
+            animation: popUp 0.4s ease-out;
+        }
+
+        @keyframes popUp {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .clapping-boy-img {
+            width: 150px;
+            height: auto;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🌟 Phonics Story &amp; Game Land! 🌟</h1>
+        <p class="subtitle">Listen to sounds, read musical poems, and spell the missing letters!</p>
+    </header>
+
+    <!-- Dynamic Reward Bar (Resets per Target Sound Level) -->
+    <div class="reward-container">
+        <div class="reward-status">
+            <span id="reward-text">Let's solve the "IR" level! 🚀</span>
+            <span id="reward-score">0 / 10 Words Solved</span>
+        </div>
+        <div class="reward-bar-bg">
+            <div id="local-progress" class="reward-bar-fill" style="width: 0%;">0%</div>
+        </div>
+    </div>
+
+    <!-- Category Toolbar System -->
+    <div class="category-bar">
+        <button class="cat-btn active" onclick="switchCategory(&#39;diphthongs&#39;)">✨ Diphthongs</button>
+        <button class="cat-btn" onclick="switchCategory(&#39;soft-sounds&#39;)">🍦 Soft C &amp; G</button>
+        <button class="cat-btn" onclick="switchCategory(&#39;consonant-sounds&#39;)">🗣️ Sh &amp; Zh Sounds</button>
+    </div>
+
+    <!-- Active Structural Subbars -->
+    <div id="tabs-diphthongs" class="sound-tabs active"><button class="sound-btn active" id="btn-diphthongs-ir">IR</button><button class="sound-btn " id="btn-diphthongs-or">OR</button><button class="sound-btn " id="btn-diphthongs-air">AIR</button><button class="sound-btn " id="btn-diphthongs-oy">OY</button><button class="sound-btn " id="btn-diphthongs-ar">AR</button><button class="sound-btn " id="btn-diphthongs-ow">OW</button></div>
+    <div id="tabs-soft-sounds" class="sound-tabs"><button class="sound-btn " id="btn-soft-sounds-soft_c">SOFT C</button><button class="sound-btn " id="btn-soft-sounds-soft_g">SOFT G</button></div>
+    <div id="tabs-consonant-sounds" class="sound-tabs"><button class="sound-btn " id="btn-consonant-sounds-sh">SH</button><button class="sound-btn " id="btn-consonant-sounds-zh">ZH</button></div>
+
+    <!-- Main Workspace Presentation Node -->
+    <div class="main-window" id="windowWorkspace"><div class="pane active" id="pane-diphthongs-ir">
+                        <div class="sound-banner" onclick="speakSound(&#39;er&#39;, false)">
+                            <h2>Target Sound: ir</h2>
+                            <p>👉 Click to listen to the sound pronunciation!</p>
+                        </div>
+
+                        <h3 style="color:var(--secondary); border-bottom:2px dashed #DDD; padding-bottom:5px;">🎈 Step 1: Click &amp; Read Aloud!</h3>
+                        <div class="word-grid">
+                            <div class="word-card" onclick="speakSound(&#39;bird&#39;, true)">
+                                <div class="emoji">🐦</div>
+                                <div>
+                                    <h3>b<span>ir</span>d</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;girl&#39;, true)">
+                                <div class="emoji">👧</div>
+                                <div>
+                                    <h3>g<span>ir</span>l</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;shirt&#39;, true)">
+                                <div class="emoji">👕</div>
+                                <div>
+                                    <h3>sh<span>ir</span>t</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;skirt&#39;, true)">
+                                <div class="emoji">👗</div>
+                                <div>
+                                    <h3>sk<span>ir</span>t</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;twirl&#39;, true)">
+                                <div class="emoji">💃</div>
+                                <div>
+                                    <h3>tw<span>ir</span>l</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;third&#39;, true)">
+                                <div class="emoji">🥉</div>
+                                <div>
+                                    <h3>th<span>ir</span>d</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;circle&#39;, true)">
+                                <div class="emoji">⭕</div>
+                                <div>
+                                    <h3>c<span>ir</span>cle</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;dirt&#39;, true)">
+                                <div class="emoji">🌱</div>
+                                <div>
+                                    <h3>d<span>ir</span>t</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;chirp&#39;, true)">
+                                <div class="emoji">🐤</div>
+                                <div>
+                                    <h3>ch<span>ir</span>p</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;first&#39;, true)">
+                                <div class="emoji">🥇</div>
+                                <div>
+                                    <h3>f<span>ir</span>st</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="story-box" onclick="readStoryText(`A little &lt;span&gt;girl&lt;/span&gt; saw a blue &lt;span&gt;bird&lt;/span&gt;,
+It made the prettiest sound she ever heard!
+She did a happy &lt;span&gt;twirl&lt;/span&gt; in her new &lt;span&gt;skirt&lt;/span&gt;,
+And dropped her yummy cookie in the &lt;span&gt;dirt&lt;/span&gt;!`)">
+                            <h4>📚 Sound Story Poem (Click to hear read-aloud!)</h4>
+                            <p class="story-text">A little <span>girl</span> saw a blue <span>bird</span>,
+It made the prettiest sound she ever heard!
+She did a happy <span>twirl</span> in her new <span>skirt</span>,
+And dropped her yummy cookie in the <span>dirt</span>!</p>
+                        </div>
+
+                        <div class="game-section">
+                            <div class="game-header">
+                                <h3 style="margin:0; color:var(--dark);">🎮 Step 2: Spell the Missing Part! (10 Questions)</h3>
+                                <button class="reset-btn" onclick="resetQuiz(&#39;diphthongs&#39;, &#39;ir&#39;)">🔄 Reset Quiz</button>
+                            </div>
+                            <div class="quiz-container">
+                            <div class="quiz-item" id="q-box-diphthongs-ir-0">
+                                <div class="quiz-emoji">🐦</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-ir-0">B _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-ir-0" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;ir&#39;, 0, &#39;ird&#39;, &#39;bird&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-ir-1">
+                                <div class="quiz-emoji">👧</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-ir-1">G _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-ir-1" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;ir&#39;, 1, &#39;irl&#39;, &#39;girl&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-ir-2">
+                                <div class="quiz-emoji">👕</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-ir-2">SH _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-ir-2" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;ir&#39;, 2, &#39;irt&#39;, &#39;shirt&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-ir-3">
+                                <div class="quiz-emoji">👗</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-ir-3">SK _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-ir-3" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;ir&#39;, 3, &#39;irt&#39;, &#39;skirt&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-ir-4">
+                                <div class="quiz-emoji">💃</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-ir-4">TW _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-ir-4" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;ir&#39;, 4, &#39;irl&#39;, &#39;twirl&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-ir-5">
+                                <div class="quiz-emoji">🥉</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-ir-5">TH _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-ir-5" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;ir&#39;, 5, &#39;ird&#39;, &#39;third&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-ir-6">
+                                <div class="quiz-emoji">⭕</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-ir-6">CI _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-ir-6" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;ir&#39;, 6, &#39;rcle&#39;, &#39;circle&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-ir-7">
+                                <div class="quiz-emoji">🌱</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-ir-7">D _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-ir-7" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;ir&#39;, 7, &#39;irt&#39;, &#39;dirt&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-ir-8">
+                                <div class="quiz-emoji">🐤</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-ir-8">CH _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-ir-8" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;ir&#39;, 8, &#39;irp&#39;, &#39;chirp&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-ir-9">
+                                <div class="quiz-emoji">🥇</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-ir-9">F _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-ir-9" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;ir&#39;, 9, &#39;irst&#39;, &#39;first&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="celebration-box" id="victory-diphthongs-ir">
+                            <h2 style="color:var(--success); margin:0 0 10px 0;">🌟 FANTASTIC! 🌟</h2>
+                            <img src="./index_files/happy-child-clapping-hands-in-flat-cartoon-style-illustration-vector.jpg" class="clapping-boy-img" alt="Good job clapping cartoon boy graphic animation"><br>
+                            <p style="font-size:1.5rem; font-weight:bold; color:var(--dark); margin:10px 0 0 0;">"Good job! You completed all 10 words!"</p>
+                        </div>
+                    </div><div class="pane " id="pane-diphthongs-or">
+                        <div class="sound-banner" onclick="speakSound(&#39;or&#39;, false)">
+                            <h2>Target Sound: or</h2>
+                            <p>👉 Click to listen to the sound pronunciation!</p>
+                        </div>
+
+                        <h3 style="color:var(--secondary); border-bottom:2px dashed #DDD; padding-bottom:5px;">🎈 Step 1: Click &amp; Read Aloud!</h3>
+                        <div class="word-grid">
+                            <div class="word-card" onclick="speakSound(&#39;fork&#39;, true)">
+                                <div class="emoji">🍴</div>
+                                <div>
+                                    <h3>f<span>or</span>k</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;corn&#39;, true)">
+                                <div class="emoji">🌽</div>
+                                <div>
+                                    <h3>c<span>or</span>n</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;horn&#39;, true)">
+                                <div class="emoji">📯</div>
+                                <div>
+                                    <h3>h<span>or</span>n</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;storm&#39;, true)">
+                                <div class="emoji">⛈️</div>
+                                <div>
+                                    <h3>st<span>or</span>m</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;horse&#39;, true)">
+                                <div class="emoji">🐴</div>
+                                <div>
+                                    <h3>h<span>or</span>se</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;fort&#39;, true)">
+                                <div class="emoji">🏰</div>
+                                <div>
+                                    <h3>f<span>or</span>t</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;torch&#39;, true)">
+                                <div class="emoji">🔦</div>
+                                <div>
+                                    <h3>t<span>or</span>ch</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;stork&#39;, true)">
+                                <div class="emoji">🦤</div>
+                                <div>
+                                    <h3>st<span>or</span>k</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;cork&#39;, true)">
+                                <div class="emoji">🍾</div>
+                                <div>
+                                    <h3>c<span>or</span>k</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;lord&#39;, true)">
+                                <div class="emoji">👑</div>
+                                <div>
+                                    <h3>l<span>or</span>d</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="story-box" onclick="readStoryText(`The hungry &lt;span&gt;horse&lt;/span&gt; wanted some sweet &lt;span&gt;corn&lt;/span&gt;,
+He walked past a castle with a loud horn!
+A heavy &lt;span&gt;storm&lt;/span&gt; blew over the old &lt;span&gt;fort&lt;/span&gt;,
+While a big white &lt;span&gt;stork&lt;/span&gt; landed at the port!`)">
+                            <h4>📚 Sound Story Poem (Click to hear read-aloud!)</h4>
+                            <p class="story-text">The hungry <span>horse</span> wanted some sweet <span>corn</span>,
+He walked past a castle with a loud horn!
+A heavy <span>storm</span> blew over the old <span>fort</span>,
+While a big white <span>stork</span> landed at the port!</p>
+                        </div>
+
+                        <div class="game-section">
+                            <div class="game-header">
+                                <h3 style="margin:0; color:var(--dark);">🎮 Step 2: Spell the Missing Part! (10 Questions)</h3>
+                                <button class="reset-btn" onclick="resetQuiz(&#39;diphthongs&#39;, &#39;or&#39;)">🔄 Reset Quiz</button>
+                            </div>
+                            <div class="quiz-container">
+                            <div class="quiz-item" id="q-box-diphthongs-or-0">
+                                <div class="quiz-emoji">🍴</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-or-0">F _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-or-0" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;or&#39;, 0, &#39;ork&#39;, &#39;fork&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-or-1">
+                                <div class="quiz-emoji">🌽</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-or-1">C _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-or-1" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;or&#39;, 1, &#39;orn&#39;, &#39;corn&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-or-2">
+                                <div class="quiz-emoji">📯</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-or-2">H _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-or-2" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;or&#39;, 2, &#39;orn&#39;, &#39;horn&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-or-3">
+                                <div class="quiz-emoji">⛈️</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-or-3">ST _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-or-3" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;or&#39;, 3, &#39;orm&#39;, &#39;storm&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-or-4">
+                                <div class="quiz-emoji">🐴</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-or-4">H _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-or-4" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;or&#39;, 4, &#39;orse&#39;, &#39;horse&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-or-5">
+                                <div class="quiz-emoji">🏰</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-or-5">F _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-or-5" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;or&#39;, 5, &#39;ort&#39;, &#39;fort&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-or-6">
+                                <div class="quiz-emoji">🔦</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-or-6">TO _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-or-6" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;or&#39;, 6, &#39;rch&#39;, &#39;torch&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-or-7">
+                                <div class="quiz-emoji">🦤</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-or-7">ST _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-or-7" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;or&#39;, 7, &#39;ork&#39;, &#39;stork&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-or-8">
+                                <div class="quiz-emoji">🍾</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-or-8">C _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-or-8" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;or&#39;, 8, &#39;ork&#39;, &#39;cork&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-or-9">
+                                <div class="quiz-emoji">👑</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-or-9">L _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-or-9" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;or&#39;, 9, &#39;ord&#39;, &#39;lord&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="celebration-box" id="victory-diphthongs-or">
+                            <h2 style="color:var(--success); margin:0 0 10px 0;">🌟 FANTASTIC! 🌟</h2>
+                            <img src="./index_files/happy-child-clapping-hands-in-flat-cartoon-style-illustration-vector.jpg" class="clapping-boy-img" alt="Good job clapping cartoon boy graphic animation"><br>
+                            <p style="font-size:1.5rem; font-weight:bold; color:var(--dark); margin:10px 0 0 0;">"Good job! You completed all 10 words!"</p>
+                        </div>
+                    </div><div class="pane " id="pane-diphthongs-air">
+                        <div class="sound-banner" onclick="speakSound(&#39;air&#39;, false)">
+                            <h2>Target Sound: air</h2>
+                            <p>👉 Click to listen to the sound pronunciation!</p>
+                        </div>
+
+                        <h3 style="color:var(--secondary); border-bottom:2px dashed #DDD; padding-bottom:5px;">🎈 Step 1: Click &amp; Read Aloud!</h3>
+                        <div class="word-grid">
+                            <div class="word-card" onclick="speakSound(&#39;chair&#39;, true)">
+                                <div class="emoji">🪑</div>
+                                <div>
+                                    <h3>ch<span>air</span></h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;hair&#39;, true)">
+                                <div class="emoji">💇</div>
+                                <div>
+                                    <h3>h<span>air</span></h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;fair&#39;, true)">
+                                <div class="emoji">🎡</div>
+                                <div>
+                                    <h3>f<span>air</span></h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;pair&#39;, true)">
+                                <div class="emoji">🧦</div>
+                                <div>
+                                    <h3>p<span>air</span></h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;stair&#39;, true)">
+                                <div class="emoji">🪜</div>
+                                <div>
+                                    <h3>st<span>air</span></h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;airplane&#39;, true)">
+                                <div class="emoji">✈️</div>
+                                <div>
+                                    <h3><span>air</span>plane</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;dairy&#39;, true)">
+                                <div class="emoji">🥛</div>
+                                <div>
+                                    <h3>d<span>air</span>y</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;fairy&#39;, true)">
+                                <div class="emoji">🧚</div>
+                                <div>
+                                    <h3>f<span>air</span>y</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;repair&#39;, true)">
+                                <div class="emoji">🛠️</div>
+                                <div>
+                                    <h3>rep<span>air</span></h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;flair&#39;, true)">
+                                <div class="emoji">✨</div>
+                                <div>
+                                    <h3>fl<span>air</span></h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="story-box" onclick="readStoryText(`The pretty &lt;span&gt;fairy&lt;/span&gt; with shiny &lt;span&gt;hair&lt;/span&gt;,
+Sat down contentedly on a wooden &lt;span&gt;chair&lt;/span&gt;.
+She saw an &lt;span&gt;airplane&lt;/span&gt; high up in the &lt;span&gt;air&lt;/span&gt;,
+Flying all the way to the colorful summer &lt;span&gt;fair&lt;/span&gt;!`)">
+                            <h4>📚 Sound Story Poem (Click to hear read-aloud!)</h4>
+                            <p class="story-text">The pretty <span>fairy</span> with shiny <span>hair</span>,
+Sat down contentedly on a wooden <span>chair</span>.
+She saw an <span>airplane</span> high up in the <span>air</span>,
+Flying all the way to the colorful summer <span>fair</span>!</p>
+                        </div>
+
+                        <div class="game-section">
+                            <div class="game-header">
+                                <h3 style="margin:0; color:var(--dark);">🎮 Step 2: Spell the Missing Part! (10 Questions)</h3>
+                                <button class="reset-btn" onclick="resetQuiz(&#39;diphthongs&#39;, &#39;air&#39;)">🔄 Reset Quiz</button>
+                            </div>
+                            <div class="quiz-container">
+                            <div class="quiz-item" id="q-box-diphthongs-air-0">
+                                <div class="quiz-emoji">🪑</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-air-0">CH _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-air-0" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;air&#39;, 0, &#39;air&#39;, &#39;chair&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-air-1">
+                                <div class="quiz-emoji">💇</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-air-1">H _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-air-1" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;air&#39;, 1, &#39;air&#39;, &#39;hair&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-air-2">
+                                <div class="quiz-emoji">🎡</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-air-2">F _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-air-2" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;air&#39;, 2, &#39;air&#39;, &#39;fair&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-air-3">
+                                <div class="quiz-emoji">🧦</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-air-3">P _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-air-3" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;air&#39;, 3, &#39;air&#39;, &#39;pair&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-air-4">
+                                <div class="quiz-emoji">🪜</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-air-4">ST _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-air-4" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;air&#39;, 4, &#39;air&#39;, &#39;stair&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-air-5">
+                                <div class="quiz-emoji">✈️</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-air-5">AI _ _ _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-air-5" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;air&#39;, 5, &#39;rplane&#39;, &#39;airplane&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-air-6">
+                                <div class="quiz-emoji">🥛</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-air-6">DA _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-air-6" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;air&#39;, 6, &#39;iry&#39;, &#39;dairy&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-air-7">
+                                <div class="quiz-emoji">🧚</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-air-7">FA _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-air-7" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;air&#39;, 7, &#39;iry&#39;, &#39;fairy&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-air-8">
+                                <div class="quiz-emoji">🛠️</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-air-8">RE _ _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-air-8" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;air&#39;, 8, &#39;pair&#39;, &#39;repair&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-air-9">
+                                <div class="quiz-emoji">✨</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-air-9">FL _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-air-9" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;air&#39;, 9, &#39;air&#39;, &#39;flair&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="celebration-box" id="victory-diphthongs-air">
+                            <h2 style="color:var(--success); margin:0 0 10px 0;">🌟 FANTASTIC! 🌟</h2>
+                            <img src="./index_files/happy-child-clapping-hands-in-flat-cartoon-style-illustration-vector.jpg" class="clapping-boy-img" alt="Good job clapping cartoon boy graphic animation"><br>
+                            <p style="font-size:1.5rem; font-weight:bold; color:var(--dark); margin:10px 0 0 0;">"Good job! You completed all 10 words!"</p>
+                        </div>
+                    </div><div class="pane " id="pane-diphthongs-oy">
+                        <div class="sound-banner" onclick="speakSound(&#39;oy&#39;, false)">
+                            <h2>Target Sound: oy</h2>
+                            <p>👉 Click to listen to the sound pronunciation!</p>
+                        </div>
+
+                        <h3 style="color:var(--secondary); border-bottom:2px dashed #DDD; padding-bottom:5px;">🎈 Step 1: Click &amp; Read Aloud!</h3>
+                        <div class="word-grid">
+                            <div class="word-card" onclick="speakSound(&#39;boy&#39;, true)">
+                                <div class="emoji">👦</div>
+                                <div>
+                                    <h3>b<span>oy</span></h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;toy&#39;, true)">
+                                <div class="emoji">🧸</div>
+                                <div>
+                                    <h3>t<span>oy</span></h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;joy&#39;, true)">
+                                <div class="emoji">😄</div>
+                                <div>
+                                    <h3>j<span>oy</span></h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;oyster&#39;, true)">
+                                <div class="emoji">🦪</div>
+                                <div>
+                                    <h3><span>oy</span>ster</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;soy&#39;, true)">
+                                <div class="emoji">🍶</div>
+                                <div>
+                                    <h3>s<span>oy</span></h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;coy&#39;, true)">
+                                <div class="emoji">🐟</div>
+                                <div>
+                                    <h3>c<span>oy</span></h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;annoy&#39;, true)">
+                                <div class="emoji">😫</div>
+                                <div>
+                                    <h3>ann<span>oy</span></h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;decoy&#39;, true)">
+                                <div class="emoji">🦆</div>
+                                <div>
+                                    <h3>dec<span>oy</span></h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;royal&#39;, true)">
+                                <div class="emoji">👑</div>
+                                <div>
+                                    <h3>r<span>oy</span>al</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;employ&#39;, true)">
+                                <div class="emoji">💼</div>
+                                <div>
+                                    <h3>empl<span>oy</span></h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="story-box" onclick="readStoryText(`A happy little &lt;span&gt;boy&lt;/span&gt; found a brand new &lt;span&gt;toy&lt;/span&gt;,
+He jumped up and down, singing out with &lt;span&gt;joy&lt;/span&gt;!
+He found an &lt;span&gt;oyster&lt;/span&gt; down by the bay,
+And didn&#39;t want to &lt;span&gt;annoy&lt;/span&gt; it, so he ran to play!`)">
+                            <h4>📚 Sound Story Poem (Click to hear read-aloud!)</h4>
+                            <p class="story-text">A happy little <span>boy</span> found a brand new <span>toy</span>,
+He jumped up and down, singing out with <span>joy</span>!
+He found an <span>oyster</span> down by the bay,
+And didn't want to <span>annoy</span> it, so he ran to play!</p>
+                        </div>
+
+                        <div class="game-section">
+                            <div class="game-header">
+                                <h3 style="margin:0; color:var(--dark);">🎮 Step 2: Spell the Missing Part! (10 Questions)</h3>
+                                <button class="reset-btn" onclick="resetQuiz(&#39;diphthongs&#39;, &#39;oy&#39;)">🔄 Reset Quiz</button>
+                            </div>
+                            <div class="quiz-container">
+                            <div class="quiz-item" id="q-box-diphthongs-oy-0">
+                                <div class="quiz-emoji">👦</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-oy-0">B _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-oy-0" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;oy&#39;, 0, &#39;oy&#39;, &#39;boy&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-oy-1">
+                                <div class="quiz-emoji">🧸</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-oy-1">T _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-oy-1" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;oy&#39;, 1, &#39;oy&#39;, &#39;toy&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-oy-2">
+                                <div class="quiz-emoji">😄</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-oy-2">J _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-oy-2" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;oy&#39;, 2, &#39;oy&#39;, &#39;joy&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-oy-3">
+                                <div class="quiz-emoji">🦪</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-oy-3">OY _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-oy-3" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;oy&#39;, 3, &#39;ster&#39;, &#39;oyster&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-oy-4">
+                                <div class="quiz-emoji">🍶</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-oy-4">S _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-oy-4" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;oy&#39;, 4, &#39;oy&#39;, &#39;soy&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-oy-5">
+                                <div class="quiz-emoji">🐟</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-oy-5">C _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-oy-5" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;oy&#39;, 5, &#39;oy&#39;, &#39;coy&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-oy-6">
+                                <div class="quiz-emoji">😫</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-oy-6">AN _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-oy-6" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;oy&#39;, 6, &#39;noy&#39;, &#39;annoy&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-oy-7">
+                                <div class="quiz-emoji">🦆</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-oy-7">DE _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-oy-7" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;oy&#39;, 7, &#39;coy&#39;, &#39;decoy&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-oy-8">
+                                <div class="quiz-emoji">👑</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-oy-8">RO _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-oy-8" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;oy&#39;, 8, &#39;yal&#39;, &#39;royal&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-oy-9">
+                                <div class="quiz-emoji">💼</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-oy-9">EM _ _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-oy-9" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;oy&#39;, 9, &#39;ploy&#39;, &#39;employ&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="celebration-box" id="victory-diphthongs-oy">
+                            <h2 style="color:var(--success); margin:0 0 10px 0;">🌟 FANTASTIC! 🌟</h2>
+                            <img src="./index_files/happy-child-clapping-hands-in-flat-cartoon-style-illustration-vector.jpg" class="clapping-boy-img" alt="Good job clapping cartoon boy graphic animation"><br>
+                            <p style="font-size:1.5rem; font-weight:bold; color:var(--dark); margin:10px 0 0 0;">"Good job! You completed all 10 words!"</p>
+                        </div>
+                    </div><div class="pane " id="pane-diphthongs-ar">
+                        <div class="sound-banner" onclick="speakSound(&#39;ar&#39;, false)">
+                            <h2>Target Sound: ar</h2>
+                            <p>👉 Click to listen to the sound pronunciation!</p>
+                        </div>
+
+                        <h3 style="color:var(--secondary); border-bottom:2px dashed #DDD; padding-bottom:5px;">🎈 Step 1: Click &amp; Read Aloud!</h3>
+                        <div class="word-grid">
+                            <div class="word-card" onclick="speakSound(&#39;car&#39;, true)">
+                                <div class="emoji">🚗</div>
+                                <div>
+                                    <h3>c<span>ar</span></h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;star&#39;, true)">
+                                <div class="emoji">⭐</div>
+                                <div>
+                                    <h3>st<span>ar</span></h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;park&#39;, true)">
+                                <div class="emoji">🛝</div>
+                                <div>
+                                    <h3>p<span>ar</span>k</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;farm&#39;, true)">
+                                <div class="emoji">🚜</div>
+                                <div>
+                                    <h3>f<span>ar</span>m</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;bark&#39;, true)">
+                                <div class="emoji">🐶</div>
+                                <div>
+                                    <h3>b<span>ar</span>k</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;shark&#39;, true)">
+                                <div class="emoji">🦈</div>
+                                <div>
+                                    <h3>sh<span>ar</span>k</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;yarn&#39;, true)">
+                                <div class="emoji">🧶</div>
+                                <div>
+                                    <h3>y<span>ar</span>n</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;card&#39;, true)">
+                                <div class="emoji">🃏</div>
+                                <div>
+                                    <h3>c<span>ar</span>d</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;cart&#39;, true)">
+                                <div class="emoji">🛒</div>
+                                <div>
+                                    <h3>c<span>ar</span>t</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;harp&#39;, true)">
+                                <div class="emoji">🪕</div>
+                                <div>
+                                    <h3>h<span>ar</span>p</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="story-box" onclick="readStoryText(`We drove in the &lt;span&gt;car&lt;/span&gt; to visit the &lt;span&gt;farm&lt;/span&gt;,
+Where a big friendly sheepdog lived in the barn.
+We looked at a &lt;span&gt;star&lt;/span&gt; high over the &lt;span&gt;park&lt;/span&gt;,
+And watched a scary &lt;span&gt;shark&lt;/span&gt; swimming in the dark!`)">
+                            <h4>📚 Sound Story Poem (Click to hear read-aloud!)</h4>
+                            <p class="story-text">We drove in the <span>car</span> to visit the <span>farm</span>,
+Where a big friendly sheepdog lived in the barn.
+We looked at a <span>star</span> high over the <span>park</span>,
+And watched a scary <span>shark</span> swimming in the dark!</p>
+                        </div>
+
+                        <div class="game-section">
+                            <div class="game-header">
+                                <h3 style="margin:0; color:var(--dark);">🎮 Step 2: Spell the Missing Part! (10 Questions)</h3>
+                                <button class="reset-btn" onclick="resetQuiz(&#39;diphthongs&#39;, &#39;ar&#39;)">🔄 Reset Quiz</button>
+                            </div>
+                            <div class="quiz-container">
+                            <div class="quiz-item" id="q-box-diphthongs-ar-0">
+                                <div class="quiz-emoji">🚗</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-ar-0">C _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-ar-0" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;ar&#39;, 0, &#39;ar&#39;, &#39;car&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-ar-1">
+                                <div class="quiz-emoji">⭐</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-ar-1">ST _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-ar-1" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;ar&#39;, 1, &#39;ar&#39;, &#39;star&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-ar-2">
+                                <div class="quiz-emoji">🛝</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-ar-2">P _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-ar-2" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;ar&#39;, 2, &#39;ark&#39;, &#39;park&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-ar-3">
+                                <div class="quiz-emoji">🚜</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-ar-3">F _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-ar-3" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;ar&#39;, 3, &#39;arm&#39;, &#39;farm&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-ar-4">
+                                <div class="quiz-emoji">🐶</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-ar-4">B _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-ar-4" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;ar&#39;, 4, &#39;ark&#39;, &#39;bark&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-ar-5">
+                                <div class="quiz-emoji">🦈</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-ar-5">SH _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-ar-5" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;ar&#39;, 5, &#39;ark&#39;, &#39;shark&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-ar-6">
+                                <div class="quiz-emoji">🧶</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-ar-6">Y _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-ar-6" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;ar&#39;, 6, &#39;arn&#39;, &#39;yarn&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-ar-7">
+                                <div class="quiz-emoji">🃏</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-ar-7">C _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-ar-7" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;ar&#39;, 7, &#39;ard&#39;, &#39;card&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-ar-8">
+                                <div class="quiz-emoji">🛒</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-ar-8">C _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-ar-8" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;ar&#39;, 8, &#39;art&#39;, &#39;cart&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-ar-9">
+                                <div class="quiz-emoji">🪕</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-ar-9">H _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-ar-9" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;ar&#39;, 9, &#39;arp&#39;, &#39;harp&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="celebration-box" id="victory-diphthongs-ar">
+                            <h2 style="color:var(--success); margin:0 0 10px 0;">🌟 FANTASTIC! 🌟</h2>
+                            <img src="./index_files/happy-child-clapping-hands-in-flat-cartoon-style-illustration-vector.jpg" class="clapping-boy-img" alt="Good job clapping cartoon boy graphic animation"><br>
+                            <p style="font-size:1.5rem; font-weight:bold; color:var(--dark); margin:10px 0 0 0;">"Good job! You completed all 10 words!"</p>
+                        </div>
+                    </div><div class="pane " id="pane-diphthongs-ow">
+                        <div class="sound-banner" onclick="speakSound(&#39;oww&#39;, false)">
+                            <h2>Target Sound: ow</h2>
+                            <p>👉 Click to listen to the sound pronunciation!</p>
+                        </div>
+
+                        <h3 style="color:var(--secondary); border-bottom:2px dashed #DDD; padding-bottom:5px;">🎈 Step 1: Click &amp; Read Aloud!</h3>
+                        <div class="word-grid">
+                            <div class="word-card" onclick="speakSound(&#39;cow&#39;, true)">
+                                <div class="emoji">🐮</div>
+                                <div>
+                                    <h3>c<span>ow</span></h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;owl&#39;, true)">
+                                <div class="emoji">🦉</div>
+                                <div>
+                                    <h3><span>ow</span>l</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;clown&#39;, true)">
+                                <div class="emoji">🤡</div>
+                                <div>
+                                    <h3>cl<span>ow</span>n</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;crown&#39;, true)">
+                                <div class="emoji">👑</div>
+                                <div>
+                                    <h3>cr<span>ow</span>n</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;town&#39;, true)">
+                                <div class="emoji">🏙️</div>
+                                <div>
+                                    <h3>t<span>ow</span>n</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;down&#39;, true)">
+                                <div class="emoji">👇</div>
+                                <div>
+                                    <h3>d<span>ow</span>n</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;brown&#39;, true)">
+                                <div class="emoji">🟫</div>
+                                <div>
+                                    <h3>br<span>ow</span>n</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;gown&#39;, true)">
+                                <div class="emoji">👗</div>
+                                <div>
+                                    <h3>g<span>ow</span>n</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;growl&#39;, true)">
+                                <div class="emoji">🦁</div>
+                                <div>
+                                    <h3>gr<span>ow</span>l</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;plow&#39;, true)">
+                                <div class="emoji">🚜</div>
+                                <div>
+                                    <h3>pl<span>ow</span></h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="story-box" onclick="readStoryText(`Out in the &lt;span&gt;town&lt;/span&gt;, a funny circus &lt;span&gt;clown&lt;/span&gt;,
+Wore a shiny gold &lt;span&gt;crown&lt;/span&gt; and walked up and &lt;span&gt;down&lt;/span&gt;.
+He saw a spotted &lt;span&gt;cow&lt;/span&gt; look up with a scowl,
+As a wise feathered &lt;span&gt;owl&lt;/span&gt; started to growl!`)">
+                            <h4>📚 Sound Story Poem (Click to hear read-aloud!)</h4>
+                            <p class="story-text">Out in the <span>town</span>, a funny circus <span>clown</span>,
+Wore a shiny gold <span>crown</span> and walked up and <span>down</span>.
+He saw a spotted <span>cow</span> look up with a scowl,
+As a wise feathered <span>owl</span> started to growl!</p>
+                        </div>
+
+                        <div class="game-section">
+                            <div class="game-header">
+                                <h3 style="margin:0; color:var(--dark);">🎮 Step 2: Spell the Missing Part! (10 Questions)</h3>
+                                <button class="reset-btn" onclick="resetQuiz(&#39;diphthongs&#39;, &#39;ow&#39;)">🔄 Reset Quiz</button>
+                            </div>
+                            <div class="quiz-container">
+                            <div class="quiz-item" id="q-box-diphthongs-ow-0">
+                                <div class="quiz-emoji">🐮</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-ow-0">C _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-ow-0" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;ow&#39;, 0, &#39;ow&#39;, &#39;cow&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-ow-1">
+                                <div class="quiz-emoji">🦉</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-ow-1">O _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-ow-1" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;ow&#39;, 1, &#39;wl&#39;, &#39;owl&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-ow-2">
+                                <div class="quiz-emoji">🤡</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-ow-2">CL _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-ow-2" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;ow&#39;, 2, &#39;own&#39;, &#39;clown&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-ow-3">
+                                <div class="quiz-emoji">👑</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-ow-3">CR _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-ow-3" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;ow&#39;, 3, &#39;own&#39;, &#39;crown&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-ow-4">
+                                <div class="quiz-emoji">🏙️</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-ow-4">T _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-ow-4" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;ow&#39;, 4, &#39;own&#39;, &#39;town&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-ow-5">
+                                <div class="quiz-emoji">👇</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-ow-5">D _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-ow-5" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;ow&#39;, 5, &#39;own&#39;, &#39;down&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-ow-6">
+                                <div class="quiz-emoji">🟫</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-ow-6">BR _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-ow-6" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;ow&#39;, 6, &#39;own&#39;, &#39;brown&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-ow-7">
+                                <div class="quiz-emoji">👗</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-ow-7">G _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-ow-7" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;ow&#39;, 7, &#39;own&#39;, &#39;gown&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-ow-8">
+                                <div class="quiz-emoji">🦁</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-ow-8">GR _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-ow-8" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;ow&#39;, 8, &#39;owl&#39;, &#39;growl&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-diphthongs-ow-9">
+                                <div class="quiz-emoji">🚜</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-diphthongs-ow-9">P _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-diphthongs-ow-9" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;diphthongs&#39;, &#39;ow&#39;, 9, &#39;low&#39;, &#39;plow&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="celebration-box" id="victory-diphthongs-ow">
+                            <h2 style="color:var(--success); margin:0 0 10px 0;">🌟 FANTASTIC! 🌟</h2>
+                            <img src="./index_files/happy-child-clapping-hands-in-flat-cartoon-style-illustration-vector.jpg" class="clapping-boy-img" alt="Good job clapping cartoon boy graphic animation"><br>
+                            <p style="font-size:1.5rem; font-weight:bold; color:var(--dark); margin:10px 0 0 0;">"Good job! You completed all 10 words!"</p>
+                        </div>
+                    </div><div class="pane " id="pane-soft-sounds-soft_c">
+                        <div class="sound-banner" onclick="speakSound(&#39;ss&#39;, false)">
+                            <h2>Target Sound: soft c</h2>
+                            <p>👉 Click to listen to the sound pronunciation!</p>
+                        </div>
+
+                        <h3 style="color:var(--secondary); border-bottom:2px dashed #DDD; padding-bottom:5px;">🎈 Step 1: Click &amp; Read Aloud!</h3>
+                        <div class="word-grid">
+                            <div class="word-card" onclick="speakSound(&#39;city&#39;, true)">
+                                <div class="emoji">🏙️</div>
+                                <div>
+                                    <h3>city</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;ice&#39;, true)">
+                                <div class="emoji">🧊</div>
+                                <div>
+                                    <h3>ice</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;face&#39;, true)">
+                                <div class="emoji">😀</div>
+                                <div>
+                                    <h3>face</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;rice&#39;, true)">
+                                <div class="emoji">🍚</div>
+                                <div>
+                                    <h3>rice</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;circle&#39;, true)">
+                                <div class="emoji">⭕</div>
+                                <div>
+                                    <h3>circle</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;pencil&#39;, true)">
+                                <div class="emoji">✏️</div>
+                                <div>
+                                    <h3>pencil</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;juice&#39;, true)">
+                                <div class="emoji">🧃</div>
+                                <div>
+                                    <h3>juice</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;mice&#39;, true)">
+                                <div class="emoji">🐭</div>
+                                <div>
+                                    <h3>mice</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;space&#39;, true)">
+                                <div class="emoji">🚀</div>
+                                <div>
+                                    <h3>space</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;dance&#39;, true)">
+                                <div class="emoji">💃</div>
+                                <div>
+                                    <h3>dance</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="story-box" onclick="readStoryText(`In the big busy &lt;span&gt;city&lt;/span&gt;, out on the &lt;span&gt;space&lt;/span&gt;,
+A happy little astronaut had a smile on his &lt;span&gt;face&lt;/span&gt;.
+He ate bowls of &lt;span&gt;rice&lt;/span&gt;, cold sweet &lt;span&gt;juice&lt;/span&gt;, and &lt;span&gt;ice&lt;/span&gt;,
+While drawing a big &lt;span&gt;circle&lt;/span&gt; with a &lt;span&gt;pencil&lt;/span&gt; for some mice!`)">
+                            <h4>📚 Sound Story Poem (Click to hear read-aloud!)</h4>
+                            <p class="story-text">In the big busy <span>city</span>, out on the <span>space</span>,
+A happy little astronaut had a smile on his <span>face</span>.
+He ate bowls of <span>rice</span>, cold sweet <span>juice</span>, and <span>ice</span>,
+While drawing a big <span>circle</span> with a <span>pencil</span> for some mice!</p>
+                        </div>
+
+                        <div class="game-section">
+                            <div class="game-header">
+                                <h3 style="margin:0; color:var(--dark);">🎮 Step 2: Spell the Missing Part! (10 Questions)</h3>
+                                <button class="reset-btn" onclick="resetQuiz(&#39;soft-sounds&#39;, &#39;soft c&#39;)">🔄 Reset Quiz</button>
+                            </div>
+                            <div class="quiz-container">
+                            <div class="quiz-item" id="q-box-soft-sounds-soft_c-0">
+                                <div class="quiz-emoji">🏙️</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-soft-sounds-soft_c-0">CI _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-soft-sounds-soft_c-0" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;soft-sounds&#39;, &#39;soft c&#39;, 0, &#39;ty&#39;, &#39;city&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-soft-sounds-soft_c-1">
+                                <div class="quiz-emoji">🧊</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-soft-sounds-soft_c-1">I _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-soft-sounds-soft_c-1" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;soft-sounds&#39;, &#39;soft c&#39;, 1, &#39;ce&#39;, &#39;ice&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-soft-sounds-soft_c-2">
+                                <div class="quiz-emoji">😀</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-soft-sounds-soft_c-2">FA _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-soft-sounds-soft_c-2" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;soft-sounds&#39;, &#39;soft c&#39;, 2, &#39;ce&#39;, &#39;face&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-soft-sounds-soft_c-3">
+                                <div class="quiz-emoji">🍚</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-soft-sounds-soft_c-3">RI _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-soft-sounds-soft_c-3" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;soft-sounds&#39;, &#39;soft c&#39;, 3, &#39;ce&#39;, &#39;rice&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-soft-sounds-soft_c-4">
+                                <div class="quiz-emoji">⭕</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-soft-sounds-soft_c-4">CI _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-soft-sounds-soft_c-4" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;soft-sounds&#39;, &#39;soft c&#39;, 4, &#39;rcle&#39;, &#39;circle&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-soft-sounds-soft_c-5">
+                                <div class="quiz-emoji">✏️</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-soft-sounds-soft_c-5">PE _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-soft-sounds-soft_c-5" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;soft-sounds&#39;, &#39;soft c&#39;, 5, &#39;ncil&#39;, &#39;pencil&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-soft-sounds-soft_c-6">
+                                <div class="quiz-emoji">🧃</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-soft-sounds-soft_c-6">JU _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-soft-sounds-soft_c-6" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;soft-sounds&#39;, &#39;soft c&#39;, 6, &#39;ice&#39;, &#39;juice&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-soft-sounds-soft_c-7">
+                                <div class="quiz-emoji">🐭</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-soft-sounds-soft_c-7">MI _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-soft-sounds-soft_c-7" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;soft-sounds&#39;, &#39;soft c&#39;, 7, &#39;ce&#39;, &#39;mice&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-soft-sounds-soft_c-8">
+                                <div class="quiz-emoji">🚀</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-soft-sounds-soft_c-8">SP _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-soft-sounds-soft_c-8" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;soft-sounds&#39;, &#39;soft c&#39;, 8, &#39;ace&#39;, &#39;space&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-soft-sounds-soft_c-9">
+                                <div class="quiz-emoji">💃</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-soft-sounds-soft_c-9">DA _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-soft-sounds-soft_c-9" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;soft-sounds&#39;, &#39;soft c&#39;, 9, &#39;nce&#39;, &#39;dance&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="celebration-box" id="victory-soft-sounds-soft_c">
+                            <h2 style="color:var(--success); margin:0 0 10px 0;">🌟 FANTASTIC! 🌟</h2>
+                            <img src="./index_files/happy-child-clapping-hands-in-flat-cartoon-style-illustration-vector.jpg" class="clapping-boy-img" alt="Good job clapping cartoon boy graphic animation"><br>
+                            <p style="font-size:1.5rem; font-weight:bold; color:var(--dark); margin:10px 0 0 0;">"Good job! You completed all 10 words!"</p>
+                        </div>
+                    </div><div class="pane " id="pane-soft-sounds-soft_g">
+                        <div class="sound-banner" onclick="speakSound(&#39;j&#39;, false)">
+                            <h2>Target Sound: soft g</h2>
+                            <p>👉 Click to listen to the sound pronunciation!</p>
+                        </div>
+
+                        <h3 style="color:var(--secondary); border-bottom:2px dashed #DDD; padding-bottom:5px;">🎈 Step 1: Click &amp; Read Aloud!</h3>
+                        <div class="word-grid">
+                            <div class="word-card" onclick="speakSound(&#39;gem&#39;, true)">
+                                <div class="emoji">💎</div>
+                                <div>
+                                    <h3>gem</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;giant&#39;, true)">
+                                <div class="emoji">👹</div>
+                                <div>
+                                    <h3>giant</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;cage&#39;, true)">
+                                <div class="emoji">⛓️</div>
+                                <div>
+                                    <h3>cage</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;giraffe&#39;, true)">
+                                <div class="emoji">🦒</div>
+                                <div>
+                                    <h3>giraffe</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;orange&#39;, true)">
+                                <div class="emoji">🍊</div>
+                                <div>
+                                    <h3>orange</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;badge&#39;, true)">
+                                <div class="emoji">🏅</div>
+                                <div>
+                                    <h3>badge</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;stage&#39;, true)">
+                                <div class="emoji">🎭</div>
+                                <div>
+                                    <h3>stage</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;page&#39;, true)">
+                                <div class="emoji">📄</div>
+                                <div>
+                                    <h3>page</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;sponge&#39;, true)">
+                                <div class="emoji">🧽</div>
+                                <div>
+                                    <h3>sponge</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;magic&#39;, true)">
+                                <div class="emoji">🪄</div>
+                                <div>
+                                    <h3>magic</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="story-box" onclick="readStoryText(`The friendly &lt;span&gt;giraffe&lt;/span&gt; wore a badge made of gold,
+He was a nice &lt;span&gt;giant&lt;/span&gt;, or so I&#39;ve been told.
+He performed &lt;span&gt;magic&lt;/span&gt; tricks on a wooden &lt;span&gt;stage&lt;/span&gt;,
+And ate an &lt;span&gt;orange&lt;/span&gt; while looking at a book &lt;span&gt;page&lt;/span&gt;!`)">
+                            <h4>📚 Sound Story Poem (Click to hear read-aloud!)</h4>
+                            <p class="story-text">The friendly <span>giraffe</span> wore a badge made of gold,
+He was a nice <span>giant</span>, or so I've been told.
+He performed <span>magic</span> tricks on a wooden <span>stage</span>,
+And ate an <span>orange</span> while looking at a book <span>page</span>!</p>
+                        </div>
+
+                        <div class="game-section">
+                            <div class="game-header">
+                                <h3 style="margin:0; color:var(--dark);">🎮 Step 2: Spell the Missing Part! (10 Questions)</h3>
+                                <button class="reset-btn" onclick="resetQuiz(&#39;soft-sounds&#39;, &#39;soft g&#39;)">🔄 Reset Quiz</button>
+                            </div>
+                            <div class="quiz-container">
+                            <div class="quiz-item" id="q-box-soft-sounds-soft_g-0">
+                                <div class="quiz-emoji">💎</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-soft-sounds-soft_g-0">G _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-soft-sounds-soft_g-0" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;soft-sounds&#39;, &#39;soft g&#39;, 0, &#39;em&#39;, &#39;gem&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-soft-sounds-soft_g-1">
+                                <div class="quiz-emoji">👹</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-soft-sounds-soft_g-1">GI _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-soft-sounds-soft_g-1" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;soft-sounds&#39;, &#39;soft g&#39;, 1, &#39;ant&#39;, &#39;giant&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-soft-sounds-soft_g-2">
+                                <div class="quiz-emoji">⛓️</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-soft-sounds-soft_g-2">CA _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-soft-sounds-soft_g-2" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;soft-sounds&#39;, &#39;soft g&#39;, 2, &#39;ge&#39;, &#39;cage&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-soft-sounds-soft_g-3">
+                                <div class="quiz-emoji">🦒</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-soft-sounds-soft_g-3">GI _ _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-soft-sounds-soft_g-3" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;soft-sounds&#39;, &#39;soft g&#39;, 3, &#39;raffe&#39;, &#39;giraffe&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-soft-sounds-soft_g-4">
+                                <div class="quiz-emoji">🍊</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-soft-sounds-soft_g-4">OR _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-soft-sounds-soft_g-4" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;soft-sounds&#39;, &#39;soft g&#39;, 4, &#39;ange&#39;, &#39;orange&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-soft-sounds-soft_g-5">
+                                <div class="quiz-emoji">🏅</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-soft-sounds-soft_g-5">BA _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-soft-sounds-soft_g-5" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;soft-sounds&#39;, &#39;soft g&#39;, 5, &#39;dge&#39;, &#39;badge&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-soft-sounds-soft_g-6">
+                                <div class="quiz-emoji">🎭</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-soft-sounds-soft_g-6">ST _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-soft-sounds-soft_g-6" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;soft-sounds&#39;, &#39;soft g&#39;, 6, &#39;age&#39;, &#39;stage&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-soft-sounds-soft_g-7">
+                                <div class="quiz-emoji">📄</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-soft-sounds-soft_g-7">P _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-soft-sounds-soft_g-7" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;soft-sounds&#39;, &#39;soft g&#39;, 7, &#39;age&#39;, &#39;page&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-soft-sounds-soft_g-8">
+                                <div class="quiz-emoji">🧽</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-soft-sounds-soft_g-8">SP _ _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-soft-sounds-soft_g-8" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;soft-sounds&#39;, &#39;soft g&#39;, 8, &#39;onge&#39;, &#39;sponge&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-soft-sounds-soft_g-9">
+                                <div class="quiz-emoji">🪄</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-soft-sounds-soft_g-9">MA _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-soft-sounds-soft_g-9" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;soft-sounds&#39;, &#39;soft g&#39;, 9, &#39;gic&#39;, &#39;magic&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="celebration-box" id="victory-soft-sounds-soft_g">
+                            <h2 style="color:var(--success); margin:0 0 10px 0;">🌟 FANTASTIC! 🌟</h2>
+                            <img src="./index_files/happy-child-clapping-hands-in-flat-cartoon-style-illustration-vector.jpg" class="clapping-boy-img" alt="Good job clapping cartoon boy graphic animation"><br>
+                            <p style="font-size:1.5rem; font-weight:bold; color:var(--dark); margin:10px 0 0 0;">"Good job! You completed all 10 words!"</p>
+                        </div>
+                    </div><div class="pane " id="pane-consonant-sounds-sh">
+                        <div class="sound-banner" onclick="speakSound(&#39;shh&#39;, false)">
+                            <h2>Target Sound: sh</h2>
+                            <p>👉 Click to listen to the sound pronunciation!</p>
+                        </div>
+
+                        <h3 style="color:var(--secondary); border-bottom:2px dashed #DDD; padding-bottom:5px;">🎈 Step 1: Click &amp; Read Aloud!</h3>
+                        <div class="word-grid">
+                            <div class="word-card" onclick="speakSound(&#39;ship&#39;, true)">
+                                <div class="emoji">🚢</div>
+                                <div>
+                                    <h3><span>sh</span>ip</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;shop&#39;, true)">
+                                <div class="emoji">🛍️</div>
+                                <div>
+                                    <h3><span>sh</span>op</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;shell&#39;, true)">
+                                <div class="emoji">🐚</div>
+                                <div>
+                                    <h3><span>sh</span>ell</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;shoe&#39;, true)">
+                                <div class="emoji">👟</div>
+                                <div>
+                                    <h3><span>sh</span>oe</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;sheep&#39;, true)">
+                                <div class="emoji">🐑</div>
+                                <div>
+                                    <h3><span>sh</span>eep</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;fish&#39;, true)">
+                                <div class="emoji">🐠</div>
+                                <div>
+                                    <h3>fi<span>sh</span></h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;brush&#39;, true)">
+                                <div class="emoji">🖌️</div>
+                                <div>
+                                    <h3>bru<span>sh</span></h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;shark&#39;, true)">
+                                <div class="emoji">🦈</div>
+                                <div>
+                                    <h3><span>sh</span>ark</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;shirt&#39;, true)">
+                                <div class="emoji">👕</div>
+                                <div>
+                                    <h3><span>sh</span>irt</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;dish&#39;, true)">
+                                <div class="emoji">🍽️</div>
+                                <div>
+                                    <h3>di<span>sh</span></h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="story-box" onclick="readStoryText(`The big ocean &lt;span&gt;ship&lt;/span&gt; sailed fast and free,
+Past a fluffy white &lt;span&gt;sheep&lt;/span&gt; looking at the sea.
+We found a shiny &lt;span&gt;shell&lt;/span&gt; next to a blue &lt;span&gt;fish&lt;/span&gt;,
+And put it by a &lt;span&gt;shoe&lt;/span&gt; onto a pretty dinner &lt;span&gt;dish&lt;/span&gt;!`)">
+                            <h4>📚 Sound Story Poem (Click to hear read-aloud!)</h4>
+                            <p class="story-text">The big ocean <span>ship</span> sailed fast and free,
+Past a fluffy white <span>sheep</span> looking at the sea.
+We found a shiny <span>shell</span> next to a blue <span>fish</span>,
+And put it by a <span>shoe</span> onto a pretty dinner <span>dish</span>!</p>
+                        </div>
+
+                        <div class="game-section">
+                            <div class="game-header">
+                                <h3 style="margin:0; color:var(--dark);">🎮 Step 2: Spell the Missing Part! (10 Questions)</h3>
+                                <button class="reset-btn" onclick="resetQuiz(&#39;consonant-sounds&#39;, &#39;sh&#39;)">🔄 Reset Quiz</button>
+                            </div>
+                            <div class="quiz-container">
+                            <div class="quiz-item" id="q-box-consonant-sounds-sh-0">
+                                <div class="quiz-emoji">🚢</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-consonant-sounds-sh-0">SH _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-consonant-sounds-sh-0" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;consonant-sounds&#39;, &#39;sh&#39;, 0, &#39;ip&#39;, &#39;ship&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-consonant-sounds-sh-1">
+                                <div class="quiz-emoji">🛍️</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-consonant-sounds-sh-1">SH _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-consonant-sounds-sh-1" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;consonant-sounds&#39;, &#39;sh&#39;, 1, &#39;op&#39;, &#39;shop&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-consonant-sounds-sh-2">
+                                <div class="quiz-emoji">🐚</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-consonant-sounds-sh-2">SH _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-consonant-sounds-sh-2" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;consonant-sounds&#39;, &#39;sh&#39;, 2, &#39;ell&#39;, &#39;shell&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-consonant-sounds-sh-3">
+                                <div class="quiz-emoji">👟</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-consonant-sounds-sh-3">SH _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-consonant-sounds-sh-3" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;consonant-sounds&#39;, &#39;sh&#39;, 3, &#39;oe&#39;, &#39;shoe&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-consonant-sounds-sh-4">
+                                <div class="quiz-emoji">🐑</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-consonant-sounds-sh-4">SH _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-consonant-sounds-sh-4" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;consonant-sounds&#39;, &#39;sh&#39;, 4, &#39;eep&#39;, &#39;sheep&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-consonant-sounds-sh-5">
+                                <div class="quiz-emoji">🐠</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-consonant-sounds-sh-5">FI _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-consonant-sounds-sh-5" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;consonant-sounds&#39;, &#39;sh&#39;, 5, &#39;sh&#39;, &#39;fish&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-consonant-sounds-sh-6">
+                                <div class="quiz-emoji">🖌️</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-consonant-sounds-sh-6">BR _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-consonant-sounds-sh-6" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;consonant-sounds&#39;, &#39;sh&#39;, 6, &#39;ush&#39;, &#39;brush&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-consonant-sounds-sh-7">
+                                <div class="quiz-emoji">🦈</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-consonant-sounds-sh-7">SH _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-consonant-sounds-sh-7" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;consonant-sounds&#39;, &#39;sh&#39;, 7, &#39;ark&#39;, &#39;shark&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-consonant-sounds-sh-8">
+                                <div class="quiz-emoji">👕</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-consonant-sounds-sh-8">SH _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-consonant-sounds-sh-8" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;consonant-sounds&#39;, &#39;sh&#39;, 8, &#39;irt&#39;, &#39;shirt&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-consonant-sounds-sh-9">
+                                <div class="quiz-emoji">🍽️</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-consonant-sounds-sh-9">DI _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-consonant-sounds-sh-9" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;consonant-sounds&#39;, &#39;sh&#39;, 9, &#39;sh&#39;, &#39;dish&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="celebration-box" id="victory-consonant-sounds-sh">
+                            <h2 style="color:var(--success); margin:0 0 10px 0;">🌟 FANTASTIC! 🌟</h2>
+                            <img src="./index_files/happy-child-clapping-hands-in-flat-cartoon-style-illustration-vector.jpg" class="clapping-boy-img" alt="Good job clapping cartoon boy graphic animation"><br>
+                            <p style="font-size:1.5rem; font-weight:bold; color:var(--dark); margin:10px 0 0 0;">"Good job! You completed all 10 words!"</p>
+                        </div>
+                    </div><div class="pane " id="pane-consonant-sounds-zh">
+                        <div class="sound-banner" onclick="speakSound(&#39;zhh&#39;, false)">
+                            <h2>Target Sound: zh</h2>
+                            <p>👉 Click to listen to the sound pronunciation!</p>
+                        </div>
+
+                        <h3 style="color:var(--secondary); border-bottom:2px dashed #DDD; padding-bottom:5px;">🎈 Step 1: Click &amp; Read Aloud!</h3>
+                        <div class="word-grid">
+                            <div class="word-card" onclick="speakSound(&#39;treasure&#39;, true)">
+                                <div class="emoji">🏴‍☠️</div>
+                                <div>
+                                    <h3>treasure</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;measure&#39;, true)">
+                                <div class="emoji">📏</div>
+                                <div>
+                                    <h3>measure</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;television&#39;, true)">
+                                <div class="emoji">📺</div>
+                                <div>
+                                    <h3>television</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;explosion&#39;, true)">
+                                <div class="emoji">💥</div>
+                                <div>
+                                    <h3>explosion</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;pleasure&#39;, true)">
+                                <div class="emoji">✨</div>
+                                <div>
+                                    <h3>pleasure</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;visual&#39;, true)">
+                                <div class="emoji">👀</div>
+                                <div>
+                                    <h3>visual</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;collision&#39;, true)">
+                                <div class="emoji">💥</div>
+                                <div>
+                                    <h3>collision</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;conclusion&#39;, true)">
+                                <div class="emoji">📝</div>
+                                <div>
+                                    <h3>conclusion</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;division&#39;, true)">
+                                <div class="emoji">➗</div>
+                                <div>
+                                    <h3>division</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        
+                            <div class="word-card" onclick="speakSound(&#39;leasure&#39;, true)">
+                                <div class="emoji">🏖️</div>
+                                <div>
+                                    <h3>leasure</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="story-box" onclick="readStoryText(`It&#39;s a grand &lt;span&gt;pleasure&lt;/span&gt; to search for hidden keys,
+To open a &lt;span&gt;treasure&lt;/span&gt; box under the trees.
+We check the &lt;span&gt;visual&lt;/span&gt; map with standard &lt;span&gt;measure&lt;/span&gt;,
+While watching a show on the &lt;span&gt;television&lt;/span&gt; at leisure!`)">
+                            <h4>📚 Sound Story Poem (Click to hear read-aloud!)</h4>
+                            <p class="story-text">It's a grand <span>pleasure</span> to search for hidden keys,
+To open a <span>treasure</span> box under the trees.
+We check the <span>visual</span> map with standard <span>measure</span>,
+While watching a show on the <span>television</span> at leisure!</p>
+                        </div>
+
+                        <div class="game-section">
+                            <div class="game-header">
+                                <h3 style="margin:0; color:var(--dark);">🎮 Step 2: Spell the Missing Part! (10 Questions)</h3>
+                                <button class="reset-btn" onclick="resetQuiz(&#39;consonant-sounds&#39;, &#39;zh&#39;)">🔄 Reset Quiz</button>
+                            </div>
+                            <div class="quiz-container">
+                            <div class="quiz-item" id="q-box-consonant-sounds-zh-0">
+                                <div class="quiz-emoji">🏴‍☠️</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-consonant-sounds-zh-0">TR _ _ _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-consonant-sounds-zh-0" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;consonant-sounds&#39;, &#39;zh&#39;, 0, &#39;easure&#39;, &#39;treasure&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-consonant-sounds-zh-1">
+                                <div class="quiz-emoji">📏</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-consonant-sounds-zh-1">ME _ _ _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-consonant-sounds-zh-1" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;consonant-sounds&#39;, &#39;zh&#39;, 1, &#39;asure&#39;, &#39;measure&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-consonant-sounds-zh-2">
+                                <div class="quiz-emoji">📺</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-consonant-sounds-zh-2">TE _ _ _ _ _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-consonant-sounds-zh-2" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;consonant-sounds&#39;, &#39;zh&#39;, 2, &#39;levision&#39;, &#39;television&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-consonant-sounds-zh-3">
+                                <div class="quiz-emoji">💥</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-consonant-sounds-zh-3">EX _ _ _ _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-consonant-sounds-zh-3" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;consonant-sounds&#39;, &#39;zh&#39;, 3, &#39;plosion&#39;, &#39;explosion&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-consonant-sounds-zh-4">
+                                <div class="quiz-emoji">✨</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-consonant-sounds-zh-4">PL _ _ _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-consonant-sounds-zh-4" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;consonant-sounds&#39;, &#39;zh&#39;, 4, &#39;easure&#39;, &#39;pleasure&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-consonant-sounds-zh-5">
+                                <div class="quiz-emoji">👀</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-consonant-sounds-zh-5">VI _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-consonant-sounds-zh-5" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;consonant-sounds&#39;, &#39;zh&#39;, 5, &#39;sual&#39;, &#39;visual&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-consonant-sounds-zh-6">
+                                <div class="quiz-emoji">💥</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-consonant-sounds-zh-6">CO _ _ _ _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-consonant-sounds-zh-6" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;consonant-sounds&#39;, &#39;zh&#39;, 6, &#39;llision&#39;, &#39;collision&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-consonant-sounds-zh-7">
+                                <div class="quiz-emoji">📝</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-consonant-sounds-zh-7">CO _ _ _ _ _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-consonant-sounds-zh-7" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;consonant-sounds&#39;, &#39;zh&#39;, 7, &#39;nclusion&#39;, &#39;conclusion&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-consonant-sounds-zh-8">
+                                <div class="quiz-emoji">➗</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-consonant-sounds-zh-8">DI _ _ _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-consonant-sounds-zh-8" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;consonant-sounds&#39;, &#39;zh&#39;, 8, &#39;vision&#39;, &#39;division&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="quiz-item" id="q-box-consonant-sounds-zh-9">
+                                <div class="quiz-emoji">🏖️</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-consonant-sounds-zh-9">LE _ _ _ _ _</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-consonant-sounds-zh-9" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer(&#39;consonant-sounds&#39;, &#39;zh&#39;, 9, &#39;isure&#39;, &#39;leasure&#39;)">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="celebration-box" id="victory-consonant-sounds-zh">
+                            <h2 style="color:var(--success); margin:0 0 10px 0;">🌟 FANTASTIC! 🌟</h2>
+                            <img src="./index_files/happy-child-clapping-hands-in-flat-cartoon-style-illustration-vector.jpg" class="clapping-boy-img" alt="Good job clapping cartoon boy graphic animation"><br>
+                            <p style="font-size:1.5rem; font-weight:bold; color:var(--dark); margin:10px 0 0 0;">"Good job! You completed all 10 words!"</p>
+                        </div>
+                    </div></div>
+
+    <script>
+        // Track the actively selected layout targets
+        let currentCategoryGlobal = "diphthongs";
+        let currentSoundGlobal = "ir";
+
+        const phonicsDatabase = {
+            "diphthongs": {
+                "ir": {
+                    pronounce: "er",
+                    poem: "A little <span>girl</span> saw a blue <span>bird</span>,\nIt made the prettiest sound she ever heard!\nShe did a happy <span>twirl</span> in her new <span>skirt</span>,\nAnd dropped her yummy cookie in the <span>dirt</span>!",
+                    words: [
+                        { word: "bird", display: "B _ _ _", missing: "ird", emoji: "🐦" },
+                        { word: "girl", display: "G _ _ _", missing: "irl", emoji: "👧" },
+                        { word: "shirt", display: "SH _ _ _", missing: "irt", emoji: "👕" },
+                        { word: "skirt", display: "SK _ _ _", missing: "irt", emoji: "👗" },
+                        { word: "twirl", display: "TW _ _ _", missing: "irl", emoji: "💃" },
+                        { word: "third", display: "TH _ _ _", missing: "ird", emoji: "🥉" },
+                        { word: "circle", display: "CI _ _ _ _", missing: "rcle", emoji: "⭕" },
+                        { word: "dirt", display: "D _ _ _", missing: "irt", emoji: "🌱" },
+                        { word: "chirp", display: "CH _ _ _", missing: "irp", emoji: "🐤" },
+                        { word: "first", display: "F _ _ _ _", missing: "irst", emoji: "🥇" }
+                    ]
+                },
+                "or": {
+                    pronounce: "or",
+                    poem: "The hungry <span>horse</span> wanted some sweet <span>corn</span>,\nHe walked past a castle with a loud horn!\nA heavy <span>storm</span> blew over the old <span>fort</span>,\nWhile a big white <span>stork</span> landed at the port!",
+                    words: [
+                        { word: "fork", display: "F _ _ _", missing: "ork", emoji: "🍴" },
+                        { word: "corn", display: "C _ _ _", missing: "orn", emoji: "🌽" },
+                        { word: "horn", display: "H _ _ _", missing: "orn", emoji: "📯" },
+                        { word: "storm", display: "ST _ _ _ _", missing: "orm", emoji: "⛈️" },
+                        { word: "horse", display: "H _ _ _ _", missing: "orse", emoji: "🐴" },
+                        { word: "fort", display: "F _ _ _", missing: "ort", emoji: "🏰" },
+                        { word: "torch", display: "TO _ _ _", missing: "rch", emoji: "🔦" },
+                        { word: "stork", display: "ST _ _ _ _", missing: "ork", emoji: "🦤" },
+                        { word: "cork", display: "C _ _ _", missing: "ork", emoji: "🍾" },
+                        { word: "lord", display: "L _ _ _", missing: "ord", emoji: "👑" }
+                    ]
+                },
+                "air": {
+                    pronounce: "air",
+                    poem: "The pretty <span>fairy</span> with shiny <span>hair</span>,\nSat down contentedly on a wooden <span>chair</span>.\nShe saw an <span>airplane</span> high up in the <span>air</span>,\nFlying all the way to the colorful summer <span>fair</span>!",
+                    words: [
+                        { word: "chair", display: "CH _ _ _", missing: "air", emoji: "🪑" },
+                        { word: "hair", display: "H _ _ _", missing: "air", emoji: "💇" },
+                        { word: "fair", display: "F _ _ _", missing: "air", emoji: "🎡" },
+                        { word: "pair", display: "P _ _ _", missing: "air", emoji: "🧦" },
+                        { word: "stair", display: "ST _ _ _ _", missing: "air", emoji: "🪜" },
+                        { word: "airplane", display: "AI _ _ _ _ _ _", missing: "rplane", emoji: "✈️" },
+                        { word: "dairy", display: "DA _ _ _", missing: "iry", emoji: "🥛" },
+                        { word: "fairy", display: "FA _ _ _", missing: "iry", emoji: "🧚" },
+                        { word: "repair", display: "RE _ _ _ _ _", missing: "pair", emoji: "🛠️" },
+                        { word: "flair", display: "FL _ _ _ _", missing: "air", emoji: "✨" }
+                    ]
+                },
+                "oy": {
+                    pronounce: "oy",
+                    poem: "A happy little <span>boy</span> found a brand new <span>toy</span>,\nHe jumped up and down, singing out with <span>joy</span>!\nHe found an <span>oyster</span> down by the bay,\nAnd didn't want to <span>annoy</span> it, so he ran to play!",
+                    words: [
+                        { word: "boy", display: "B _ _", missing: "oy", emoji: "👦" },
+                        { word: "toy", display: "T _ _", missing: "oy", emoji: "🧸" },
+                        { word: "joy", display: "J _ _", missing: "oy", emoji: "😄" },
+                        { word: "oyster", display: "OY _ _ _ _", missing: "ster", emoji: "🦪" },
+                        { word: "soy", display: "S _ _", missing: "oy", emoji: "🍶" },
+                        { word: "coy", display: "C _ _", missing: "oy", emoji: "🐟" },
+                        { word: "annoy", display: "AN _ _ _ _", missing: "noy", emoji: "😫" },
+                        { word: "decoy", display: "DE _ _ _ _", missing: "coy", emoji: "🦆" },
+                        { word: "royal", display: "RO _ _ _", missing: "yal", emoji: "👑" },
+                        { word: "employ", display: "EM _ _ _ _ _", missing: "ploy", emoji: "💼" }
+                    ]
+                },
+                "ar": {
+                    pronounce: "ar",
+                    poem: "We drove in the <span>car</span> to visit the <span>farm</span>,\nWhere a big friendly sheepdog lived in the barn.\nWe looked at a <span>star</span> high over the <span>park</span>,\nAnd watched a scary <span>shark</span> swimming in the dark!",
+                    words: [
+                        { word: "car", display: "C _ _", missing: "ar", emoji: "🚗" },
+                        { word: "star", display: "ST _ _ _", missing: "ar", emoji: "⭐" },
+                        { word: "park", display: "P _ _ _", missing: "ark", emoji: "🛝" },
+                        { word: "farm", display: "F _ _ _", missing: "arm", emoji: "🚜" },
+                        { word: "bark", display: "B _ _ _", missing: "ark", emoji: "🐶" },
+                        { word: "shark", display: "SH _ _ _ _", missing: "ark", emoji: "🦈" },
+                        { word: "yarn", display: "Y _ _ _", missing: "arn", emoji: "🧶" },
+                        { word: "card", display: "C _ _ _", missing: "ard", emoji: "🃏" },
+                        { word: "cart", display: "C _ _ _", missing: "art", emoji: "🛒" },
+                        { word: "harp", display: "H _ _ _", missing: "arp", emoji: "🪕" }
+                    ]
+                },
+                "ow": {
+                    pronounce: "oww",
+                    poem: "Out in the <span>town</span>, a funny circus <span>clown</span>,\nWore a shiny gold <span>crown</span> and walked up and <span>down</span>.\nHe saw a spotted <span>cow</span> look up with a scowl,\nAs a wise feathered <span>owl</span> started to growl!",
+                    words: [
+                        { word: "cow", display: "C _ _", missing: "ow", emoji: "🐮" },
+                        { word: "owl", display: "O _ _", missing: "wl", emoji: "🦉" },
+                        { word: "clown", display: "CL _ _ _ _", missing: "own", emoji: "🤡" },
+                        { word: "crown", display: "CR _ _ _ _", missing: "own", emoji: "👑" },
+                        { word: "town", display: "T _ _ _", missing: "own", emoji: "🏙️" },
+                        { word: "down", display: "D _ _ _", missing: "own", emoji: "👇" },
+                        { word: "brown", display: "BR _ _ _ _", missing: "own", emoji: "🟫" },
+                        { word: "gown", display: "G _ _ _", missing: "own", emoji: "👗" },
+                        { word: "growl", display: "GR _ _ _ _", missing: "owl", emoji: "🦁" },
+                        { word: "plow", display: "P _ _ _", missing: "low", emoji: "🚜" }
+                    ]
+                }
+            },
+            "soft-sounds": {
+                "soft c": {
+                    pronounce: "ss",
+                    poem: "In the big busy <span>city</span>, out on the <span>space</span>,\nA happy little astronaut had a smile on his <span>face</span>.\nHe ate bowls of <span>rice</span>, cold sweet <span>juice</span>, and <span>ice</span>,\nWhile drawing a big <span>circle</span> with a <span>pencil</span> for some mice!",
+                    words: [
+                        { word: "city", display: "CI _ _", missing: "ty", emoji: "🏙️" },
+                        { word: "ice", display: "I _ _", missing: "ce", emoji: "🧊" },
+                        { word: "face", display: "FA _ _", missing: "ce", emoji: "😀" },
+                        { word: "rice", display: "RI _ _", missing: "ce", emoji: "🍚" },
+                        { word: "circle", display: "CI _ _ _ _", missing: "rcle", emoji: "⭕" },
+                        { word: "pencil", display: "PE _ _ _ _", missing: "ncil", emoji: "✏️" },
+                        { word: "juice", display: "JU _ _ _ _", missing: "ice", emoji: "🧃" },
+                        { word: "mice", display: "MI _ _", missing: "ce", emoji: "🐭" },
+                        { word: "space", display: "SP _ _ _ _", missing: "ace", emoji: "🚀" },
+                        { word: "dance", display: "DA _ _ _ _", missing: "nce", emoji: "💃" }
+                    ]
+                },
+                "soft g": {
+                    pronounce: "j",
+                    poem: "The friendly <span>giraffe</span> wore a badge made of gold,\nHe was a nice <span>giant</span>, or so I've been told.\nHe performed <span>magic</span> tricks on a wooden <span>stage</span>,\nAnd ate an <span>orange</span> while looking at a book <span>page</span>!",
+                    words: [
+                        { word: "gem", display: "G _ _", missing: "em", emoji: "💎" },
+                        { word: "giant", display: "GI _ _ _", missing: "ant", emoji: "👹" },
+                        { word: "cage", display: "CA _ _", missing: "ge", emoji: "⛓️" },
+                        { word: "giraffe", display: "GI _ _ _ _ _", missing: "raffe", emoji: "🦒" },
+                        { word: "orange", display: "OR _ _ _ _", missing: "ange", emoji: "🍊" },
+                        { word: "badge", display: "BA _ _ _", missing: "dge", emoji: "🏅" },
+                        { word: "stage", display: "ST _ _ _ _", missing: "age", emoji: "🎭" },
+                        { word: "page", display: "P _ _ _", missing: "age", emoji: "📄" },
+                        { word: "sponge", display: "SP _ _ _ _ _", missing: "onge", emoji: "🧽" },
+                        { word: "magic", display: "MA _ _ _", missing: "gic", emoji: "🪄" }
+                    ]
+                }
+            },
+            "consonant-sounds": {
+                "sh": {
+                    pronounce: "shh",
+                    poem: "The big ocean <span>ship</span> sailed fast and free,\nPast a fluffy white <span>sheep</span> looking at the sea.\nWe found a shiny <span>shell</span> next to a blue <span>fish</span>,\nAnd put it by a <span>shoe</span> onto a pretty dinner <span>dish</span>!",
+                    words: [
+                        { word: "ship", display: "SH _ _", missing: "ip", emoji: "🚢" },
+                        { word: "shop", display: "SH _ _", missing: "op", emoji: "🛍️" },
+                        { word: "shell", display: "SH _ _ _", missing: "ell", emoji: "🐚" },
+                        { word: "shoe", display: "SH _ _", missing: "oe", emoji: "👟" },
+                        { word: "sheep", display: "SH _ _ _", missing: "eep", emoji: "🐑" },
+                        { word: "fish", display: "FI _ _", missing: "sh", emoji: "🐠" },
+                        { word: "brush", display: "BR _ _ _", missing: "ush", emoji: "🖌️" },
+                        { word: "shark", display: "SH _ _ _", missing: "ark", emoji: "🦈" },
+                        { word: "shirt", display: "SH _ _ _", missing: "irt", emoji: "👕" },
+                        { word: "dish", display: "DI _ _", missing: "sh", emoji: "🍽️" }
+                    ]
+                },
+                "zh": {
+                    pronounce: "zhh",
+                    poem: "It's a grand <span>pleasure</span> to search for hidden keys,\nTo open a <span>treasure</span> box under the trees.\nWe check the <span>visual</span> map with standard <span>measure</span>,\nWhile watching a show on the <span>television</span> at leisure!",
+                    words: [
+                        { word: "treasure", display: "TR _ _ _ _ _ _", missing: "easure", emoji: "🏴‍☠️" },
+                        { word: "measure", display: "ME _ _ _ _ _ _", missing: "asure", emoji: "📏" },
+                        { word: "television", display: "TE _ _ _ _ _ _ _ _", missing: "levision", emoji: "📺" },
+                        { word: "explosion", display: "EX _ _ _ _ _ _ _", missing: "plosion", emoji: "💥" },
+                        { word: "pleasure", display: "PL _ _ _ _ _ _", missing: "easure", emoji: "✨" },
+                        { word: "visual", display: "VI _ _ _ _", missing: "sual", emoji: "👀" },
+                        { word: "collision", display: "CO _ _ _ _ _ _ _", missing: "llision", emoji: "💥" },
+                        { word: "conclusion", display: "CO _ _ _ _ _ _ _ _", missing: "nclusion", emoji: "📝" },
+                        { word: "division", display: "DI _ _ _ _ _ _", missing: "vision", emoji: "➗" },
+                        { word: "leasure", display: "LE _ _ _ _ _", missing: "isure", emoji: "🏖️" }
+                    ]
+                }
+            }
+        };
+
+        // Locate a female teacher voice
+        let ladyVoice = null;
+        function loadLadyVoice() {
+            let voices = window.speechSynthesis.getVoices();
+            ladyVoice = voices.find(voice => 
+                voice.name.includes("Zira") || 
+                voice.name.includes("Google US English") || 
+                voice.name.includes("Samantha") ||
+                voice.name.includes("Moira") || 
+                voice.name.includes("Hazel") ||
+                (voice.name.includes("Female") && voice.lang.startsWith("en"))
+            );
+            if (!ladyVoice) {
+                ladyVoice = voices.find(voice => voice.lang.startsWith("en"));
+            }
+        }
+
+        window.speechSynthesis.onvoiceschanged = loadLadyVoice;
+        loadLadyVoice();
+
+        function speakSound(phrase, isFast = false) {
+            window.speechSynthesis.cancel();
+            let utter = new SpeechSynthesisUtterance(phrase);
+            if (ladyVoice) utter.voice = ladyVoice;
+            utter.lang = 'en-US';
+            utter.rate = isFast ? 0.75 : 0.55; 
+            utter.pitch = 1.4; 
+            window.speechSynthesis.speak(utter);
+        }
+
+        function readStoryText(rawText) {
+            const cleanText = rawText.replace(/<\/?span>/g, "");
+            speakSound(cleanText, true);
+        }
+
+        function switchCategory(catKey) {
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.sound-tabs').forEach(t => t.classList.remove('active'));
+            
+            event.currentTarget.classList.add('active');
+            const activeTabRow = document.getElementById(`tabs-${catKey}`);
+            activeTabRow.classList.add('active');
+            
+            currentCategoryGlobal = catKey;
+            activeTabRow.querySelector('.sound-btn').click();
+        }
+
+        // Calculates progress ONLY for the currently active sound board module
+        function updateLocalRewardTracker() {
+            const cleanSoundKey = currentSoundGlobal.replace(' ', '_');
+            const activeSoundData = phonicsDatabase[currentCategoryGlobal][currentSoundGlobal];
+            
+            let solvedCounter = 0;
+            activeSoundData.words.forEach((w, index) => {
+                const inputField = document.getElementById(`input-${currentCategoryGlobal}-${cleanSoundKey}-${index}`);
+                if (inputField && inputField.disabled) {
+                    solvedCounter++;
+                }
+            });
+
+            // Calculate percentage based on the 10 local words
+            const currentPercentage = Math.round((solvedCounter / 10) * 100);
+            
+            const progressFill = document.getElementById('local-progress');
+            progressFill.style.width = `${currentPercentage}%`;
+            progressFill.innerText = `${currentPercentage}%`;
+
+            document.getElementById('reward-score').innerText = `${solvedCounter} / 10 Words Solved`;
+
+            const textStatus = document.getElementById('reward-text');
+            if (currentPercentage === 0) {
+                textStatus.innerText = `Let's solve the "${currentSoundGlobal.toUpperCase()}" level! 🚀`;
+            } else if (currentPercentage < 40) {
+                textStatus.innerText = "Good start! Keep going! 🦄";
+            } else if (currentPercentage < 80) {
+                textStatus.innerText = "Halfway through! You're super smart! 🔥";
+            } else if (currentPercentage < 100) {
+                textStatus.innerText = "Almost done! Finish strong! 🏆";
+            } else {
+                textStatus.innerText = `🌟 Spectacular! "${currentSoundGlobal.toUpperCase()}" Level Mastered! 🌟`;
+            }
+        }
+
+        function initApp() {
+            const workspace = document.getElementById('windowWorkspace');
+            let firstTabSet = false;
+
+            for (const [catKey, soundGroup] of Object.entries(phonicsDatabase)) {
+                const tabRow = document.getElementById(`tabs-${catKey}`);
+                let isFirstSoundInCat = true;
+
+                for (const [soundKey, data] of Object.entries(soundGroup)) {
+                    const sBtn = document.createElement('button');
+                    sBtn.className = `sound-btn ${isFirstSoundInCat && !firstTabSet ? 'active' : ''}`;
+                    sBtn.innerText = soundKey.toUpperCase();
+                    sBtn.id = `btn-${catKey}-${soundKey.replace(' ', '_')}`;
+                    sBtn.onclick = (e) => switchSoundPane(e, catKey, soundKey);
+                    tabRow.appendChild(sBtn);
+
+                    let wordGridHTML = '';
+                    data.words.forEach(w => {
+                        let dynamicLabel = w.word.replace(soundKey, `<span>${soundKey}</span>`);
+                        wordGridHTML += `
+                            <div class="word-card" onclick="speakSound('${w.word}', true)">
+                                <div class="emoji">${w.emoji}</div>
+                                <div>
+                                    <h3>${dynamicLabel}</h3>
+                                    <p style="margin:2px 0 0 0; font-size:0.85rem; color:#666;">Tap to hear!</p>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    let quizItemsHTML = '';
+                    data.words.forEach((w, index) => {
+                        quizItemsHTML += `
+                            <div class="quiz-item" id="q-box-${catKey}-${soundKey.replace(' ', '_')}-${index}">
+                                <div class="quiz-emoji">${w.emoji}</div>
+                                <div>
+                                    <div class="quiz-word-display" id="display-text-${catKey}-${soundKey.replace(' ', '_')}-${index}">${w.display}</div>
+                                    <div class="quiz-input-wrapper">
+                                        <input type="text" class="quiz-input" id="input-${catKey}-${soundKey.replace(' ', '_')}-${index}" placeholder="Type here...">
+                                        <button class="check-btn" onclick="checkAnswer('${catKey}', '${soundKey}', ${index}, '${w.missing}', '${w.word}')">Check</button>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    const pane = document.createElement('div');
+                    pane.className = `pane ${isFirstSoundInCat && !firstTabSet ? 'active' : ''}`;
+                    pane.id = `pane-${catKey}-${soundKey.replace(' ', '_')}`;
+                    pane.innerHTML = `
+                        <div class="sound-banner" onclick="speakSound('${data.pronounce}', false)">
+                            <h2>Target Sound: ${soundKey}</h2>
+                            <p>👉 Click to listen to the sound pronunciation!</p>
+                        </div>
+
+                        <h3 style="color:var(--secondary); border-bottom:2px dashed #DDD; padding-bottom:5px;">🎈 Step 1: Click & Read Aloud!</h3>
+                        <div class="word-grid">${wordGridHTML}</div>
+
+                        <div class="story-box" onclick="readStoryText(\`${data.poem.replace(/"/g, '&quot;')}\`)\">
+                            <h4>📚 Sound Story Poem (Click to hear read-aloud!)</h4>
+                            <p class="story-text">${data.poem}</p>
+                        </div>
+
+                        <div class="game-section">
+                            <div class="game-header">
+                                <h3 style="margin:0; color:var(--dark);">🎮 Step 2: Spell the Missing Part! (10 Questions)</h3>
+                                <button class="reset-btn" onclick="resetQuiz('${catKey}', '${soundKey}')">🔄 Reset Quiz</button>
+                            </div>
+                            <div class="quiz-container">${quizItemsHTML}</div>
+                        </div>
+
+                        <div class="celebration-box" id="victory-${catKey}-${soundKey.replace(' ', '_')}">
+                            <h2 style="color:var(--success); margin:0 0 10px 0;">🌟 FANTASTIC! 🌟</h2>
+                            <img src="https://static.vecteezy.com/system/resources/previews/060/400/115/non_2x/happy-child-clapping-hands-in-flat-cartoon-style-illustration-vector.jpg" class="clapping-boy-img" alt="Good job clapping cartoon boy graphic animation"><br>
+                            <p style="font-size:1.5rem; font-weight:bold; color:var(--dark); margin:10px 0 0 0;">"Good job! You completed all 10 words!"</p>
+                        </div>
+                    `;
+                    workspace.appendChild(pane);
+                    isFirstSoundInCat = false;
+                }
+                firstTabSet = true;
+            }
+        }
+
+        function switchSoundPane(event, catKey, soundKey) {
+            const parentTabRow = document.getElementById(`tabs-${catKey}`);
+            parentTabRow.querySelectorAll('.sound-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.pane').forEach(p => p.classList.remove('active'));
+            
+            event.currentTarget.classList.add('active');
+            document.getElementById(`pane-${catKey}-${soundKey.replace(' ', '_')}`).classList.add('active');
+            
+            // Re-bind current pointers and reset tracking views
+            currentCategoryGlobal = catKey;
+            currentSoundGlobal = soundKey;
+            
+            updateLocalRewardTracker();
+        }
+
+        function checkAnswer(catKey, soundKey, index, exactMissingStr, completeWordVal) {
+            const identifierClean = `${catKey}-${soundKey.replace(' ', '_')}-${index}`;
+            const inputField = document.getElementById(`input-${identifierClean}`);
+            const textDisplay = document.getElementById(`display-text-${identifierClean}`);
+            const childGuess = inputField.value.trim().toLowerCase();
+
+            if(childGuess === exactMissingStr.toLowerCase()) {
+                document.getElementById(`q-box-${identifierClean}`).classList.add('correct-item');
+                inputField.disabled = true;
+                inputField.nextElementSibling.style.display = 'none'; 
+                inputField.style.display = 'none'; 
+                
+                textDisplay.innerText = completeWordVal.toUpperCase();
+                textDisplay.style.color = "var(--success)";
+                
+                speakSound(completeWordVal, true);
+                
+                // Immediately refresh local score tracking progress components
+                updateLocalRewardTracker();
+                checkSoundGroupVictory(catKey, soundKey);
+            } else {
+                speakSound("Try again!", true);
+                inputField.style.borderColor = "var(--primary)";
+                setTimeout(() => { inputField.style.borderColor = "var(--secondary)"; }, 1000);
+            }
+        }
+
+        function checkSoundGroupVictory(catKey, soundKey) {
+            const cleanSoundKey = soundKey.replace(' ', '_');
+            const targetDataGroup = phonicsDatabase[catKey][soundKey];
+            let exactCorrectCounter = 0;
+
+            targetDataGroup.words.forEach((w, index) => {
+                const inputField = document.getElementById(`input-${catKey}-${cleanSoundKey}-${index}`);
+                if(inputField && inputField.disabled === true) exactCorrectCounter++;
+            });
+
+            if(exactCorrectCounter === 10) {
+                document.getElementById(`victory-${catKey}-${cleanSoundKey}`).style.display = 'block';
+                speakSound("Good job! You finished everything!", true);
+                document.getElementById(`victory-${catKey}-${cleanSoundKey}`).scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function resetQuiz(catKey, soundKey) {
+            const cleanSoundKey = soundKey.replace(' ', '_');
+            const targetDataGroup = phonicsDatabase[catKey][soundKey];
+
+            targetDataGroup.words.forEach((w, index) => {
+                const identifierClean = `${catKey}-${cleanSoundKey}-${index}`;
+                const cardBox = document.getElementById(`q-box-${identifierClean}`);
+                const inputField = document.getElementById(`input-${identifierClean}`);
+                const textDisplay = document.getElementById(`display-text-${identifierClean}`);
+                
+                cardBox.classList.remove('correct-item');
+                inputField.disabled = false;
+                inputField.value = '';
+                inputField.style.display = 'inline-block';
+                inputField.nextElementSibling.style.display = 'inline-block';
+                
+                textDisplay.innerText = w.display;
+                textDisplay.style.color = "#475569";
+            });
+
+            document.getElementById(`victory-${catKey}-${cleanSoundKey}`).style.display = 'none';
+            speakSound("Let's try again!", true);
+            
+            updateLocalRewardTracker();
+        }
+
+        window.onload = () => {
+            initApp();
+            updateLocalRewardTracker();
+        };
+    </script>
+
+</body></html>
