@@ -25,7 +25,7 @@
             background-color: var(--bg-light);
             color: var(--text-dark);
             margin: 0;
-            padding: 10px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -33,11 +33,11 @@
 
         header {
             text-align: center;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             background: white;
-            padding: 10px 20px;
-            border-radius: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            padding: 15px 30px;
+            border-radius: 25px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.05);
             border: 3px solid var(--pika-yellow);
             width: 100%;
             max-width: 1000px;
@@ -46,15 +46,15 @@
         h1 {
             color: var(--pika-blue);
             margin: 0;
-            font-size: 1.8rem;
-            text-shadow: 1px 1px 0px var(--pika-yellow);
+            font-size: 2.2rem;
+            text-shadow: 2px 2px 0px var(--pika-yellow);
         }
 
-        /* Responsive Nav Tabs layout */
+        /* Nav Tabs Layout */
         .nav-tabs {
             display: flex;
-            gap: 6px;
-            margin-bottom: 15px;
+            gap: 10px;
+            margin-bottom: 20px;
             flex-wrap: wrap;
             justify-content: center;
             width: 100%;
@@ -63,40 +63,36 @@
 
         .tab-btn {
             background: white;
-            border: 2px solid var(--pika-blue);
-            padding: 8px 12px;
-            font-size: 1rem;
+            border: 3px solid var(--pika-blue);
+            padding: 10px 20px;
+            font-size: 1.2rem;
             font-weight: bold;
-            border-radius: 14px;
+            border-radius: 18px;
             cursor: pointer;
-            box-shadow: 0 3px 0 var(--pika-blue);
+            box-shadow: 0 4px 0 var(--pika-blue);
             transition: all 0.1s ease;
             color: var(--pika-blue);
-            flex: 1 1 calc(33% - 6px);
-            min-width: 90px;
-            text-align: center;
         }
 
         .tab-btn.active {
             background: var(--pika-yellow);
             color: var(--text-dark);
             border-color: var(--pika-orange);
-            box-shadow: 0 3px 0 var(--pika-orange);
+            box-shadow: 0 4px 0 var(--pika-orange);
             transform: translateY(2px);
         }
 
         .tab-btn.final-tab {
             border-color: var(--pika-red);
             color: var(--pika-red);
-            box-shadow: 0 3px 0 var(--pika-red);
-            flex: 1 1 100%;
+            box-shadow: 0 4px 0 var(--pika-red);
         }
 
         .tab-btn.final-tab.active {
             background: var(--pika-red);
             color: white;
             border-color: #B70000;
-            box-shadow: 0 3px 0 #B70000;
+            box-shadow: 0 4px 0 #B70000;
         }
 
         /* Workspace Framework Card */
@@ -105,8 +101,8 @@
             border-radius: 25px;
             max-width: 1000px;
             width: 100%;
-            padding: 15px;
-            box-shadow: 0 6px 15px rgba(0,0,0,0.04);
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.04);
             border: 3px solid #E2E8F0;
         }
 
@@ -118,11 +114,12 @@
             display: block;
         }
 
-        /* Desktop Grid vs Phone Stack Layout */
+        /* Learning Grid Layout */
         .learning-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 20px;
+            gap: 25px;
+            margin-top: 15px;
         }
 
         @media (min-width: 768px) {
@@ -133,44 +130,46 @@
             background: #FFFDEB;
             border: 2px solid var(--pika-yellow);
             border-radius: 15px;
-            padding: 12px;
+            padding: 15px;
         }
 
         .chart-row {
             display: flex;
             justify-content: space-between;
-            padding: 6px 10px;
-            font-size: 1.2rem;
+            padding: 6px 12px;
+            font-size: 1.3rem;
             font-weight: bold;
             border-bottom: 1px dashed #FFEFA6;
         }
+
+        .chart-row:last-child { border: none; }
 
         .guiding-box {
             background: #EBF5FF;
             border: 2px solid #90CAF9;
             border-radius: 15px;
-            padding: 15px;
+            padding: 20px;
         }
 
         .guide-scroller {
-            max-height: 300px;
+            max-height: 350px;
             overflow-y: auto;
         }
 
         .guide-item {
             background: white;
-            padding: 10px;
+            padding: 12px;
             border-radius: 12px;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             border: 2px solid #CFD8DC;
         }
 
-        .guide-expr { font-size: 1.2rem; font-weight: bold; }
-        .guide-input { width: 65px; padding: 6px; font-size: 1.1rem; text-align: center; border: 2px solid #90CAF9; border-radius: 8px; }
-        .check-btn { background: #2196F3; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; }
+        .guide-expr { font-size: 1.3rem; font-weight: bold; }
+        .guide-input { width: 70px; padding: 6px; font-size: 1.2rem; text-align: center; border: 2px solid #90CAF9; border-radius: 8px; }
+        .check-btn { background: #2196F3; color: white; border: none; padding: 6px 14px; border-radius: 8px; font-weight: bold; cursor: pointer; }
 
         .guide-item.passed { border-color: var(--success-green); background: #E8F5E9; }
 
@@ -178,31 +177,42 @@
         .quiz-workspace {
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 25px;
+            margin-top: 15px;
         }
 
-        /* IPHONE STICKY TRACKER HEADER BAR DYNAMIC ADAPTATION */
+        /* NEW DYNAMIC HORIZONTAL TRACKER PILLAR */
         .achievement-pillar {
             width: 100%;
             background: #F1F5F9;
             border: 3px solid var(--pika-blue);
             border-radius: 20px;
-            padding: 10px 15px;
+            padding: 12px 20px;
             display: flex;
             flex-direction: row;
             align-items: center;
-            gap: 10px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 5px;
-            z-index: 100;
+            gap: 15px;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        .pillar-label {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #475569;
+            min-width: 90px;
+            text-align: center;
+            background: white;
+            padding: 6px 10px;
+            border-radius: 10px;
+            border: 2px solid #CBD5E1;
+            text-transform: uppercase;
         }
 
         .track-rail-bg {
-            height: 20px;
-            width: 100%;
+            height: 24px;
+            flex-grow: 1;
             background: #CBD5E1;
-            border-radius: 10px;
+            border-radius: 12px;
             position: relative;
             border: 1px solid #94A3B8;
         }
@@ -211,10 +221,10 @@
             height: 100%;
             width: 0%;
             background: linear-gradient(to right, var(--pika-orange), var(--pika-yellow));
-            border-radius: 10px;
+            border-radius: 12px;
             position: absolute;
             left: 0;
-            bottom: 0;
+            top: 0;
             transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -222,95 +232,93 @@
             position: absolute;
             left: 0%;
             top: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1.8rem;
+            transform: translate(-50%, -55%);
+            font-size: 2.2rem;
             transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 10;
             user-select: none;
+            filter: drop-shadow(0px 3px 3px rgba(0,0,0,0.15));
         }
 
         .goal-post {
-            font-size: 1.4rem;
+            font-size: 1.8rem;
             flex-shrink: 0;
+            animation: rewardBounce 1.5s infinite ease-in-out;
         }
 
-        .pillar-label {
-            font-size: 0.75rem;
-            font-weight: bold;
-            color: #475569;
-            min-width: 70px;
-            text-align: center;
-            background: white;
-            padding: 4px 6px;
-            border-radius: 8px;
-            border: 1px solid #CBD5E1;
+        @keyframes rewardBounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
         }
 
-        /* Quiz UI Content Box Configuration */
+        /* Quiz UI Content Area Node */
         .quiz-content-node {
             width: 100%;
             background: #FAFAFA;
             border: 3px dashed #CBD5E1;
             border-radius: 20px;
-            padding: 15px;
+            padding: 25px;
         }
 
-        .quiz-intro-screen { text-align: center; padding: 15px 5px; }
+        .quiz-intro-screen { text-align: center; padding: 20px 10px; }
+        
         .start-btn {
             background: var(--success-green);
             color: white;
             border: none;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             font-weight: bold;
-            padding: 12px 28px;
+            padding: 14px 35px;
             border-radius: 20px;
-            box-shadow: 0 4px 0 #2E7D32;
+            box-shadow: 0 5px 0 #2E7D32;
             cursor: pointer;
         }
+        .start-btn:active { transform: translateY(2px); box-shadow: 0 3px 0 #2E7D32; }
 
         .card-question-box { text-align: center; }
-        .question-number-badge { background: #E2E8F0; padding: 4px 10px; border-radius: 8px; font-size: 0.9rem; font-weight: bold; }
+        .question-number-badge { background: #E2E8F0; padding: 4px 12px; border-radius: 10px; font-size: 1rem; font-weight: bold; display: inline-block; margin-bottom: 10px; }
         
-        /* Large Visible Text Statement for Mobile Viewports */
         .math-statement {
-            font-size: 3.2rem;
+            font-size: 3.5rem;
             font-weight: bold;
             color: var(--pika-blue);
-            margin: 10px 0;
+            margin: 15px 0;
         }
 
-        /* Large touch target buttons for iPhones */
         .quiz-options-layout {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 15px;
+            gap: 15px;
+            margin-top: 20px;
         }
 
         .option-btn {
             background: white;
             border: 3px solid #64748B;
             border-radius: 18px;
-            padding: 20px 10px;
+            padding: 15px;
             font-size: 1.8rem;
             font-weight: bold;
             cursor: pointer;
             box-shadow: 0 4px 0 #64748B;
+            transition: all 0.1s;
         }
-
+        .option-btn:hover { background: #F8FAFC; }
         .option-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #64748B; }
 
         .cheer-box {
             background: #E8F5E9;
             color: #2E7D32;
             border: 2px solid #A5D6A7;
-            padding: 8px;
-            border-radius: 10px;
-            margin-top: 10px;
+            padding: 10px;
+            border-radius: 12px;
+            margin-top: 15px;
             font-weight: bold;
             text-align: center;
             display: none;
         }
+
+        .quiz-finished-screen { text-align: center; padding: 20px; }
 
         .pika-flash-lightning { animation: lightningFlash 0.2s ease-in-out 2; }
         @keyframes lightningFlash { 0%, 100% { background-color: white; } 50% { background-color: #FFFDEB; } }
@@ -323,10 +331,10 @@
     </header>
 
     <div class="nav-tabs">
-        <button class="tab-btn active" onclick="activateTab(this, 'tab2', 2)">2×</button>
-        <button class="tab-btn" onclick="activateTab(this, 'tab3', 3)">3×</button>
-        <button class="tab-btn" onclick="activateTab(this, 'tab4', 4)">4×</button>
-        <button class="tab-btn" onclick="activateTab(this, 'tab5', 5)">5×</button>
+        <button class="tab-btn active" onclick="activateTab(this, 'tab2', 2)">2 Times Table</button>
+        <button class="tab-btn" onclick="activateTab(this, 'tab3', 3)">3 Times Table</button>
+        <button class="tab-btn" onclick="activateTab(this, 'tab4', 4)">4 Times Table</button>
+        <button class="tab-btn" onclick="activateTab(this, 'tab5', 5)">5 Times Table</button>
         <button class="tab-btn final-tab" onclick="activateTab(this, 'tabFinal', 'mixed')">🏆 Mixed Mega Quiz (40 Qs)</button>
     </div>
 
@@ -344,8 +352,19 @@
             targetTable: 2
         };
 
-        const standardCheers = ["⭐ High Five! ⭐", "⚡ Electric! ⚡", "🔴 Pokéball Power! 🔴", "🎉 Brilliant! 🎉", "💪 Math Master! 💪"];
-        const completionCheers = ["🏆 You Crushed It! 🏆", "👑 Spectacular Finish! 👑", "🚀 Epic Victory! 🚀"];
+        const standardCheers = [
+            "⭐ High Five! Outstanding job! ⭐",
+            "⚡ You are pure electric! Amazing! ⚡",
+            "🔴 Pokéball power! Perfect answer! 🔴",
+            "🎉 Brilliant calculation! 🎉",
+            "💪 You are becoming a master! 💪"
+        ];
+
+        const completionCheers = [
+            "🏆 Mission Completed! You crushed it! 🏆",
+            "👑 Spectacular! Your brain power is off the charts! 👑",
+            "🚀 Epic finish! Pikachu is cheering for you! 🚀"
+        ];
 
         function getRandomCheer(isCompletion = false) {
             const list = isCompletion ? completionCheers : standardCheers;
@@ -382,7 +401,7 @@
                     let fakeAns = correctAns + (Math.floor(Math.random() * 10) - 5);
                     if(fakeAns > 0 && fakeAns !== correctAns) optionsSet.add(fakeAns);
                 }
-                pool.push({ qStr: `${factorA} × ${factorB}`, ans: correctAns, opts: Array.from(optionsSet).sort((x,y) => x - y) });
+                pool.push({ qStr: `${factorA} × ${factorB} = ?`, ans: correctAns, opts: Array.from(optionsSet).sort((x,y) => x - y) });
             }
             return pool;
         }
@@ -400,7 +419,8 @@
             if(activeNum === 'mixed') {
                 container.innerHTML = `
                     <div class="view-pane active">
-                        <h3 style="color:var(--pika-red); margin-top:0;">🏆 Mixed Mega Arena Challenge</h3>
+                        <h2 style="color:var(--pika-red); margin-top:0;">🏆 Ultimate Mixed Mega Arena Challenge</h2>
+                        <p>This final arena tests your speed across all <b>2, 3, 4, and 5 times tables</b>. Face 40 ultimate questions to secure the Master Pokéball!</p>
                         
                         <div class="quiz-workspace">
                             <div class="achievement-pillar">
@@ -415,9 +435,9 @@
                             <div class="quiz-content-node">
                                 <div id="quiz-box-final">
                                     <div class="quiz-intro-screen">
-                                        <span style="font-size:3rem;">🎒</span>
-                                        <h4>Face 40 Random Questions!</h4>
-                                        <button class="start-btn" style="background:var(--pika-red);" onclick="startQuizSession('mixed', 40)">Enter Mega Arena</button>
+                                        <span style="font-size:4rem;">🎒</span>
+                                        <h3>Ready for the 40-Question Mega Challenge?</h3>
+                                        <button class="start-btn" style="background:var(--pika-red); box-shadow: 0 5px 0 #900;" onclick="startQuizSession('mixed', 40)">Enter Mega Arena</button>
                                     </div>
                                 </div>
                                 <div class="cheer-box" id="cheer-final"></div>
@@ -438,7 +458,7 @@
                             <div class="guide-expr">${q.a} × ${q.b} = </div>
                             <div>
                                 <input type="number" class="guide-input" id="g-input-${activeNum}-${idx}" placeholder="?">
-                                <button class="check-btn" onclick="verifySideGuidingAnswer(${activeNum}, ${idx}, ${q.ans})">✔</button>
+                                <button class="check-btn" onclick="verifySideGuidingAnswer(${activeNum}, ${idx}, ${q.ans})">Check</button>
                             </div>
                         </div>
                     `;
@@ -446,13 +466,15 @@
 
                 container.innerHTML = `
                     <div class="view-pane active">
+                        <h2 style="margin-top:0; color:var(--pika-blue);">✨ Learning Channel: The ${activeNum} Times Table</h2>
+                        
                         <div class="learning-grid">
                             <div>
-                                <h3 style="margin:0; color:var(--pika-orange);">📋 1. Study Chart</h3>
+                                <h3 style="margin-top:0; color:var(--pika-orange);">📋 1. Study the Chart</h3>
                                 <div class="chart-box">${tableRowsHTML}</div>
                             </div>
                             <div>
-                                <h3 style="margin:0; color:var(--pika-orange);">⌨️ 2. Warm-Up</h3>
+                                <h3 style="margin-top:0; color:var(--pika-orange);">⌨️ 2. Guiding Warm-Up</h3>
                                 <div class="guiding-box">
                                     <div class="guide-scroller">${guidingItemsHTML}</div>
                                     <div class="cheer-box" id="cheer-guide-${activeNum}"></div>
@@ -460,8 +482,8 @@
                             </div>
                         </div>
 
-                        <div style="margin-top:25px; border-top:3px dashed #E2E8F0; padding-top:15px;">
-                            <h3 style="color:var(--pika-blue); margin:0 0 10px 0;">⚡ 3. Catch Pikachu Challenge</h3>
+                        <div style="margin-top:40px; border-top:4px dashed #E2E8F0; padding-top:25px;">
+                            <h3 style="color:var(--pika-blue); margin-top:0;">⚡ 3. The official Catch Challenge (15 Questions)</h3>
                             
                             <div class="quiz-workspace">
                                 <div class="achievement-pillar">
@@ -476,8 +498,9 @@
                                 <div class="quiz-content-node">
                                     <div id="quiz-box-${activeNum}">
                                         <div class="quiz-intro-screen">
-                                            <h4>Answer 15 questions to catch him!</h4>
-                                            <button class="start-btn" onclick="startQuizSession(${activeNum}, 15)">Start Quiz</button>
+                                            <h3>Prove your skills to unlock Pikachu!</h3>
+                                            <p>Face 15 randomized multiplication questions.</p><br>
+                                            <button class="start-btn" onclick="startQuizSession(${activeNum}, 15)">Start Local Quiz</button>
                                         </div>
                                     </div>
                                     <div class="cheer-box" id="cheer-quiz-${activeNum}"></div>
@@ -524,7 +547,7 @@
 
             targetContainer.innerHTML = `
                 <div class="card-question-box">
-                    <div class="question-number-badge">Q ${quizState.currentQuestionIdx + 1} of ${quizState.totalQuestions}</div>
+                    <div class="question-number-badge">Question ${quizState.currentQuestionIdx + 1} of ${quizState.totalQuestions}</div>
                     <div class="math-statement">${data.qStr}</div>
                     <div class="quiz-options-layout">${optionsButtonsHTML}</div>
                 </div>
@@ -583,20 +606,20 @@
             const targetBoxId = quizState.targetTable === 'mixed' ? 'quiz-box-final' : `quiz-box-${quizState.targetTable}`;
             const targetContainer = document.getElementById(targetBoxId);
             let percentageSuccess = Math.round((quizState.scoreCount / quizState.totalQuestions) * 100);
-            let html = '';
+            let endingNarrationHTML = '';
 
             if(percentageSuccess === 100) {
-                html = `<span style="font-size:3rem;">⚡🔴⚡</span><h3 style="color:var(--success-green);">PERFECT!</h3><p>Pikachu was caught!</p>`;
+                endingNarrationHTML = `<span style="font-size:4rem;">⚡🔴⚡</span><h2 style="color:var(--success-green);">PERFECT CAPTURE!</h2><p>Pikachu was safely caught!</p>`;
             } else if (percentageSuccess >= 70) {
-                html = `<span style="font-size:3rem;">🍎🐹</span><h3>SO CLOSE!</h3><p>Score: ${quizState.scoreCount}/${quizState.totalQuestions}. Try again!</p>`;
+                endingNarrationHTML = `<span style="font-size:4rem;">🍎🐹</span><h2>SO CLOSE!</h2><p>Great job! You scored ${quizState.scoreCount}/${quizState.totalQuestions}. Try again!</p>`;
             } else {
-                html = `<span style="font-size:3rem;">💨🍃</span><h3 style="color:var(--pika-red);">FLED!</h3><p>Try reviewing charts!</p>`;
+                endingNarrationHTML = `<span style="font-size:4rem;">💨🍃</span><h2 style="color:var(--pika-red);">PIKACHU FLED!</h2><p>Review the charts and try again!</p>`;
             }
 
             targetContainer.innerHTML = `
                 <div class="quiz-finished-screen">
-                    ${html}<br>
-                    <button class="start-btn" onclick="startQuizSession('${quizState.targetTable}', ${quizState.totalQuestions})">🔄 Restart</button>
+                    ${endingNarrationHTML}<br>
+                    <button class="start-btn" onclick="startQuizSession('${quizState.targetTable}', ${quizState.totalQuestions})">🔄 Restart Challenge</button>
                 </div>
             `;
         }
