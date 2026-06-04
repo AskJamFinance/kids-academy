@@ -377,7 +377,7 @@
             </div>
 
             <div class="gameboard" id="gameArena">
-                </div>
+            </div>
 
         </div>
     </div>
@@ -425,10 +425,133 @@
                 let num1, num2, answer;
 
                 if (max <= 20) {
-                    num1 = Math.floor(Math.random() * (max - min)) + min;
+                    num1 = Math.floor(Math.random() * (max - min + 1)) + min;
                     num2 = Math.floor(Math.random() * 9) + 1;
                 } else {
-                    num1 = Math.floor(Math.random() * (max - min)) + min;
+                    num1 = Math.floor(Math.random() * (max - min + 1)) + min;
                     num2 = Math.floor(Math.random() * 12) + 1;
                 }
-                answer =
+                answer = num1 + num2;
+
+                // Create a pool of distinct fake options
+                let optionsSet = new Set([answer]);
+                while(optionsSet.size < 4) {
+                    let variance = Math.floor(Math.random() * 10) - 5; // offset by -5 to +4
+                    let fakeAns = answer + variance;
+                    if(fakeAns > 0 && fakeAns !== answer) {
+                        optionsSet.add(fakeAns);
+                    }
+                }
+                
+                // Convert set to array and shuffle options
+                let optionsArr = Array.from(optionsSet).sort(() => Math.random() - 0.5);
+
+                questions.push({
+                    num1: num1,
+                    num2: num2,
+                    answer: answer,
+                    options: optionsArr
+                });
+            }
+            return questions;
+        }
+
+        function renderWorkspaceScreen() {
+            const arena = document.getElementById('gameArena');
+            
+            if (gameState.questionIndex >= gameState.totalNeeded) {
+                // Render completion layout
+                arena.innerHTML = `
+                    <div class="finish-screen">
+                        <h2>🎉 Quest Completed! 🎉</h2>
+                        <p>Incredible job! You mastered this set!</p>
+                        <button class="start-btn" onclick="startNewSetSession()">Play Again 🔄</button>
+                    </div>
+                `;
+                return;
+            }
+
+            const currentQ = gameState.pool[gameState.questionIndex];
+
+            // Render star tracker bubbles
+            let starsHTML = '';
+            for(let i=0; i < gameState.totalNeeded; i++) {
+                starsHTML += `<span class="star ${i < gameState.starCount ? 'earned' : ''}">★</span>`;
+            }
+
+            arena.innerHTML = `
+                <div class="star-tracker">${starsHTML}</div>
+                <div class="badge-info">Question ${gameState.questionIndex + 1} of ${gameState.totalNeeded}</div>
+                
+                <div class="column-math-container">
+                    <div class="math-row">${String(currentQ.num1).padStart(2, ' ')}</div>
+                    <div class="math-row"><span class="plus-sign">+</span>${String(currentQ.num2).padStart(2, ' ')}</div>
+                    <div class="equals-bar"></div>
+                    <div class="question-mark-box" id="mathOutput">?</div>
+                </div>
+
+                <div class="cheer-msg" id="feedbackBar"></div>
+
+                <div class="options-grid">
+                    ${currentQ.options.map(opt => `
+                        <button class="ans-btn" onclick="checkUserAnswer(${opt}, this)">${opt}</button>
+                    `).join('')}
+                </div>
+            `;
+        }
+
+        function checkUserAnswer(selected, buttonElement) {
+            const currentQ = gameState.pool[gameState.questionIndex];
+            const feedback = document.getElementById('feedbackBar');
+            const mathOutput = document.getElementById('mathOutput');
+            const arena = document.getElementById('gameArena');
+
+            if (selected === currentQ.answer) {
+                // Correct!
+                gameState.starCount++;
+                mathOutput.innerText = currentQ.answer;
+                mathOutput.style.color = "var(--bright-green)";
+                
+                feedback.innerText = rewardsCheers[Math.floor(Math.random() * rewardsCheers.length)];
+                feedback.style.display = "block";
+                arena.classList.add('correct-flash');
+
+                // Disable buttons instantly to prevent double taps
+                document.querySelectorAll('.ans-btn').forEach(b => b.disabled = true);
+
+                updateRewardPillarGraphic();
+
+                setTimeout(() => {
+                    arena.classList.remove('correct-flash');
+                    gameState.questionIndex++;
+                    renderWorkspaceScreen();
+                }, 1500);
+
+            } else {
+                // Incorrect - shake or change style of clicked button slightly
+                buttonElement.style.backgroundColor = "#FFCDD2";
+                buttonElement.style.borderColor = "var(--happy-pink)";
+                buttonElement.disabled = true;
+            }
+        }
+
+        function updateRewardPillarGraphic() {
+            const pct = (gameState.starCount / gameState.totalNeeded) * 100;
+            document.getElementById('rewardRailFill').style.width = pct + '%';
+            document.getElementById('rewardAvatar').style.left = pct + '%';
+
+            const label = document.getElementById('rewardLabel');
+            if (pct === 0) label.innerText = "Ready!";
+            else if (pct < 40) label.innerText = "Great Start!";
+            else if (pct < 75) label.innerText = "Halfway There!";
+            else if (pct < 100) label.innerText = "Almost King!";
+            else label.innerText = "Victory!";
+        }
+
+        // Initialize game on load
+        window.onload = function() {
+            startNewSetSession();
+        };
+    </script>
+</body>
+</html>
