@@ -1,557 +1,634 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>🎈 Magic Maths Quest! 🎈</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🌈 Addition Adventure Quest! 🌈</title>
     <style>
         :root {
-            --bg-color: #F7FFF7;
-            --text-color: #2F3E46;
-            --primary-blue: #3A86FF;
-            --sunny-yellow: #FFBE0B;
-            --happy-pink: #FF006E;
-            --bright-green: #38B000;
+            --sky-blue: #00A8E8;
+            --sunny-yellow: #FFD166;
+            --apple-red: #EF476F;
+            --grass-green: #06D6A0;
+            --royal-purple: #118AB2;
+            --bg-creme: #FDFBF7;
+            --text-main: #2B2D42;
+            --master-gold: #FFB703;
         }
 
         * {
             box-sizing: border-box;
-            font-family: 'Comic Sans MS', 'Chalkboard SE', sans-serif;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background-color: #E2E8F0; /* Soft background desktop view */
-            color: var(--text-color);
+            background-color: #F0F7F4;
+            color: var(--text-main);
             margin: 0;
-            padding: 10px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-        }
-
-        /* iPhone Canvas Box Wrapper */
-        .iphone-screen {
-            background-color: var(--bg-color);
-            width: 100%;
-            max-width: 412px; /* Emulates standard iPhone width */
-            height: 840px;
-            max-height: 92vh;
-            border-radius: 40px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-            border: 8px solid #1e293b; /* Sleek bezel */
-            padding: 16px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
-            overflow-y: auto;
-            position: relative;
+            align-items: center;
         }
 
         header {
             text-align: center;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             background: white;
-            padding: 8px 15px;
-            border-radius: 18px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-            border: 3px solid var(--sunny-yellow);
+            padding: 12px 25px;
+            border-radius: 25px;
+            box-shadow: 0 6px 0 #CBD5E1;
+            border: 3px solid var(--sky-blue);
+            width: 100%;
+            max-width: 800px;
         }
 
         h1 {
-            color: var(--happy-pink);
             margin: 0;
-            font-size: 1.5rem;
-            text-shadow: 1px 1px 0px var(--sunny-yellow);
+            font-size: 2rem;
+            color: var(--royal-purple);
+            text-shadow: 2px 2px 0px var(--sunny-yellow);
         }
 
-        /* Set Selection Bar Horizontal Scrollable on iPhone */
-        .set-selector-bar {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 12px;
-            overflow-x: auto;
-            padding-bottom: 6px;
-            -webkit-overflow-scrolling: touch;
+        /* MASTER GLOBAL LEADERBOARD RIBBON */
+        .master-hall-fame {
             width: 100%;
-        }
-        .set-selector-bar::-webkit-scrollbar {
-            height: 4px;
-        }
-        .set-selector-bar::-webkit-scrollbar-thumb {
-            background: #CBD5E1;
-            border-radius: 10px;
+            max-width: 800px;
+            background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+            border: 4px solid var(--master-gold);
+            border-radius: 22px;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            color: white;
         }
 
-        .set-btn {
-            background: white;
-            border: 2px solid var(--primary-blue);
-            padding: 6px 12px;
+        .master-label {
             font-size: 0.85rem;
             font-weight: bold;
+            color: #0F172A;
+            background: var(--master-gold);
+            padding: 6px 12px;
             border-radius: 12px;
-            cursor: pointer;
-            box-shadow: 0 3px 0 var(--primary-blue);
-            white-space: nowrap;
-            color: var(--primary-blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+            min-width: 110px;
         }
 
-        .set-btn.active {
-            background: var(--sunny-yellow);
-            color: var(--text-color);
-            border-color: #E2A000;
-            box-shadow: 0 3px 0 #E2A000;
-            transform: translateY(1px);
-        }
-
-        /* Smartphone Dynamic Workspace Stack */
-        .workspace-layout {
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            width: 100%;
+        .master-rail-bg {
+            height: 24px;
             flex-grow: 1;
-        }
-
-        /* HORIZONTAL REWARD TRACKER PILLAR */
-        .achievement-pillar {
-            width: 100%;
-            background: white;
-            border: 3px solid var(--primary-blue);
-            border-radius: 20px;
-            padding: 10px 15px;
-            display: flex;
-            flex-direction: row;
-            align-items: center;
-            position: relative;
-            height: 65px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
-            gap: 12px;
-        }
-
-        .track-rail-bg {
-            height: 16px;
-            background: #E2E8F0;
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 12px;
-            flex-grow: 1;
             position: relative;
-            border: 2px solid #CBD5E1;
-            margin-right: 25px; /* Give room for the crown */
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            overflow: visible;
         }
 
-        .track-rail-fill {
+        .master-rail-fill {
             height: 100%;
             width: 0%;
-            background: linear-gradient(to right, var(--happy-pink), var(--sunny-yellow));
+            background: linear-gradient(to right, #FFD166, #F77F00, #EF476F);
             border-radius: 12px;
             position: absolute;
             left: 0;
-            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            top: 0;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .avatar-rider {
+        .master-trophy-token {
             position: absolute;
             left: 0%;
             top: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 1.8rem;
-            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translate(-50%, -55%);
+            font-size: 2.2rem;
+            transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 10;
-            filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.1));
-            user-select: none;
+            filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.3));
         }
 
-        .goal-post {
-            position: absolute;
-            right: 8px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 1.6rem;
-            z-index: 5;
-            animation: floatBounce 1.5s infinite ease-in-out;
-        }
-
-        @keyframes floatBounce {
-            0%, 100% { transform: translateY(-50%) translateY(0); }
-            50% { transform: translateY(-50%) translateY(-4px); }
-        }
-
-        .pillar-label {
-            font-size: 0.75rem;
+        .master-score-badge {
+            font-size: 1.1rem;
             font-weight: bold;
-            color: #4A5568;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            min-width: 65px;
-            text-align: left;
-            line-height: 1.1;
+            color: var(--master-gold);
+            min-width: 75px;
+            text-align: right;
         }
 
-        /* Right Side Gameboard Panel */
-        .gameboard {
+        /* Category Tabs Layout Split */
+        .stage-map {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .map-node-btn {
             background: white;
-            border-radius: 24px;
-            flex-grow: 1;
-            padding: 16px;
-            box-shadow: 0 6px 16px rgba(0,0,0,0.05);
-            border: 3px solid #E2E8F0;
+            border: 3px solid #64748B;
+            padding: 10px 14px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #64748B;
+            transition: all 0.1s ease;
+            color: #334155;
+            flex: 1 1 calc(20% - 8px);
+            min-width: 90px;
             text-align: center;
+        }
+
+        .map-node-btn.active {
+            color: white;
+            transform: translateY(3px);
+        }
+
+        .map-node-btn[data-lvl="1"].active { background: #EF476F; border-color: #D62246; box-shadow: 0 1px 0 #D62246; }
+        .map-node-btn[data-lvl="2"].active { background: #F77F00; border-color: #C16200; box-shadow: 0 1px 0 #C16200; }
+        .map-node-btn[data-lvl="3"].active { background: #FFB703; border-color: #FB8500; box-shadow: 0 1px 0 #FB8500; color: #023047; }
+        .map-node-btn[data-lvl="4"].active { background: #06D6A0; border-color: #05B386; box-shadow: 0 1px 0 #05B386; }
+        .map-node-btn[data-lvl="5"].active { background: #7209B7; border-color: #56038D; box-shadow: 0 1px 0 #56038D; }
+
+        /* Main Display Workspace */
+        .adventure-deck {
+            background: var(--bg-creme);
+            border-radius: 30px;
+            max-width: 800px;
+            width: 100%;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border: 4px solid #E2E8F0;
+        }
+
+        /* Horizontal Category Ribbon Component */
+        .reward-tracker-ribbon {
+            width: 100%;
+            background: #EDF2F7;
+            border: 3px solid #4A5568;
+            border-radius: 20px;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .badge-title {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: white;
+            background: #4A5568;
+            padding: 5px 8px;
+            border-radius: 8px;
+            text-transform: uppercase;
+        }
+
+        .trail-path-bg {
+            height: 22px;
+            flex-grow: 1;
+            background: #CBD5E1;
+            border-radius: 11px;
+            position: relative;
+            border: 1px solid #94A3B8;
+        }
+
+        .trail-path-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(to right, #06D6A0, #4CC9F0);
+            border-radius: 11px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            transition: width 0.3s ease;
+        }
+
+        .walker-token {
+            position: absolute;
+            left: 0%;
+            top: 50%;
+            transform: translate(-50%, -55%);
+            font-size: 2rem;
+            transition: left 0.3s ease;
+            z-index: 10;
+        }
+
+        .destination-chest {
+            font-size: 1.6rem;
+            flex-shrink: 0;
+        }
+
+        /* Question Frame Elements */
+        .question-box {
+            text-align: center;
+            background: white;
+            border: 3px dashed #CBD5E1;
+            border-radius: 20px;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between;
         }
 
-        /* Star Tracker Bar */
-        .star-tracker {
-            display: flex;
-            justify-content: center;
-            gap: 2px;
-            margin-bottom: 8px;
-            background: #F0F4F8;
-            padding: 6px;
-            border-radius: 14px;
-            flex-wrap: wrap;
-            width: 100%;
-        }
-
-        .star {
-            font-size: 0.85rem;
-            color: #CBD5E1;
-            transition: transform 0.2s ease;
-        }
-
-        .star.earned {
-            color: var(--sunny-yellow);
-            transform: scale(1.1);
-        }
-
-        .badge-info {
-            background: #EBF5FF;
+        .progress-tag {
+            background: #E2E8F0;
             padding: 4px 12px;
-            border-radius: 10px;
+            border-radius: 8px;
+            font-size: 0.9rem;
             font-weight: bold;
-            font-size: 0.85rem;
             display: inline-block;
-            margin-bottom: 8px;
-            color: var(--primary-blue);
+            margin-bottom: 15px;
         }
 
-        /* Vertical column presentation setup optimized for mobile viewport */
+        /* AUTHENTIC MATH COLUMN METHOD STYLING */
         .column-math-container {
             display: inline-block;
-            font-size: 3.5rem;
+            font-family: 'Courier New', Courier, monospace;
             font-weight: bold;
-            font-family: monospace;
-            color: var(--primary-blue);
-            margin: 10px auto;
-            text-align: right;
-            position: relative;
-            padding-right: 15px;
-        }
-
-        .math-row {
-            letter-spacing: 4px;
+            font-size: 3.5rem;
+            color: #1D3557;
             line-height: 1.1;
-        }
-
-        .plus-sign {
-            position: absolute;
-            left: -45px;
-            bottom: 55px;
-            color: var(--happy-pink);
-        }
-
-        .equals-bar {
-            border-bottom: 5px solid var(--text-color);
-            margin-top: 2px;
-            margin-bottom: 5px;
-            width: 120%;
-            display: inline-block;
-        }
-
-        .question-mark-box {
-            color: #CBD5E1;
             text-align: right;
-            font-size: 3.5rem;
-            font-weight: bold;
-            letter-spacing: 4px;
+            margin: 10px 0 25px 0;
+            padding: 10px 20px;
+            background: #F8FAFC;
+            border-radius: 15px;
+            border: 2px solid #E2E8F0;
         }
 
-        /* Answer Buttons Selection Grid layout adjusted for mobile finger taps */
-        .options-grid {
+        .column-row {
+            display: flex;
+            justify-content: flex-end;
+            letter-spacing: 6px;
+            position: relative;
+            min-width: 140px;
+        }
+
+        .column-row.operator-row {
+            border-bottom: 5px solid #1D3557;
+            padding-bottom: 4px;
+        }
+
+        .column-operator {
+            position: absolute;
+            left: 0;
+            bottom: 4px;
+            font-size: 3rem;
+        }
+
+        .column-result-space {
+            letter-spacing: 6px;
+            color: var(--sky-blue);
+            padding-top: 6px;
+            font-size: 3.5rem;
+            min-height: 4rem;
+            text-align: right;
+            font-weight: 900;
+        }
+
+        /* Option Selection Grids */
+        .answers-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
-            margin-top: 10px;
+            gap: 15px;
+            margin-top: 15px;
             width: 100%;
         }
 
-        .ans-btn {
+        .choice-btn {
             background: white;
-            border: 3px solid #64748B;
-            border-radius: 16px;
-            padding: 10px;
-            font-size: 1.8rem;
+            border: 3px solid #4A5568;
+            border-radius: 20px;
+            padding: 16px;
+            font-size: 2rem;
             font-weight: bold;
             cursor: pointer;
-            box-shadow: 0 4px 0 #64748B;
+            box-shadow: 0 5px 0 #4A5568;
             transition: all 0.1s;
         }
+        .choice-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #4A5568; }
 
-        .ans-btn:active {
-            transform: translateY(2px);
-            box-shadow: 0 2px 0 #64748B;
+        /* DYNAMIC CONCRETE COUNTER COMPONENT */
+        .visual-aid-arena {
+            background: #FFF;
+            border: 2px dashed #BEE3F8;
+            border-radius: 15px;
+            padding: 15px;
+            margin-top: 25px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
         }
-
-        /* Feedback Display Text block */
-        .cheer-msg {
-            background: #E8F5E9;
-            color: var(--bright-green);
-            border: 2px solid #A5D6A7;
+        
+        .counter-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            max-width: 45%;
+            justify-content: center;
             padding: 8px;
-            border-radius: 12px;
-            margin-top: 10px;
+            border-radius: 10px;
+        }
+        .group-left { background-color: #EBF8FF; border: 1px solid #BEE3F8; }
+        .group-right { background-color: #FFFAF0; border: 1px solid #FEEBC8; }
+
+        .alert-cheer {
+            background: #E8F5E9;
+            color: #1B5E20;
+            border: 2px solid #C8E6C9;
+            padding: 12px;
+            border-radius: 15px;
+            margin-top: 15px;
             font-weight: bold;
-            font-size: 0.95rem;
+            text-align: center;
             display: none;
+            font-size: 1.1rem;
             width: 100%;
         }
 
-        .finish-screen {
-            padding: 15px 5px;
-            width: 100%;
-        }
-
-        .start-btn {
-            background: var(--bright-green);
+        .quiz-end-card { text-align: center; padding: 25px 10px; }
+        .action-start-btn {
+            background: #06D6A0;
             color: white;
             border: none;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             font-weight: bold;
-            padding: 12px 30px;
-            border-radius: 20px;
+            padding: 12px 35px;
+            border-radius: 18px;
+            box-shadow: 0 5px 0 #05B386;
             cursor: pointer;
-            box-shadow: 0 4px 0 #2E7D32;
         }
+        .action-start-btn:active { transform: translateY(2px); box-shadow: 0 3px 0 #05B386; }
 
-        .start-btn:active {
-            transform: translateY(2px);
-            box-shadow: 0 2px 0 #2E7D32;
-        }
-
-        .correct-flash {
-            animation: successFlash 0.3s ease-out;
-        }
-
-        @keyframes successFlash {
-            0%, 100% { background-color: white; }
-            50% { background-color: #E8F5E9; }
-        }
+        .celebrate-bounce { animation: screenJump 0.2s ease-in-out 2; }
+        @keyframes screenJump { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+        
+        .hall-fame-pop { animation: goldFlash 0.4s ease-in-out; }
+        @keyframes goldFlash { 0%, 100% { background: #1E293B; } 50% { background: #FFB703; transform: scale(1.02); } }
     </style>
 </head>
 <body>
 
-    <div class="iphone-screen">
-        <header>
-            <h1>🎈 Magic Maths Quest! 🎈</h1>
-        </header>
+    <header>
+        <h1>🌈 Addition Adventure Quest! 🌈</h1>
+    </header>
 
-        <div class="set-selector-bar">
-            <button class="set-btn active" onclick="selectSetRange(this, 1, 10)">Nums 1 - 10</button>
-            <button class="set-btn" onclick="selectSetRange(this, 10, 20)">Nums 10 - 20</button>
-            <button class="set-btn" onclick="selectSetRange(this, 20, 40)">Nums 20 - 40</button>
-            <button class="set-btn" onclick="selectSetRange(this, 40, 60)">Nums 40 - 60</button>
-            <button class="set-btn" onclick="selectSetRange(this, 60, 80)">Nums 60 - 80</button>
-            <button class="set-btn" onclick="selectSetRange(this, 80, 100)">Nums 80 - 100</button>
+    <div class="master-hall-fame" id="global-board">
+        <div class="master-label" id="global-rank">Recruit</div>
+        <div class="master-rail-bg">
+            <div id="master-fill" class="master-rail-fill"></div>
+            <div id="master-trophy" class="master-trophy-token">🎖️</div>
+        </div>
+        <div class="master-score-badge" id="master-txt-score">0 / 50</div>
+    </div>
+
+    <div class="stage-map">
+        <button class="map-node-btn active" data-lvl="1" onclick="switchAdditionCategoryTab(this, 1)">+1 Quest</button>
+        <button class="map-node-btn" data-lvl="2" onclick="switchAdditionCategoryTab(this, 2)">+2 Quest</button>
+        <button class="map-node-btn" data-lvl="3" onclick="switchAdditionCategoryTab(this, 3)">+3 Quest</button>
+        <button class="map-node-btn" data-lvl="4" onclick="switchAdditionCategoryTab(this, 4)">+4 Quest</button>
+        <button class="map-node-btn" data-lvl="5" onclick="switchAdditionCategoryTab(this, 5)">+5 Quest</button>
+    </div>
+
+    <div class="adventure-deck">
+        <div class="reward-tracker-ribbon">
+            <div class="badge-title" id="reward-lbl">Quest Base</div>
+            <div class="trail-path-bg">
+                <div id="reward-fill" class="trail-path-fill"></div>
+                <div id="reward-walker" class="walker-token">🏃</div>
+            </div>
+            <div class="destination-chest">🎁</div>
         </div>
 
-        <div class="workspace-layout">
-            
-            <div class="achievement-pillar">
-                <div class="pillar-label" id="rewardLabel">Ready!</div>
-                <div class="track-rail-bg">
-                    <div id="rewardRailFill" class="track-rail-fill" style="width: 0%;"></div>
-                    <div id="rewardAvatar" class="avatar-rider" style="left: 0%;">🎈</div>
-                </div>
-                <div class="goal-post">👑</div>
-            </div>
-
-            <div class="gameboard" id="gameArena">
-            </div>
-
-        </div>
+        <div id="game-arena-content"></div>
     </div>
 
     <script>
-        let currentMin = 1;
-        let currentMax = 10;
+        let currentLevelCategory = 1; 
+        
+        let globalTotalScore = 0;
+        let categoriesBeatenFlags = { 1: false, 2: false, 3: false, 4: false, 5: false };
 
         let gameState = {
-            questionIndex: 0,
-            starCount: 0,
-            totalNeeded: 20,
+            currentIdx: 0,
+            correctCount: 0,
+            totalCount: 10,
             pool: []
         };
 
-        const rewardsCheers = [
-            "⭐ Brilliant! You are super smart! ⭐",
-            "🌈 Wow! Magic math power! 🌈",
-            "🎉 Yay! You got it right! 🎉",
-            "🎈 Pop! Awesome job! 🎈",
-            "🚀 High five! Flying higher! 🚀"
+        const cheeringPhrases = [
+            "⭐ Fantastic! You found the answer! ⭐",
+            "🚀 Zoom! Rocket power correct! 🚀",
+            "🎈 Yay! Outstanding counting! 🎈",
+            "🎉 Brilliant! You are a math star! 🎉",
+            "💎 Diamond Sparkle Job! 💎"
         ];
 
-        function selectSetRange(element, minVal, maxVal) {
-            document.querySelectorAll('.set-selector-bar .set-btn').forEach(b => b.classList.remove('active'));
-            if(element) element.classList.add('active');
-
-            currentMin = minVal;
-            currentMax = maxVal;
-            startNewSetSession();
+        function switchAdditionCategoryTab(btnDom, targetCategoryNum) {
+            document.querySelectorAll('.stage-map .map-node-btn').forEach(b => b.classList.remove('active'));
+            if(btnDom) btnDom.classList.add('active');
+            currentLevelCategory = targetCategoryNum;
+            initiateQuestSession();
         }
 
-        function startNewSetSession() {
-            gameState.questionIndex = 0;
-            gameState.starCount = 0;
-            gameState.pool = buildSetQuestions(currentMin, currentMax, gameState.totalNeeded);
-            
-            renderWorkspaceScreen();
-            updateRewardPillarGraphic();
+        function initiateQuestSession() {
+            gameState.currentIdx = 0;
+            gameState.correctCount = 0;
+            gameState.pool = buildRandomAdditionDataset(currentLevelCategory, gameState.totalCount);
+            renderCurrentMathCard();
+            refreshVisualTrailProgress();
+            updateMasterGlobalRewardBar();
         }
 
-        function buildSetQuestions(min, max, count) {
+        function buildRandomAdditionDataset(constantAdder, count) {
             let questions = [];
-            for (let i = 0; i < count; i++) {
-                let num1, num2, answer;
+            
+            while(questions.length < count) {
+                let addendA = Math.floor(Math.random() * 10); 
+                let addendB = constantAdder; 
 
-                if (max <= 20) {
-                    num1 = Math.floor(Math.random() * (max - min + 1)) + min;
-                    num2 = Math.floor(Math.random() * 9) + 1;
-                } else {
-                    num1 = Math.floor(Math.random() * (max - min + 1)) + min;
-                    num2 = Math.floor(Math.random() * 12) + 1;
-                }
-                answer = num1 + num2;
-
-                // Create a pool of distinct fake options
-                let optionsSet = new Set([answer]);
-                while(optionsSet.size < 4) {
-                    let variance = Math.floor(Math.random() * 10) - 5; // offset by -5 to +4
-                    let fakeAns = answer + variance;
-                    if(fakeAns > 0 && fakeAns !== answer) {
-                        optionsSet.add(fakeAns);
+                let sumResult = addendA + addendB;
+                
+                let choicesSet = new Set([sumResult]);
+                while(choicesSet.size < 4) {
+                    let offsetValue = sumResult + (Math.floor(Math.random() * 7) - 3);
+                    if(offsetValue >= 0 && offsetValue !== sumResult) {
+                        choicesSet.add(offsetValue);
                     }
                 }
                 
-                // Convert set to array and shuffle options
-                let optionsArr = Array.from(optionsSet).sort(() => Math.random() - 0.5);
-
                 questions.push({
-                    num1: num1,
-                    num2: num2,
-                    answer: answer,
-                    options: optionsArr
+                    numA: addendA,
+                    numB: addendB,
+                    correct: sumResult,
+                    options: Array.from(choicesSet).sort((x,y) => x - y)
                 });
             }
             return questions;
         }
 
-        function renderWorkspaceScreen() {
-            const arena = document.getElementById('gameArena');
-            
-            if (gameState.questionIndex >= gameState.totalNeeded) {
-                // Render completion layout
-                arena.innerHTML = `
-                    <div class="finish-screen">
-                        <h2>🎉 Quest Completed! 🎉</h2>
-                        <p>Incredible job! You mastered this set!</p>
-                        <button class="start-btn" onclick="startNewSetSession()">Play Again 🔄</button>
-                    </div>
-                `;
-                return;
-            }
+        function renderCurrentMathCard() {
+            const rootContainer = document.getElementById('game-arena-content');
+            const data = gameState.pool[gameState.currentIdx];
 
-            const currentQ = gameState.pool[gameState.questionIndex];
+            let buttonsHTML = '';
+            data.options.forEach(opt => {
+                buttonsHTML += `<button class="choice-btn" onclick="submitAdditionChoice(${opt}, ${data.correct})">${opt}</button>`;
+            });
 
-            // Render star tracker bubbles
-            let starsHTML = '';
-            for(let i=0; i < gameState.totalNeeded; i++) {
-                starsHTML += `<span class="star ${i < gameState.starCount ? 'earned' : ''}">★</span>`;
-            }
+            let leftCounters = '🔷'.repeat(data.numA);
+            let rightCounters = '🔶'.repeat(data.numB);
 
-            arena.innerHTML = `
-                <div class="star-tracker">${starsHTML}</div>
-                <div class="badge-info">Question ${gameState.questionIndex + 1} of ${gameState.totalNeeded}</div>
-                
-                <div class="column-math-container">
-                    <div class="math-row">${String(currentQ.num1).padStart(2, ' ')}</div>
-                    <div class="math-row"><span class="plus-sign">+</span>${String(currentQ.num2).padStart(2, ' ')}</div>
-                    <div class="equals-bar"></div>
-                    <div class="question-mark-box" id="mathOutput">?</div>
+            let counterSectionHTML = `
+                <div class="visual-aid-arena">
+                    <div class="counter-group group-left">${leftCounters || '0'}</div>
+                    <span style="font-size:1.5rem; font-weight:bold; align-self:center;">+</span>
+                    <div class="counter-group group-right">${rightCounters || '0'}</div>
                 </div>
+            `;
 
-                <div class="cheer-msg" id="feedbackBar"></div>
+            let strA = data.numA.toString();
+            let strB = data.numB.toString();
+            let maxLength = Math.max(strA.length, strB.length);
+            
+            let formattedA = strA.padStart(maxLength, ' ');
+            let formattedB = strB.padStart(maxLength, ' ');
 
-                <div class="options-grid">
-                    ${currentQ.options.map(opt => `
-                        <button class="ans-btn" onclick="checkUserAnswer(${opt}, this)">${opt}</button>
-                    `).join('')}
+            rootContainer.innerHTML = `
+                <div class="question-box">
+                    <div class="progress-tag">Question ${gameState.currentIdx + 1} of ${gameState.totalCount}</div>
+                    
+                    <div class="column-math-container">
+                        <div class="column-row">${formattedA.replace(/ /g, '&nbsp;')}</div>
+                        <div class="column-row operator-row">
+                            <span class="column-operator">+</span>
+                            ${formattedB.replace(/ /g, '&nbsp;')}
+                        </div>
+                        <div class="column-result-space">?</div>
+                    </div>
+
+                    <div class="answers-grid">${buttonsHTML}</div>
+                    <div class="alert-cheer" id="quest-cheer-box"></div>
+                    ${counterSectionHTML}
                 </div>
             `;
         }
 
-        function checkUserAnswer(selected, buttonElement) {
-            const currentQ = gameState.pool[gameState.questionIndex];
-            const feedback = document.getElementById('feedbackBar');
-            const mathOutput = document.getElementById('mathOutput');
-            const arena = document.getElementById('gameArena');
+        function submitAdditionChoice(userClicked, correctValue) {
+            const workspaceContainer = document.querySelector('.adventure-deck');
+            const cheerBox = document.getElementById('quest-cheer-box');
 
-            if (selected === currentQ.answer) {
-                // Correct!
-                gameState.starCount++;
-                mathOutput.innerText = currentQ.answer;
-                mathOutput.style.color = "var(--bright-green)";
+            if(userClicked === correctValue) {
+                gameState.correctCount++;
+                workspaceContainer.classList.add('celebrate-bounce');
+                setTimeout(() => workspaceContainer.classList.remove('celebrate-bounce'), 250);
                 
-                feedback.innerText = rewardsCheers[Math.floor(Math.random() * rewardsCheers.length)];
-                feedback.style.display = "block";
-                arena.classList.add('correct-flash');
-
-                // Disable buttons instantly to prevent double taps
-                document.querySelectorAll('.ans-btn').forEach(b => b.disabled = true);
-
-                updateRewardPillarGraphic();
-
-                setTimeout(() => {
-                    arena.classList.remove('correct-flash');
-                    gameState.questionIndex++;
-                    renderWorkspaceScreen();
-                }, 1500);
-
+                cheerBox.innerText = cheeringPhrases[Math.floor(Math.random() * cheeringPhrases.length)];
+                cheerBox.style.display = "block";
             } else {
-                // Incorrect - shake or change style of clicked button slightly
-                buttonElement.style.backgroundColor = "#FFCDD2";
-                buttonElement.style.borderColor = "var(--happy-pink)";
-                buttonElement.disabled = true;
+                if(cheerBox) cheerBox.style.display = "none";
+            }
+
+            gameState.currentIdx++;
+            refreshVisualTrailProgress();
+
+            setTimeout(() => {
+                if(gameState.currentIdx < gameState.totalCount) {
+                    renderCurrentMathCard();
+                } else {
+                    processCategoryCompletionCalculations();
+                }
+            }, 600);
+        }
+
+        function refreshVisualTrailProgress() {
+            const fill = document.getElementById('reward-fill');
+            const walker = document.getElementById('reward-walker');
+            const label = document.getElementById('reward-lbl');
+
+            let fillPercentage = Math.round((gameState.currentIdx / gameState.totalCount) * 100);
+            fill.style.width = `${fillPercentage}%`;
+            walker.style.left = `${fillPercentage}%`;
+
+            let stepCount = gameState.correctCount;
+            if(stepCount === 0) { walker.innerText = "🏃"; label.innerText = `Track: Start`; }
+            else if(stepCount < 4) { walker.innerText = "👟"; label.innerText = "Marching!"; }
+            else if(stepCount < 7) { walker.innerText = "🚲"; label.innerText = "Halfway!"; }
+            else if(stepCount < 10) { walker.innerText = "🚀"; label.innerText = "Closing In!"; }
+            else { walker.innerText = "🎁"; label.innerText = "Set Cleared!"; }
+        }
+
+        function processCategoryCompletionCalculations() {
+            globalTotalScore += gameState.correctCount;
+            categoriesBeatenFlags[currentLevelCategory] = true;
+
+            const globalBoard = document.getElementById('global-board');
+            globalBoard.classList.add('hall-fame-pop');
+            setTimeout(() => globalBoard.classList.remove('hall-fame-pop'), 500);
+
+            updateMasterGlobalRewardBar();
+            renderQuestEndSummary();
+        }
+
+        function updateMasterGlobalRewardBar() {
+            const mFill = document.getElementById('master-fill');
+            const mTrophy = document.getElementById('master-trophy');
+            const mTxtScore = document.getElementById('master-txt-score');
+            const mRank = document.getElementById('global-rank');
+
+            let globalPercentage = Math.min(100, Math.round((globalTotalScore / 50) * 100));
+            mFill.style.width = `${globalPercentage}%`;
+            mTrophy.style.left = `${globalPercentage}%`;
+            mTxtScore.innerText = `${globalTotalScore} / 50`;
+
+            if(globalTotalScore === 0) {
+                mRank.innerText = "Recruit 🎒"; mRank.style.backgroundColor = "#94A3B8";
+            } else if (globalTotalScore < 15) {
+                mRank.innerText = "Explorer 🧭"; mRank.style.backgroundColor = "#3B82F6";
+            } else if (globalTotalScore < 30) {
+                mRank.innerText = "Knight ⚔️"; mRank.style.backgroundColor = "#F59E0B";
+            } else if (globalTotalScore < 45) {
+                mRank.innerText = "Hero 🔥"; mRank.style.backgroundColor = "#EF4444";
+            } else if (globalTotalScore < 50) {
+                mRank.innerText = "Mythic ⚡"; mRank.style.backgroundColor = "#8B5CF6";
+            } else {
+                mRank.innerText = "CHAMPION 👑"; mRank.style.backgroundColor = "#10B981"; mTrophy.innerText = "🏆";
             }
         }
 
-        function updateRewardPillarGraphic() {
-            const pct = (gameState.starCount / gameState.totalNeeded) * 100;
-            document.getElementById('rewardRailFill').style.width = pct + '%';
-            document.getElementById('rewardAvatar').style.left = pct + '%';
+        function renderQuestEndSummary() {
+            const rootContainer = document.getElementById('game-arena-content');
+            let successRatio = Math.round((gameState.correctCount / gameState.totalCount) * 100);
+            let performanceHTML = '';
 
-            const label = document.getElementById('rewardLabel');
-            if (pct === 0) label.innerText = "Ready!";
-            else if (pct < 40) label.innerText = "Great Start!";
-            else if (pct < 75) label.innerText = "Halfway There!";
-            else if (pct < 100) label.innerText = "Almost King!";
-            else label.innerText = "Victory!";
+            if(successRatio === 100) {
+                performanceHTML = `<span style="font-size:4.5rem;">💎🏆💎</span><h2 style="color:var(--grass-green);">PERFECT LEVEL ACCOMPLISHED!</h2><p>Terrific single digit addition calculating work! <b>+10 Points</b> have been wired straight to your Master Hall of Fame bar above!</p>`;
+            } else if (successRatio >= 70) {
+                performanceHTML = `<span style="font-size:4rem;">🌟🥈</span><h2>QUEST ATTAINED!</h2><p>Good job! You earned <b>+${gameState.correctCount} Points</b> for your Master Bar. Let's rerun the set to capture a flawless 10/10 prize!</p>`;
+            } else {
+                performanceHTML = `<span style="font-size:4rem;">🎒🏕️</span><h2>POINTS LOCKED IN</h2><p>You added <b>+${gameState.correctCount} Points</b> to your Master Bar. Let's do another run to boost your global score higher!</p>`;
+            }
+
+            rootContainer.innerHTML = `
+                <div class="quiz-end-card">
+                    ${performanceHTML}<br>
+                    <button class="action-start-btn" onclick="initiateQuestSession()">🔄 Replay This Category</button>
+                </div>
+            `;
         }
 
-        // Initialize game on load
-        window.onload = function() {
-            startNewSetSession();
-        };
+        window.onload = () => { initiateQuestSession(); };
     </script>
 </body>
 </html>
