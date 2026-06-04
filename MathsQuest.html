@@ -344,3 +344,91 @@
         }
 
         @keyframes successFlash {
+            0%, 100% { background-color: white; }
+            50% { background-color: #E8F5E9; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="iphone-screen">
+        <header>
+            <h1>🎈 Magic Maths Quest! 🎈</h1>
+        </header>
+
+        <div class="set-selector-bar">
+            <button class="set-btn active" onclick="selectSetRange(this, 1, 10)">Nums 1 - 10</button>
+            <button class="set-btn" onclick="selectSetRange(this, 10, 20)">Nums 10 - 20</button>
+            <button class="set-btn" onclick="selectSetRange(this, 20, 40)">Nums 20 - 40</button>
+            <button class="set-btn" onclick="selectSetRange(this, 40, 60)">Nums 40 - 60</button>
+            <button class="set-btn" onclick="selectSetRange(this, 60, 80)">Nums 60 - 80</button>
+            <button class="set-btn" onclick="selectSetRange(this, 80, 100)">Nums 80 - 100</button>
+        </div>
+
+        <div class="workspace-layout">
+            
+            <div class="achievement-pillar">
+                <div class="pillar-label" id="rewardLabel">Ready!</div>
+                <div class="track-rail-bg">
+                    <div id="rewardRailFill" class="track-rail-fill" style="width: 0%;"></div>
+                    <div id="rewardAvatar" class="avatar-rider" style="left: 0%;">🎈</div>
+                </div>
+                <div class="goal-post">👑</div>
+            </div>
+
+            <div class="gameboard" id="gameArena">
+                </div>
+
+        </div>
+    </div>
+
+    <script>
+        let currentMin = 1;
+        let currentMax = 10;
+
+        let gameState = {
+            questionIndex: 0,
+            starCount: 0,
+            totalNeeded: 20,
+            pool: []
+        };
+
+        const rewardsCheers = [
+            "⭐ Brilliant! You are super smart! ⭐",
+            "🌈 Wow! Magic math power! 🌈",
+            "🎉 Yay! You got it right! 🎉",
+            "🎈 Pop! Awesome job! 🎈",
+            "🚀 High five! Flying higher! 🚀"
+        ];
+
+        function selectSetRange(element, minVal, maxVal) {
+            document.querySelectorAll('.set-selector-bar .set-btn').forEach(b => b.classList.remove('active'));
+            if(element) element.classList.add('active');
+
+            currentMin = minVal;
+            currentMax = maxVal;
+            startNewSetSession();
+        }
+
+        function startNewSetSession() {
+            gameState.questionIndex = 0;
+            gameState.starCount = 0;
+            gameState.pool = buildSetQuestions(currentMin, currentMax, gameState.totalNeeded);
+            
+            renderWorkspaceScreen();
+            updateRewardPillarGraphic();
+        }
+
+        function buildSetQuestions(min, max, count) {
+            let questions = [];
+            for (let i = 0; i < count; i++) {
+                let num1, num2, answer;
+
+                if (max <= 20) {
+                    num1 = Math.floor(Math.random() * (max - min)) + min;
+                    num2 = Math.floor(Math.random() * 9) + 1;
+                } else {
+                    num1 = Math.floor(Math.random() * (max - min)) + min;
+                    num2 = Math.floor(Math.random() * 12) + 1;
+                }
+                answer =
