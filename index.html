@@ -10,6 +10,7 @@
             --success-green: #4CAF50;
             --pika-yellow: #FFDE00;
             --arena-purple: #7B1FA2;
+            --addition-sky: #00A8E8;
             --bg-gradient: linear-gradient(135deg, #FFFDEB 0%, #EBF5FF 100%);
             --text-dark: #2A2E45;
         }
@@ -57,13 +58,13 @@
             color: #4A5568;
         }
 
-        /* Menu Grid Layout - Updated to support 3 cards beautifully */
+        /* Menu Grid Layout - Upgraded to handle 4 cards elegantly */
         .menu-grid {
             display: flex;
             gap: 25px;
             flex-wrap: wrap;
             justify-content: center;
-            max-width: 1100px;
+            max-width: 1400px;
             width: 100%;
         }
 
@@ -72,7 +73,7 @@
             background: white;
             border-radius: 35px;
             padding: 35px;
-            width: 320px;
+            width: 300px;
             text-align: center;
             box-shadow: 0 12px 24px rgba(0,0,0,0.06);
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -88,18 +89,11 @@
             box-shadow: 0 20px 30px rgba(0,0,0,0.1);
         }
 
-        /* Specific Card Theme Borders */
-        .phonics-theme {
-            border: 5px solid var(--success-green);
-        }
-
-        .math-theme {
-            border: 5px solid var(--pika-yellow);
-        }
-
-        .arena-theme {
-            border: 5px solid var(--arena-purple);
-        }
+        /* Card Theme Borders */
+        .phonics-theme { border: 5px solid var(--success-green); }
+        .math-theme { border: 5px solid var(--pika-yellow); }
+        .arena-theme { border: 5px solid var(--arena-purple); }
+        .addition-theme { border: 5px solid var(--addition-sky); }
 
         /* Animated Card Icons */
         .card-icon {
@@ -115,7 +109,7 @@
 
         h2 {
             margin: 10px 0;
-            font-size: 1.7rem;
+            font-size: 1.6rem;
             color: var(--text-dark);
         }
 
@@ -139,20 +133,17 @@
             box-shadow: 0 6px 0 rgba(0,0,0,0.15);
         }
 
-        .phonics-color {
-            background-color: var(--success-green);
-        }
+        .phonics-color { background-color: var(--success-green); }
         .phonics-color:hover { background-color: #43A047; }
 
-        .math-color {
-            background-color: var(--primary-blue);
-        }
+        .math-color { background-color: var(--primary-blue); }
         .math-color:hover { background-color: #2F3EAF; }
 
-        .arena-color {
-            background-color: var(--arena-purple);
-        }
+        .arena-color { background-color: var(--arena-purple); }
         .arena-color:hover { background-color: #6A1B9A; }
+
+        .addition-color { background-color: var(--addition-sky); }
+        .addition-color:hover { background-color: #0086B8; }
 
         .launch-btn:active {
             transform: translateY(4px);
@@ -200,7 +191,16 @@
                 <h2>Legendary Arena</h2>
                 <p class="card-description">Conquer the harder 6 to 9 timetables! Catch Blastoise, Charizard, and Mewtwo in the 45 Qs Mega Quiz!</p>
             </div>
-            <a href="Multiplication2.html" class="launch-btn arena-color">Enter Stage 2! 👑</a>
+            <a href="Multiplication_Part2.html" class="launch-btn arena-color">Enter Stage 2! 👑</a>
+        </div>
+
+        <div class="portal-card addition-theme">
+            <div>
+                <span class="card-icon">🌈</span>
+                <h2>Addition Quest</h2>
+                <p class="card-description">Master Column Addition from 1 to 100 across 5 progressive sets. Track your scores in the global Hall of Fame!</p>
+            </div>
+            <a href="Addition_Arena.html" class="launch-btn addition-color">Play Addition! 🧮</a>
         </div>
 
     </div>
