@@ -2,208 +2,682 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🌟 Kids Learning Arcade Portal 🌟</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🌋 Legendary Multiplication Arena! 🌋</title>
     <style>
         :root {
-            --primary-blue: #3B4CCA;
-            --success-green: #4CAF50;
-            --pika-yellow: #FFDE00;
-            --arena-purple: #7B1FA2;
-            --bg-gradient: linear-gradient(135deg, #FFFDEB 0%, #EBF5FF 100%);
+            --arena-purple: #4A154B;
+            --arena-gold: #D4AF37;
+            --pika-blue: #3B4CCA;
+            --pika-red: #CC0000;
+            --bg-light: #F5F3F7;
             --text-dark: #2A2E45;
+            --success-green: #2E7D32;
+            
+            /* Pokeball Colors */
+            --great-ball: #3B4CCA;
+            --ultra-ball: #FFDE00;
+            --master-ball: #7B1FA2;
         }
 
         * {
             box-sizing: border-box;
             font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background: var(--bg-gradient);
+            background-color: var(--bg-light);
             color: var(--text-dark);
             margin: 0;
-            padding: 50px 20px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 100vh;
         }
 
-        /* Portal Main Header */
         header {
             text-align: center;
-            margin-bottom: 50px;
-            background: white;
-            padding: 20px 50px;
-            border-radius: 40px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            border: 4px solid var(--primary-blue);
-            max-width: 700px;
-            animation: bounceIn 1s ease-out;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #3A3D40 0%, #181719 100%);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 25px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            border: 4px solid var(--arena-gold);
+            width: 100%;
+            max-width: 1000px;
         }
 
         h1 {
-            color: var(--primary-blue);
             margin: 0;
-            font-size: 2.8rem;
-            text-shadow: 2px 2px 0px var(--pika-yellow);
+            font-size: 2.2rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
         }
 
-        .subtitle {
-            margin: 8px 0 0 0;
-            font-size: 1.3rem;
+        /* Nav Tabs Layout */
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+            max-width: 1000px;
+        }
+
+        .tab-btn {
+            background: white;
+            border: 3px solid #4A5568;
+            padding: 10px 20px;
+            font-size: 1.2rem;
             font-weight: bold;
+            border-radius: 18px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #4A5568;
+            transition: all 0.1s ease;
             color: #4A5568;
         }
 
-        /* Menu Grid Layout - Updated to support 3 cards beautifully */
-        .menu-grid {
-            display: flex;
-            gap: 25px;
-            flex-wrap: wrap;
-            justify-content: center;
-            max-width: 1100px;
-            width: 100%;
+        .tab-btn.active {
+            background: #4A5568;
+            color: white;
+            box-shadow: 0 4px 0 #1A202C;
+            transform: translateY(2px);
         }
 
-        /* Individual Interactive Game Cards */
-        .portal-card {
+        /* Unique Table styling colors */
+        .tab-btn[data-num="6"].active { background: #1E3A8A; border-color: #1D4ED8; box-shadow: 0 4px 0 #172554; }
+        .tab-btn[data-num="7"].active { background: #065F46; border-color: #047857; box-shadow: 0 4px 0 #022C22; }
+        .tab-btn[data-num="8"].active { background: #9A3412; border-color: #C2410C; box-shadow: 0 4px 0 #431407; }
+        .tab-btn[data-num="9"].active { background: #5B21B6; border-color: #6D28D9; box-shadow: 0 4px 0 #2E1065; }
+
+        .tab-btn.final-tab {
+            border-color: #831843;
+            color: #831843;
+            box-shadow: 0 4px 0 #831843;
+        }
+
+        .tab-btn.final-tab.active {
+            background: linear-gradient(to right, #9D174D, #831843);
+            color: white;
+            border-color: #500724;
+            box-shadow: 0 4px 0 #500724;
+        }
+
+        /* Workspace Framework Card */
+        .workspace-card {
             background: white;
-            border-radius: 35px;
-            padding: 35px;
-            width: 320px;
-            text-align: center;
-            box-shadow: 0 12px 24px rgba(0,0,0,0.06);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border-radius: 25px;
+            max-width: 1000px;
+            width: 100%;
+            padding: 25px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+            border: 3px solid #E2E8F0;
+        }
+
+        .view-pane { display: none; }
+        .view-pane.active { display: block; }
+
+        /* Learning Grid Layout */
+        .learning-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin-top: 15px;
+        }
+
+        @media (min-width: 768px) {
+            .learning-grid { grid-template-columns: 1fr 1.2fr; }
+        }
+
+        .chart-box {
+            background: #FAFAFA;
+            border: 2px solid #CBD5E1;
+            border-radius: 15px;
+            padding: 15px;
+        }
+
+        .chart-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 12px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-bottom: 1px dashed #E2E8F0;
+        }
+        .chart-row:last-child { border: none; }
+
+        .guiding-box {
+            background: #F8FAFC;
+            border: 2px solid #CBD5E1;
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        .guide-scroller {
+            max-height: 350px;
+            overflow-y: auto;
+        }
+
+        .guide-item {
+            background: white;
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border: 2px solid #E2E8F0;
+        }
+
+        .guide-expr { font-size: 1.3rem; font-weight: bold; }
+        .guide-input { width: 75px; padding: 6px; font-size: 1.2rem; text-align: center; border: 2px solid #CBD5E1; border-radius: 8px; }
+        .check-btn { background: #475569; color: white; border: none; padding: 6px 14px; border-radius: 8px; font-weight: bold; cursor: pointer; }
+
+        .guide-item.passed { border-color: #2E7D32; background: #E8F5E9; }
+
+        /* QUIZ SCREEN WORKSPACE WRAPPER */
+        .quiz-workspace {
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            position: relative;
-            overflow: hidden;
+            gap: 25px;
+            margin-top: 15px;
         }
 
-        .portal-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 30px rgba(0,0,0,0.1);
+        /* STICKY HORIZONTAL TRACKER DESIGN DEPLOYMENT */
+        .achievement-pillar {
+            width: 100%;
+            background: #F8FAFC;
+            border: 4px solid #475569;
+            border-radius: 22px;
+            padding: 12px 20px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 15px;
+            box-shadow: inset 0 2px 6px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 5px;
+            z-index: 100;
         }
 
-        /* Specific Card Theme Borders */
-        .phonics-theme {
-            border: 5px solid var(--success-green);
-        }
+        /* Ball Variant Themes */
+        .achievement-pillar.great-theme { border-color: #1D4ED8; background: #EFF6FF; }
+        .achievement-pillar.ultra-theme { border-color: #D97706; background: #FEF3C7; }
+        .achievement-pillar.master-theme { border-color: #6D28D9; background: #F5F3FF; }
+        .achievement-pillar.mega-theme { border-color: #B91C1C; background: #FEF2F2; }
 
-        .math-theme {
-            border: 5px solid var(--pika-yellow);
-        }
-
-        .arena-theme {
-            border: 5px solid var(--arena-purple);
-        }
-
-        /* Animated Card Icons */
-        .card-icon {
-            font-size: 4.5rem;
-            margin-bottom: 15px;
-            display: inline-block;
-            transition: transform 0.3s ease;
-        }
-
-        .portal-card:hover .card-icon {
-            transform: scale(1.2) rotate(5deg);
-        }
-
-        h2 {
-            margin: 10px 0;
-            font-size: 1.7rem;
-            color: var(--text-dark);
-        }
-
-        .card-description {
-            font-size: 1.05rem;
-            color: #64748B;
-            line-height: 1.5;
-            margin-bottom: 25px;
-        }
-
-        /* Play Buttons Configuration */
-        .launch-btn {
-            display: block;
-            text-decoration: none;
-            padding: 15px 20px;
-            font-size: 1.2rem;
+        .pillar-label {
+            font-size: 0.8rem;
             font-weight: bold;
             color: white;
+            min-width: 100px;
+            text-align: center;
+            padding: 6px 10px;
+            border-radius: 10px;
+            text-transform: uppercase;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        /* Dynamic matching system indicators */
+        .great-theme .pillar-label { background: #2563EB; }
+        .ultra-theme .pillar-label { background: #D97706; color: black; }
+        .master-theme .pillar-label { background: #7C3AED; }
+        .mega-theme .pillar-label { background: #DC2626; }
+
+        .track-rail-bg {
+            height: 26px;
+            flex-grow: 1;
+            background: #E2E8F0;
+            border-radius: 13px;
+            position: relative;
+            border: 2px solid #CBD5E1;
+            overflow: visible;
+        }
+
+        .track-rail-fill {
+            height: 100%;
+            width: 0%;
+            border-radius: 11px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Fill style definitions matching theme elements */
+        .great-theme .track-rail-fill { background: linear-gradient(to right, #3B82F6, #60A5FA); }
+        .ultra-theme .track-rail-fill { background: linear-gradient(to right, #F59E0B, #FBBF24); }
+        .master-theme .track-rail-fill { background: linear-gradient(to right, #8B5CF6, #A78BFA); }
+        .mega-theme .track-rail-fill { background: linear-gradient(to right, #EF4444, #F87171); }
+
+        .pokemon-avatar-rider {
+            position: absolute;
+            left: 0%;
+            top: 50%;
+            transform: translate(-50%, -55%);
+            font-size: 2.3rem;
+            transition: left 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10;
+            user-select: none;
+            filter: drop-shadow(0px 3px 4px rgba(0,0,0,0.2));
+        }
+
+        .goal-post-ball {
+            font-size: 2rem;
+            flex-shrink: 0;
+            animation: bounceTrackItem 1.4s infinite ease-in-out;
+        }
+
+        @keyframes bounceTrackItem {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-5px) scale(1.05); }
+        }
+
+        /* Quiz Card Configuration Nodes */
+        .quiz-content-node {
+            width: 100%;
+            background: #FAFAFA;
+            border: 3px dashed #CBD5E1;
             border-radius: 20px;
-            transition: all 0.1s ease;
-            box-shadow: 0 6px 0 rgba(0,0,0,0.15);
+            padding: 25px;
         }
 
-        .phonics-color {
-            background-color: var(--success-green);
+        .quiz-intro-screen { text-align: center; padding: 20px 10px; }
+        
+        .start-btn {
+            color: white;
+            border: none;
+            font-size: 1.4rem;
+            font-weight: bold;
+            padding: 14px 35px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: transform 0.1s;
         }
-        .phonics-color:hover { background-color: #43A047; }
+        .start-btn:active { transform: translateY(2px); }
 
-        .math-color {
-            background-color: var(--primary-blue);
-        }
-        .math-color:hover { background-color: #2F3EAF; }
+        .great-theme .start-btn { background: #2563EB; box-shadow: 0 5px 0 #1D4ED8; }
+        .ultra-theme .start-btn { background: #D97706; box-shadow: 0 5px 0 #B45309; }
+        .master-theme .start-btn { background: #7C3AED; box-shadow: 0 5px 0 #6D28D9; }
+        .mega-theme .start-btn { background: #DC2626; box-shadow: 0 5px 0 #B91C1C; }
 
-        .arena-color {
-            background-color: var(--arena-purple);
+        .card-question-box { text-align: center; }
+        .question-number-badge { background: #E2E8F0; padding: 4px 12px; border-radius: 10px; font-size: 1rem; font-weight: bold; display: inline-block; margin-bottom: 10px; }
+        
+        .math-statement {
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #1E293B;
+            margin: 15px 0;
         }
-        .arena-color:hover { background-color: #6A1B9A; }
 
-        .launch-btn:active {
-            transform: translateY(4px);
-            box-shadow: 0 2px 0 rgba(0,0,0,0.15);
+        .quiz-options-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
         }
 
-        /* Entry Animation */
-        @keyframes bounceIn {
-            0% { transform: scale(0.9); opacity: 0; }
-            70% { transform: scale(1.02); opacity: 1; }
-            100% { transform: scale(1); }
+        .option-btn {
+            background: white;
+            border: 3px solid #475569;
+            border-radius: 18px;
+            padding: 15px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #475569;
+            transition: all 0.1s;
         }
+        .option-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #475569; }
+
+        .cheer-box {
+            color: #1E293B;
+            padding: 12px;
+            border-radius: 12px;
+            margin-top: 15px;
+            font-weight: bold;
+            text-align: center;
+            display: none;
+            border: 2px solid #CBD5E1;
+        }
+        
+        .great-theme .cheer-box { background: #DBEAFE; color: #1E40AF; border-color: #BFDBFE; }
+        .ultra-theme .cheer-box { background: #FEF3C7; color: #92400E; border-color: #FDE68A; }
+        .master-theme .cheer-box { background: #F3E8FF; color: #6B21A8; border-color: #E9D5FF; }
+        .mega-theme .cheer-box { background: #FEE2E2; color: #991B1B; border-color: #FECACA; }
+
+        .quiz-finished-screen { text-align: center; padding: 20px; }
+
+        .arena-screen-shake { animation: arenaShake 0.2s ease-in-out 2; }
+        @keyframes arenaShake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>🌟 Kids Learning Portal 🌟</h1>
-        <p class="subtitle">Choose your adventure and start playing!</p>
+        <h1>🌋 Stage 2: Legendary Multiplication Arena! 🌋</h1>
     </header>
 
-    <div class="menu-grid">
-
-        <div class="portal-card phonics-theme">
-            <div>
-                <span class="card-icon">📚</span>
-                <h2>Phonics Academy</h2>
-                <p class="card-description">Master alphabet sounds, blending, and reading skills with interactive vocal challenges!</p>
-            </div>
-            <a href="Phonics.html" class="launch-btn phonics-color">Let's Read! 🚀</a>
-        </div>
-
-        <div class="portal-card math-theme">
-            <div>
-                <span class="card-icon">⚡</span>
-                <h2>Multiplication Land</h2>
-                <p class="card-description">Learn your 2 to 5 timetables with Pikachu, practice guiding questions, or tackle the 40 Qs Mega Quiz!</p>
-            </div>
-            <a href="Multiplication.html" class="launch-btn math-color">Start Stage 1! 🎯</a>
-        </div>
-
-        <div class="portal-card arena-theme">
-            <div>
-                <span class="card-icon">🌋</span>
-                <h2>Legendary Arena</h2>
-                <p class="card-description">Conquer the harder 6 to 9 timetables! Catch Blastoise, Charizard, and Mewtwo in the 45 Qs Mega Quiz!</p>
-            </div>
-            <a href="Multiplication_Part2.html" class="launch-btn arena-color">Enter Stage 2! 👑</a>
-        </div>
-
+    <div class="nav-tabs">
+        <button class="tab-btn active" data-num="6" onclick="activateStage2Tab(this, 'tab6', 6)">6× Table</button>
+        <button class="tab-btn" data-num="7" onclick="activateStage2Tab(this, 'tab7', 7)">7× Table</button>
+        <button class="tab-btn" data-num="8" onclick="activateStage2Tab(this, 'tab8', 8)">8× Table</button>
+        <button class="tab-btn" data-num="9" onclick="activateStage2Tab(this, 'tab9', 9)">9× Table</button>
+        <button class="tab-btn final-tab" onclick="activateStage2Tab(this, 'tabMega', 'mega')">💥 Legendary Mixed Mega Quiz (45 Qs)</button>
     </div>
 
+    <div class="workspace-card" id="appWorkspace"></div>
+
+    <script>
+        let currentTabKey = "tab6";
+        let currentTableNum = 6;
+
+        let arenaQuizState = {
+            currentQuestionIdx: 0,
+            scoreCount: 0,
+            totalQuestions: 15,
+            questionsArray: [],
+            targetTable: 6
+        };
+
+        // Table configurations for Ball type and Emoji goals
+        const tableThemes = {
+            6: { class: "great-theme", ball: "🔵", label: "Great Ball", runner: "💦", endText: "Blastoise" },
+            7: { class: "ultra-theme", ball: "🟡", label: "Ultra Ball", runner: "🦖", endText: "Tyranitar" },
+            8: { class: "ultra-theme", ball: "🟠", label: "Ultra Ball", runner: "🔥", endText: "Charizard" },
+            9: { class: "master-theme", ball: "🍇", label: "Master Ball", runner: "🔮", endText: "Mewtwo" },
+            'mega': { class: "mega-theme", ball: "👑", label: "Mega Champion", runner: "🐉", endText: "Rayquaza" }
+        };
+
+        const arenaCheers = [
+            "✨ Incredible Strike! Hit target! ✨",
+            "⚡ Legendary combination power! ⚡",
+            "☄️ Super Effective calculation! ☄️",
+            "🌟 Absolute Mastery! Keep driving! 🌟"
+        ];
+
+        function fetchRandomArenaCheer() {
+            return arenaCheers[Math.floor(Math.random() * arenaCheers.length)];
+        }
+
+        function pushArenaCheerAlert(targetId, msgText) {
+            const el = document.getElementById(targetId);
+            if(el) { el.innerText = msgText; el.style.display = "block"; }
+        }
+
+        function createFullTableArray(num) {
+            let output = [];
+            for(let i=1; i<=12; i++) { output.push({ factorA: i, factorB: num, product: i * num }); }
+            return output;
+        }
+
+        function generateRandomGuidingList(num) {
+            let list = [];
+            let sequence = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].sort(() => Math.random() - 0.5);
+            for(let i = 0; i < 10; i++) { list.push({ a: sequence[i], b: num, correct: sequence[i] * num }); }
+            return list;
+        }
+
+        function compileArenaQuizQuestions(tableKey, count) {
+            let list = [];
+            for (let i = 0; i < count; i++) {
+                let factorA, factorB;
+                if(tableKey === 'mega') {
+                    // Pulls mixed items from 6, 7, 8, or 9
+                    factorB = Math.floor(Math.random() * 4) + 6;
+                } else {
+                    factorB = tableKey;
+                }
+                factorA = Math.floor(Math.random() * 12) + 1; 
+                let correctValue = factorA * factorB;
+
+                let setupOptions = new Set([correctValue]);
+                while(setupOptions.size < 4) {
+                    let offshoot = correctValue + (Math.floor(Math.random() * 12) - 6);
+                    if(offshoot > 0 && offshoot !== correctValue) setupOptions.add(offshoot);
+                }
+                list.push({ textStr: `${factorA} × ${factorB} = ?`, correct: correctValue, selections: Array.from(setupOptions).sort((x,y) => x - y) });
+            }
+            return list;
+        }
+
+        function activateStage2Tab(btnElement, idString, targetNum) {
+            document.querySelectorAll('.nav-tabs .tab-btn').forEach(btn => btn.classList.remove('active'));
+            if (btnElement) btnElement.classList.add('active');
+            currentTabKey = idString; currentTableNum = targetNum;
+            buildArenaWorkspaceDOM();
+        }
+
+        function buildArenaWorkspaceDOM() {
+            const wrapper = document.getElementById('appWorkspace');
+            const cfg = tableThemes[currentTableNum];
+            
+            if(currentTableNum === 'mega') {
+                wrapper.innerHTML = `
+                    <div class="view-pane active">
+                        <h2 style="color:var(--pika-red); margin-top:0;">💥 The Ultimate Legendary Mega Arena Challenge</h2>
+                        <p>This grand evaluation randomizes multiplication factors across tables <b>6, 7, 8, and 9</b>. Complete all 45 problems to become a Legend!</p>
+                        
+                        <div class="quiz-workspace">
+                            <!-- UNIQUE INTERACTIVE REWARD BLOCK -->
+                            <div class="achievement-pillar ${cfg.class}">
+                                <div class="pillar-label" id="arena-label-mega">${cfg.label}</div>
+                                <div class="track-rail-bg">
+                                    <div id="arena-rail-fill-mega" class="track-rail-fill"></div>
+                                    <div id="arena-avatar-mega" class="pokemon-avatar-rider">🥚</div>
+                                </div>
+                                <div class="goal-post-ball">${cfg.ball}</div>
+                            </div>
+
+                            <div class="quiz-content-node">
+                                <div id="arena-quiz-box-mega">
+                                    <div class="quiz-intro-screen">
+                                        <span style="font-size:4rem;">🌋</span>
+                                        <h3>Are you brave enough to take on 45 Mega Questions?</h3>
+                                        <button class="start-btn" onclick="startArenaQuizSession('mega', 45)">Launch Mega Challenge</button>
+                                    </div>
+                                </div>
+                                <div class="cheer-box" id="arena-cheer-mega"></div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                let formulaRows = '';
+                createFullTableArray(currentTableNum).forEach(item => {
+                    formulaRows += `<div class="chart-row"><span>${item.factorA} × ${item.factorB}</span><span>=</span><span style="color:var(--pika-blue);">${item.product}</span></div>`;
+                });
+
+                let practiceItems = '';
+                generateRandomGuidingList(currentTableNum).forEach((prob, index) => {
+                    practiceItems += `
+                        <div class="guide-item" id="arena-g-item-${currentTableNum}-${index}">
+                            <div class="guide-expr">${prob.a} × ${prob.b} = </div>
+                            <div>
+                                <input type="number" class="guide-input" id="arena-g-input-${currentTableNum}-${index}" placeholder="?">
+                                <button class="check-btn" onclick="checkArenaWarmupAnswer(${currentTableNum}, ${index}, ${prob.correct})">Check</button>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                wrapper.innerHTML = `
+                    <div class="view-pane active">
+                        <h2 style="margin-top:0; color:#1E293B;">⚔️ Training Hub: Table of ${currentTableNum}</h2>
+                        
+                        <div class="learning-grid">
+                            <div>
+                                <h3 style="margin-top:0; color:#475569;">📋 1. Core Data Matrix</h3>
+                                <div class="chart-box">${formulaRows}</div>
+                            </div>
+                            <div>
+                                <h3 style="margin-top:0; color:#475569;">⌨️ 2. Rapid Warm-Up Drill</h3>
+                                <div class="guiding-box">
+                                    <div class="guide-scroller">${practiceItems}</div>
+                                    <div class="cheer-box" id="arena-cheer-guide-${currentTableNum}"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="margin-top:40px; border-top:4px dashed #CBD5E1; padding-top:25px;">
+                            <h3 style="color:#1E293B; margin-top:0;">🎯 3. Active Capture Challenge (15 Questions)</h3>
+                            
+                            <div class="quiz-workspace">
+                                <!-- UNIQUE INTERACTIVE REWARD BLOCK -->
+                                <div class="achievement-pillar ${cfg.class}">
+                                    <div class="pillar-label" id="arena-label-${currentTableNum}">${cfg.label}</div>
+                                    <div class="track-rail-bg">
+                                        <div id="arena-rail-fill-${currentTableNum}" class="track-rail-fill"></div>
+                                        <div id="arena-avatar-${currentTableNum}" class="pokemon-avatar-rider">💤</div>
+                                    </div>
+                                    <div class="goal-post-ball">${cfg.ball}</div>
+                                </div>
+
+                                <div class="quiz-content-node">
+                                    <div id="arena-quiz-box-${currentTableNum}">
+                                        <div class="quiz-intro-screen">
+                                            <h3>Earn your ${cfg.label} by beating this test!</h3>
+                                            <p>Answer 15 randomized questions perfectly to unlock the target!</p><br>
+                                            <button class="start-btn" onclick="startArenaQuizSession(${currentTableNum}, 15)">Begin Capture Quiz</button>
+                                        </div>
+                                    </div>
+                                    <div class="cheer-box" id="arena-cheer-quiz-${currentTableNum}"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function checkArenaWarmupAnswer(tableNum, index, targetResult) {
+            const textInput = document.getElementById(`arena-g-input-${tableNum}-${index}`);
+            const itemBox = document.getElementById(`arena-g-item-${tableNum}-${index}`);
+            if (parseInt(textInput.value) === targetResult) {
+                itemBox.classList.add('passed');
+                textInput.disabled = true;
+                
+                const currentCheerId = `arena-cheer-guide-${tableNum}`;
+                const cheerBoxElement = document.getElementById(currentCheerId);
+                if(cheerBoxElement) {
+                    cheerBoxElement.innerText = "⭐ Correct! Box cleared! ⭐";
+                    cheerBoxElement.style.display = "block";
+                    cheerBoxElement.style.backgroundColor = "#E8F5E9";
+                    cheerBoxElement.style.color = "#2E7D32";
+                }
+            } else {
+                textInput.style.borderColor = "var(--pika-red)";
+                setTimeout(() => { textInput.style.borderColor = "#CBD5E1"; }, 800);
+            }
+        }
+
+        function startArenaQuizSession(tableKey, qty) {
+            arenaQuizState.currentQuestionIdx = 0;
+            arenaQuizState.scoreCount = 0;
+            arenaQuizState.totalQuestions = qty;
+            arenaQuizState.targetTable = tableKey;
+            arenaQuizState.questionsArray = compileArenaQuizQuestions(tableKey, qty);
+            renderCurrentArenaQuestionCard();
+            updateArenaRewardBarGraphics();
+        }
+
+        function renderCurrentArenaQuestionCard() {
+            const elementBoxId = arenaQuizState.targetTable === 'mega' ? 'arena-quiz-box-mega' : `arena-quiz-box-${arenaQuizState.targetTable}`;
+            const domContainer = document.getElementById(elementBoxId);
+            const questionData = arenaQuizState.questionsArray[arenaQuizState.currentQuestionIdx];
+
+            let executionButtonsHTML = '';
+            questionData.selections.forEach(opt => {
+                executionButtonsHTML += `<button class="option-btn" onclick="evaluateArenaChoiceClick(${opt}, ${questionData.correct})">${opt}</button>`;
+            });
+
+            domContainer.innerHTML = `
+                <div class="card-question-box">
+                    <div class="question-number-badge">Challenge ${arenaQuizState.currentQuestionIdx + 1} of ${arenaQuizState.totalQuestions}</div>
+                    <div class="math-statement">${questionData.textStr}</div>
+                    <div class="quiz-options-layout">${executionButtonsHTML}</div>
+                </div>
+            `;
+        }
+
+        function evaluateArenaChoiceClick(clickedVal, actualVal) {
+            const mainframeCard = document.getElementById('appWorkspace');
+            const systemCheerId = arenaQuizState.targetTable === 'mega' ? 'arena-cheer-mega' : `arena-cheer-quiz-${arenaQuizState.targetTable}`;
+            
+            if(clickedVal === actualVal) {
+                arenaQuizState.scoreCount++;
+                mainframeCard.classList.add('arena-screen-shake');
+                setTimeout(() => mainframeCard.classList.remove('arena-screen-shake'), 200);
+                pushArenaCheerAlert(systemCheerId, fetchRandomArenaCheer());
+            } else {
+                const cBox = document.getElementById(systemCheerId);
+                if(cBox) cBox.style.display = "none";
+            }
+
+            arenaQuizState.currentQuestionIdx++;
+            updateArenaRewardBarGraphics();
+
+            if(arenaQuizState.currentQuestionIdx < arenaQuizState.totalQuestions) {
+                renderCurrentArenaQuestionCard();
+            } else {
+                computeArenaFinalSummaryReport();
+            }
+        }
+
+        function updateArenaRewardBarGraphics() {
+            const targetSuffix = arenaQuizState.targetTable === 'mega' ? 'mega' : arenaQuizState.targetTable;
+            const filledRail = document.getElementById(`arena-rail-fill-${targetSuffix}`);
+            const characterAvatar = document.getElementById(`arena-avatar-${targetSuffix}`);
+            const textHeaderTag = document.getElementById(`arena-label-${targetSuffix}`);
+
+            if(!filledRail || !characterAvatar) return;
+
+            const themeContext = tableThemes[arenaQuizState.targetTable];
+            let mathPercentage = Math.round((arenaQuizState.scoreCount / arenaQuizState.totalQuestions) * 100);
+            
+            filledRail.style.width = `${mathPercentage}%`;
+            characterAvatar.style.left = `${mathPercentage}%`;
+
+            if(arenaQuizState.scoreCount === 0) {
+                characterAvatar.innerText = "💤"; textHeaderTag.innerText = "Searching...";
+            } else if (mathPercentage < 40) {
+                characterAvatar.innerText = "👀"; textHeaderTag.innerText = "Spotted!";
+            } else if (mathPercentage < 75) {
+                characterAvatar.innerText = themeContext.runner; textHeaderTag.innerText = "Engaged!";
+            } else if (mathPercentage < 100) {
+                characterAvatar.innerText = "✨"; textHeaderTag.innerText = "Weakened!";
+            } else {
+                characterAvatar.innerText = "💥"; textHeaderTag.innerText = "CAPTURED!!";
+            }
+        }
+
+        function computeArenaFinalSummaryReport() {
+            const targetBoxId = arenaQuizState.targetTable === 'mega' ? 'arena-quiz-box-mega' : `arena-quiz-box-${arenaQuizState.targetTable}`;
+            const targetedContainer = document.getElementById(targetBoxId);
+            const contextTheme = tableThemes[arenaQuizState.targetTable];
+            let finalPercentageResult = Math.round((arenaQuizState.scoreCount / arenaQuizState.totalQuestions) * 100);
+            let displayHTML = '';
+
+            if(finalPercentageResult === 100) {
+                displayHTML = `<span style="font-size:4rem;">✨${contextTheme.ball}✨</span><h2 style="color:var(--success-green);">SUCCESSFUL CAPTURE!</h2><p>Incredible! You captured the Legendary <b>${contextTheme.endText}</b> with 100% precision!</p>`;
+            } else if (finalPercentageResult >= 70) {
+                displayHTML = `<span style="font-size:4rem;">💨💥</span><h2>TARGET ESCAPED!</h2><p>Great attempt! You scored ${arenaQuizState.scoreCount}/${arenaQuizState.totalQuestions}. The wild Pokémon broke free from the ball at the last second! Try again!</p>`;
+            } else {
+                displayHTML = `<span style="font-size:4rem;">🌋🌫️</span><h2 style="color:var(--pika-red);">BOUNCED OFF!</h2><p>The calculation power was blocked. Review the tables and try again!</p>`;
+            }
+
+            targetedContainer.innerHTML = `
+                <div class="quiz-finished-screen">
+                    ${displayHTML}<br>
+                    <button class="start-btn" onclick="startArenaQuizSession('${arenaQuizState.targetTable}', ${arenaQuizState.totalQuestions})">🔄 Re-enter Arena</button>
+                </div>
+            `;
+        }
+
+        window.onload = () => { buildArenaWorkspaceDOM(); };
+    </script>
 </body>
 </html>
