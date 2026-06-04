@@ -9,8 +9,8 @@
             --primary-blue: #3B4CCA;
             --success-green: #4CAF50;
             --pika-yellow: #FFDE00;
-            --arena-purple: #7B1FA2;
-            --addition-sky: #00A8E8;
+            --happy-pink: #FF006E;
+            --purple-magic: #8338EC;
             --bg-gradient: linear-gradient(135deg, #FFFDEB 0%, #EBF5FF 100%);
             --text-dark: #2A2E45;
         }
@@ -24,7 +24,7 @@
             background: var(--bg-gradient);
             color: var(--text-dark);
             margin: 0;
-            padding: 50px 20px;
+            padding: 40px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -34,14 +34,13 @@
         /* Portal Main Header */
         header {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 40px;
             background: white;
             padding: 20px 50px;
             border-radius: 40px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.05);
             border: 4px solid var(--primary-blue);
             max-width: 700px;
-            animation: bounceIn 1s ease-out;
         }
 
         h1 {
@@ -58,152 +57,255 @@
             color: #4A5568;
         }
 
-        /* Menu Grid Layout - Upgraded to handle 4 cards elegantly */
+        /* --- TWO MAIN CONTROLLER TABS --- */
+        .portal-tabs-container {
+            display: flex;
+            gap: 25px;
+            margin-bottom: 40px;
+            width: 100%;
+            max-width: 800px;
+            justify-content: center;
+        }
+
+        .main-tab-btn {
+            flex: 1;
+            max-width: 350px;
+            padding: 20px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            border: 5px solid;
+            border-radius: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            box-shadow: 0 8px 0 rgba(0,0,0,0.15);
+            transition: all 0.2s ease;
+            background: white;
+        }
+
+        .tab-phonic-btn {
+            border-color: var(--success-green);
+            color: var(--success-green);
+        }
+        .tab-phonic-btn:hover, .tab-phonic-btn.active {
+            background: var(--success-green);
+            color: white;
+        }
+
+        .tab-maths-btn {
+            border-color: var(--primary-blue);
+            color: var(--primary-blue);
+        }
+        .tab-maths-btn:hover, .tab-maths-btn.active {
+            background: var(--primary-blue);
+            color: white;
+        }
+
+        .main-tab-btn:active {
+            transform: translateY(4px);
+            box-shadow: 0 4px 0 rgba(0,0,0,0.15);
+        }
+
+        /* --- DISPLAY SECTION CONTAINER PANELS --- */
+        .portal-panel {
+            display: none; /* Hidden by default, toggled with JavaScript */
+            width: 100%;
+            max-width: 900px;
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        .portal-panel.active-panel {
+            display: block;
+        }
+
+        /* Card Menu Grid layout */
         .menu-grid {
             display: flex;
             gap: 25px;
             flex-wrap: wrap;
             justify-content: center;
-            max-width: 1400px;
             width: 100%;
         }
 
-        /* Individual Interactive Game Cards */
-        .portal-card {
+        /* Universal Learning Cards */
+        .game-card {
             background: white;
-            border-radius: 35px;
-            padding: 35px;
-            width: 300px;
+            border-radius: 30px;
+            padding: 25px;
+            width: 280px;
             text-align: center;
-            box-shadow: 0 12px 24px rgba(0,0,0,0.06);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            position: relative;
-            overflow: hidden;
+            transition: transform 0.2s ease;
         }
 
-        .portal-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 30px rgba(0,0,0,0.1);
+        .game-card:hover {
+            transform: translateY(-5px);
         }
 
-        /* Card Theme Borders */
-        .phonics-theme { border: 5px solid var(--success-green); }
-        .math-theme { border: 5px solid var(--pika-yellow); }
-        .arena-theme { border: 5px solid var(--arena-purple); }
-        .addition-theme { border: 5px solid var(--addition-sky); }
+        /* Card Color Profiles */
+        .card-green   { border: 4px solid var(--success-green); }
+        .card-pink    { border: 4px solid var(--happy-pink); }
+        .card-yellow  { border: 4px solid var(--pika-yellow); }
+        .card-blue    { border: 4px solid var(--primary-blue); }
+        .card-purple  { border: 4px solid var(--purple-magic); }
 
-        /* Animated Card Icons */
         .card-icon {
-            font-size: 4.5rem;
-            margin-bottom: 15px;
+            font-size: 3.5rem;
+            margin-bottom: 10px;
             display: inline-block;
-            transition: transform 0.3s ease;
-        }
-
-        .portal-card:hover .card-icon {
-            transform: scale(1.2) rotate(5deg);
         }
 
         h2 {
-            margin: 10px 0;
-            font-size: 1.6rem;
-            color: var(--text-dark);
+            margin: 5px 0;
+            font-size: 1.5rem;
         }
 
-        .card-description {
-            font-size: 1.05rem;
+        .card-desc {
+            font-size: 0.95rem;
             color: #64748B;
-            line-height: 1.5;
-            margin-bottom: 25px;
+            line-height: 1.4;
+            margin-bottom: 15px;
         }
 
-        /* Play Buttons Configuration */
+        /* Multi-colored Play Buttons */
         .launch-btn {
             display: block;
             text-decoration: none;
-            padding: 15px 20px;
-            font-size: 1.2rem;
+            padding: 12px 20px;
+            font-size: 1.1rem;
             font-weight: bold;
             color: white;
-            border-radius: 20px;
-            transition: all 0.1s ease;
-            box-shadow: 0 6px 0 rgba(0,0,0,0.15);
+            border-radius: 15px;
+            box-shadow: 0 4px 0 rgba(0,0,0,0.15);
         }
 
-        .phonics-color { background-color: var(--success-green); }
-        .phonics-color:hover { background-color: #43A047; }
-
-        .math-color { background-color: var(--primary-blue); }
-        .math-color:hover { background-color: #2F3EAF; }
-
-        .arena-color { background-color: var(--arena-purple); }
-        .arena-color:hover { background-color: #6A1B9A; }
-
-        .addition-color { background-color: var(--addition-sky); }
-        .addition-color:hover { background-color: #0086B8; }
+        .btn-green  { background-color: var(--success-green); }
+        .btn-pink   { background-color: var(--happy-pink); }
+        .btn-blue   { background-color: var(--primary-blue); }
+        .btn-purple { background-color: var(--purple-magic); }
 
         .launch-btn:active {
-            transform: translateY(4px);
+            transform: translateY(2px);
             box-shadow: 0 2px 0 rgba(0,0,0,0.15);
         }
 
-        /* Entry Animation */
-        @keyframes bounceIn {
-            0% { transform: scale(0.9); opacity: 0; }
-            70% { transform: scale(1.02); opacity: 1; }
-            100% { transform: scale(1); }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>🌟 Kids Learning Portal 🌟</h1>
-        <p class="subtitle">Choose your adventure and start playing!</p>
+        <h1>🌟 Kids Learning Arcade 🌟</h1>
+        <p class="subtitle">Pick a category to explore your gaming levels!</p>
     </header>
 
-    <div class="menu-grid">
-
-        <div class="portal-card phonics-theme">
-            <div>
-                <span class="card-icon">📚</span>
-                <h2>Phonics Academy</h2>
-                <p class="card-description">Master alphabet sounds, blending, and reading skills with interactive vocal challenges!</p>
-            </div>
-            <a href="Phonics.html" class="launch-btn phonics-color">Let's Read! 🚀</a>
-        </div>
-
-        <div class="portal-card math-theme">
-            <div>
-                <span class="card-icon">⚡</span>
-                <h2>Multiplication Land</h2>
-                <p class="card-description">Learn your 2 to 5 timetables with Pikachu, practice guiding questions, or tackle the 40 Qs Mega Quiz!</p>
-            </div>
-            <a href="Multiplication.html" class="launch-btn math-color">Start Stage 1! 🎯</a>
-        </div>
-
-        <div class="portal-card arena-theme">
-            <div>
-                <span class="card-icon">🌋</span>
-                <h2>Legendary Arena</h2>
-                <p class="card-description">Conquer the harder 6 to 9 timetables! Catch Blastoise, Charizard, and Mewtwo in the 45 Qs Mega Quiz!</p>
-            </div>
-            <a href="Multiplication2.html" class="launch-btn arena-color">Enter Stage 2! 👑</a>
-        </div>
-
-        <div class="portal-card addition-theme">
-            <div>
-                <span class="card-icon">🌈</span>
-                <h2>Addition Quest</h2>
-                <p class="card-description">Master Column Addition from 1 to 100 across 5 progressive sets. Track your scores in the global Hall of Fame!</p>
-            </div>
-            <a href="Addition_Arena.html" class="launch-btn addition-color">Play Addition! 🧮</a>
-        </div>
-
+    <!-- THE 2 MAIN TABS -->
+    <div class="portal-tabs-container">
+        <button id="btnPhonic" class="main-tab-btn tab-phonic-btn active" onclick="switchTab('phonic')">
+            <span>📚</span> Phonics
+        </button>
+        <button id="btnMaths" class="main-tab-btn tab-maths-btn" onclick="switchTab('maths')">
+            <span>🧮</span> Maths
+        </button>
     </div>
 
+    <!-- ==================== TAB 1: PHONICS PANEL ==================== -->
+    <div id="panelPhonic" class="portal-panel active-panel">
+        <div class="menu-grid">
+            <div class="game-card card-green">
+                <div>
+                    <span class="card-icon">📖</span>
+                    <h2>Phonics Academy</h2>
+                    <p class="card-desc">Master alphabet sounds, blending structures, and read out loud sentences!</p>
+                </div>
+                <!-- FIXED: Matches case-sensitive Phonics.html -->
+                <a href="Phonics.html" class="launch-btn btn-green">Play Reading! 🚀</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ==================== TAB 2: MATHS PANEL ==================== -->
+    <div id="panelMaths" class="portal-panel">
+        <div class="menu-grid">
+
+            <!-- GAME 1: ADDITION ARENA -->
+            <div class="game-card card-pink">
+                <div>
+                    <span class="card-icon">⚔️</span>
+                    <h2>Addition Arena</h2>
+                    <p class="card-desc">Battle addition equations and level up your math power points!</p>
+                </div>
+                <a href="Addition_Arena.html" class="launch-btn btn-pink">Start Battle ⚔️</a>
+            </div>
+
+            <!-- GAME 2: MAGIC MATHS QUEST -->
+            <div class="game-card card-blue">
+                <div>
+                    <span class="card-icon">🎈</span>
+                    <h2>Magic Maths Quest</h2>
+                    <p class="card-desc">Practice column-method adding from 1 to 100 and fly your balloon to the crown!</p>
+                </div>
+                <a href="MathsQuest.html" class="launch-btn btn-blue">Launch Quest 🎈</a>
+            </div>
+
+            <!-- GAME 3: PIKACHU MULTIPLICATION LAND -->
+            <div class="game-card card-yellow">
+                <div>
+                    <span class="card-icon">⚡</span>
+                    <h2>Multiplication Land</h2>
+                    <p class="card-desc">Learn your 2 to 5 times tables alongside Pikachu and win the Mega Quiz!</p>
+                </div>
+                <a href="Multiplication.html" class="launch-btn btn-blue" style="background-color: #E2A000;">Pika Math! ⚡</a>
+            </div>
+
+            <!-- GAME 4: MULTIPLICATION ADVENTURE 2 -->
+            <div class="game-card card-purple">
+                <div>
+                    <span class="card-icon">🏰</span>
+                    <h2>Multiplication 2</h2>
+                    <p class="card-desc">Advance into new challenge arenas and multiply your high scores!</p>
+                </div>
+                <a href="Multiplication2.html" class="launch-btn btn-purple">Play Level 2 🏰</a>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Simple and smart function to handle Switching Category Tabs instantly
+        function switchTab(targetTab) {
+            // Get all buttons and panels
+            const phonicBtn = document.getElementById('btnPhonic');
+            const mathsBtn = document.getElementById('btnMaths');
+            const phonicPanel = document.getElementById('panelPhonic');
+            const mathsPanel = document.getElementById('panelMaths');
+
+            if (targetTab === 'phonic') {
+                // Highlight Phonics Tab
+                phonicBtn.classList.add('active');
+                mathsBtn.classList.remove('active');
+                
+                // Switch Display views
+                phonicPanel.classList.add('active-panel');
+                mathsPanel.classList.remove('active-panel');
+            } else if (targetTab === 'maths') {
+                // Highlight Maths Tab
+                mathsBtn.classList.add('active');
+                phonicBtn.classList.remove('active');
+                
+                // Switch Display views
+                mathsPanel.classList.add('active-panel');
+                phonicPanel.classList.remove('active-panel');
+            }
+        }
+    </script>
 </body>
 </html>
