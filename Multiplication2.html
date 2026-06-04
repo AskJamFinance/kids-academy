@@ -1,156 +1,674 @@
-<!-- Include this markup inside your body where you want the bar to appear -->
-<div class="master-hall-fame" id="global-board">
-    <div class="master-label" id="global-rank">Recruit</div>
-    <div class="master-rail-bg">
-        <div id="master-fill" class="master-rail-fill"></div>
-        <div id="master-trophy" class="master-trophy-token">🎖️</div>
-    </div>
-    <div class="master-score-badge" id="master-txt-score">0 / 50</div>
-</div>
-
-<style>
-    :root {
-        --master-gold: #FFB703;
-    }
-
-    * {
-        box-sizing: border-box;
-        font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial', sans-serif;
-    }
-
-    /* MASTER GLOBAL LEADERBOARD RIBBON CONTAINER */
-    .master-hall-fame {
-        width: 100%;
-        max-width: 800px;
-        background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
-        border: 4px solid var(--master-gold);
-        border-radius: 22px;
-        padding: 12px 20px;
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        margin-bottom: 15px;
-        box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-        color: white;
-    }
-
-    /* LEFT RANKS BADGE ELEMENT */
-    .master-label {
-        font-size: 0.85rem;
-        font-weight: bold;
-        color: #0F172A;
-        background: var(--master-gold);
-        padding: 6px 12px;
-        border-radius: 12px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-        text-align: center;
-        min-width: 110px;
-        transition: background-color 0.3s ease;
-    }
-
-    /* THE RAIL TRACK BACKGROUND */
-    .master-rail-bg {
-        height: 24px;
-        flex-grow: 1;
-        background: rgba(255, 255, 255, 0.2);
-        border-radius: 12px;
-        position: relative;
-        border: 1px solid rgba(255, 255, 255, 0.4);
-        overflow: visible;
-    }
-
-    /* GRADIENT LIQUID FILL BAR */
-    .master-rail-fill {
-        height: 100%;
-        width: 0%;
-        background: linear-gradient(to right, #FFD166, #F77F00, #EF476F);
-        border-radius: 12px;
-        position: absolute;
-        left: 0;
-        top: 0;
-        transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    /* FLOATING AVATAR / TROPHY CHARACTER TOKEN */
-    .master-trophy-token {
-        position: absolute;
-        left: 0%;
-        top: 50%;
-        transform: translate(-50%, -55%);
-        font-size: 2.2rem;
-        transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-        z-index: 10;
-        filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.3));
-    }
-
-    /* NUMERIC VALUE INDICATOR LABEL */
-    .master-score-badge {
-        font-size: 1.1rem;
-        font-weight: bold;
-        color: var(--master-gold);
-        min-width: 75px;
-        text-align: right;
-    }
-
-    /* INTERACTION SCORE EARNED ANIMATION STYLES */
-    .hall-fame-pop { 
-        animation: goldFlash 0.4s ease-in-out; 
-    }
-    
-    @keyframes goldFlash { 
-        0%, 100% { background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%); } 
-        50% { background: #FFB703; transform: scale(1.02); } 
-    }
-</style>
-
-<script>
-    /**
-     * Updates the status container UI elements to match current metrics state
-     * @param {number} pointsEarned - The total points accumulatively scored by player
-     * @param {number} maximumCap - The target milestone maximum limit ceiling (e.g. 50)
-     */
-    function updateLeaderboardBar(pointsEarned, maximumCap = 50) {
-        const mBoard = document.getElementById('global-board');
-        const mFill = document.getElementById('master-fill');
-        const mTrophy = document.getElementById('master-trophy');
-        const mTxtScore = document.getElementById('master-txt-score');
-        const mRank = document.getElementById('global-rank');
-
-        // Flash wrapper element container on score updating event pipeline triggers
-        mBoard.classList.add('hall-fame-pop');
-        setTimeout(() => mBoard.classList.remove('hall-fame-pop'), 400);
-
-        // Calculate dynamic fill percentage range allocations
-        let percentage = Math.min(100, Math.round((pointsEarned / maximumCap) * 100));
-        mFill.style.width = `${percentage}%`;
-        mTrophy.style.left = `${percentage}%`;
-        mTxtScore.innerText = `${pointsEarned} / ${maximumCap}`;
-
-        // Process level milestone state transformations
-        if (pointsEarned === 0) {
-            mRank.innerText = "Recruit 🎒"; 
-            mRank.style.backgroundColor = "#94A3B8";
-        } else if (pointsEarned < (maximumCap * 0.3)) { // Under 30%
-            mRank.innerText = "Explorer 🧭"; 
-            mRank.style.backgroundColor = "#3B82F6";
-        } else if (pointsEarned < (maximumCap * 0.6)) { // Under 60%
-            mRank.innerText = "Knight ⚔️"; 
-            mRank.style.backgroundColor = "#F59E0B";
-        } else if (pointsEarned < (maximumCap * 0.9)) { // Under 90%
-            mRank.innerText = "Hero 🔥"; 
-            mRank.style.backgroundColor = "#EF4444";
-        } else if (pointsEarned < maximumCap) {         // Closing In 100%
-            mRank.innerText = "Mythic ⚡"; 
-            mRank.style.backgroundColor = "#8B5CF6";
-        } else {                                        // Max Level Attained
-            mRank.innerText = "CHAMPION 👑"; 
-            mRank.style.backgroundColor = "#10B981"; 
-            mTrophy.innerText = "🏆";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>⚡ Multiplication Quest: 6, 7, 8, 9! ⚡</title>
+    <style>
+        :root {
+            --sky-blue: #00A8E8;
+            --sunny-yellow: #FFD166;
+            --apple-red: #EF476F;
+            --grass-green: #06D6A0;
+            --royal-purple: #7209B7;
+            --bg-creme: #FDFBF7;
+            --text-main: #2B2D42;
+            --master-gold: #FFB703;
         }
-    }
 
-    // Example Initialization Call:
-    // Invoke this function anywhere in your scoring pipeline!
-    // updateLeaderboardBar(12, 50); 
-</script>
+        * {
+            box-sizing: border-box;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Arial', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: #EEF4F8;
+            color: var(--text-main);
+            margin: 0;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 15px;
+            background: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            box-shadow: 0 6px 0 #CBD5E1;
+            border: 3px solid var(--sky-blue);
+            width: 100%;
+            max-width: 800px;
+        }
+
+        h1 {
+            margin: 0;
+            font-size: 1.8rem;
+            color: #118AB2;
+            text-shadow: 2px 2px 0px var(--sunny-yellow);
+        }
+
+        /* MASTER REWARD LEADERBOARD BAR */
+        .master-hall-fame {
+            width: 100%;
+            max-width: 800px;
+            background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+            border: 4px solid var(--master-gold);
+            border-radius: 22px;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            color: white;
+        }
+
+        .master-label {
+            font-size: 0.85rem;
+            font-weight: bold;
+            color: #0F172A;
+            background: var(--master-gold);
+            padding: 6px 12px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .master-rail-bg {
+            height: 24px;
+            flex-grow: 1;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            overflow: visible;
+        }
+
+        .master-rail-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(to right, #FFD166, #F77F00, #EF476F);
+            border-radius: 12px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .master-trophy-token {
+            position: absolute;
+            left: 0%;
+            top: 50%;
+            transform: translate(-50%, -55%);
+            font-size: 2.2rem;
+            transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10;
+            filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.3));
+        }
+
+        .master-score-badge {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--master-gold);
+            min-width: 90px;
+            text-align: right;
+        }
+
+        /* NAVIGATION SELECTOR MAP TABS */
+        .stage-map {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: 100%;
+            max-width: 800px;
+        }
+
+        .map-node-btn {
+            background: white;
+            border: 3px solid #64748B;
+            padding: 10px 14px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #64748B;
+            transition: all 0.1s ease;
+            color: #334155;
+            flex: 1 1 calc(18% - 8px);
+            min-width: 95px;
+            text-align: center;
+        }
+
+        .map-node-btn.active {
+            color: white;
+            transform: translateY(3px);
+        }
+
+        .map-node-btn[data-mode="6"].active { background: #EF476F; border-color: #D62246; box-shadow: 0 1px 0 #D62246; }
+        .map-node-btn[data-mode="7"].active { background: #F77F00; border-color: #C16200; box-shadow: 0 1px 0 #C16200; }
+        .map-node-btn[data-mode="8"].active { background: #06D6A0; border-color: #05B386; box-shadow: 0 1px 0 #05B386; }
+        .map-node-btn[data-mode="9"].active { background: #7209B7; border-color: #56038D; box-shadow: 0 1px 0 #56038D; }
+        .map-node-btn[data-mode="mega"].active { 
+            background: linear-gradient(45deg, #118AB2, #FFB703); 
+            border-color: #0F172A; 
+            box-shadow: 0 1px 0 #0F172A; 
+            animation: gradientShift 2s alternate infinite;
+        }
+
+        /* ADVENTURE CONSOLE CONTAINER */
+        .adventure-deck {
+            background: var(--bg-creme);
+            border-radius: 30px;
+            max-width: 800px;
+            width: 100%;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border: 4px solid #E2E8F0;
+        }
+
+        /* MINI QUIZ MAP TRACKER RUNNER */
+        .reward-tracker-ribbon {
+            width: 100%;
+            background: #EDF2F7;
+            border: 3px solid #4A5568;
+            border-radius: 20px;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .badge-title {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: white;
+            background: #4A5568;
+            padding: 5px 8px;
+            border-radius: 8px;
+            text-transform: uppercase;
+        }
+
+        .trail-path-bg {
+            height: 22px;
+            flex-grow: 1;
+            background: #CBD5E1;
+            border-radius: 11px;
+            position: relative;
+            border: 1px solid #94A3B8;
+        }
+
+        .trail-path-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(to right, #00A8E8, #7209B7);
+            border-radius: 11px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            transition: width 0.3s ease;
+        }
+
+        .walker-token {
+            position: absolute;
+            left: 0%;
+            top: 50%;
+            transform: translate(-50%, -55%);
+            font-size: 1.8rem;
+            transition: left 0.3s ease;
+            z-index: 10;
+        }
+
+        .destination-chest {
+            font-size: 1.6rem;
+            flex-shrink: 0;
+        }
+
+        /* MATH PLAYING CARDS */
+        .question-box {
+            text-align: center;
+            background: white;
+            border: 3px dashed #CBD5E1;
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .progress-tag {
+            background: #E2E8F0;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        /* COLUMN MULTIPLICATION BLOCK INTERFACE */
+        .column-math-container {
+            display: inline-block;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            font-size: 3.5rem;
+            color: #1E293B;
+            line-height: 1.1;
+            text-align: right;
+            margin: 5px 0 20px 0;
+            padding: 10px 25px;
+            background: #F8FAFC;
+            border-radius: 15px;
+            border: 2px solid #E2E8F0;
+        }
+
+        .column-row {
+            display: flex;
+            justify-content: flex-end;
+            letter-spacing: 6px;
+            position: relative;
+            min-width: 130px;
+        }
+
+        .column-row.operator-row {
+            border-bottom: 5px solid #1E293B;
+            padding-bottom: 4px;
+        }
+
+        .column-operator {
+            position: absolute;
+            left: 0;
+            bottom: 4px;
+            font-size: 3rem;
+        }
+
+        .column-result-space {
+            letter-spacing: 6px;
+            color: var(--sky-blue);
+            padding-top: 6px;
+            font-size: 3.5rem;
+            min-height: 4rem;
+            text-align: right;
+            font-weight: 900;
+        }
+
+        /* RESPONSE SELECTION GRID GRID */
+        .answers-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .choice-btn {
+            background: white;
+            border: 3px solid #4A5568;
+            border-radius: 20px;
+            padding: 14px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #4A5568;
+            transition: all 0.1s;
+            color: #2D3748;
+        }
+        .choice-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #4A5568; }
+
+        /* MULTIPLIER DOT PATTERN VISUALIZER */
+        .visual-aid-arena {
+            background: #FFF;
+            border: 2px dashed #CBD5E1;
+            border-radius: 15px;
+            padding: 12px;
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            width: 100%;
+            max-height: 180px;
+            overflow-y: auto;
+        }
+
+        .matrix-row {
+            display: flex;
+            gap: 4px;
+        }
+
+        .matrix-dot {
+            font-size: 1.1rem;
+        }
+
+        .alert-cheer {
+            background: #E8F5E9;
+            color: #1B5E20;
+            border: 2px solid #C8E6C9;
+            padding: 10px;
+            border-radius: 15px;
+            margin-top: 12px;
+            font-weight: bold;
+            text-align: center;
+            display: none;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        .quiz-end-card { text-align: center; padding: 25px 10px; }
+        .action-start-btn {
+            background: #06D6A0;
+            color: white;
+            border: none;
+            font-size: 1.3rem;
+            font-weight: bold;
+            padding: 12px 30px;
+            border-radius: 18px;
+            box-shadow: 0 5px 0 #05B386;
+            cursor: pointer;
+        }
+        .action-start-btn:active { transform: translateY(2px); box-shadow: 0 3px 0 #05B386; }
+
+        .celebrate-bounce { animation: screenJump 0.2s ease-in-out 2; }
+        @keyframes screenJump { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+        
+        .hall-fame-pop { animation: goldFlash 0.4s ease-in-out; }
+        @keyframes goldFlash { 0%, 100% { background: #1E293B; } 50% { background: #FFB703; transform: scale(1.01); } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>⚡ Multiplication Quest Adventure ⚡</h1>
+    </header>
+
+    <!-- GLOBAL LEADERBOARD BAR (Calculated out of 80 potential milestones) -->
+    <div class="master-hall-fame" id="global-board">
+        <div class="master-label" id="global-rank">Recruit</div>
+        <div class="master-rail-bg">
+            <div id="master-fill" class="master-rail-fill"></div>
+            <div id="master-trophy" class="master-trophy-token">🎖️</div>
+        </div>
+        <div class="master-score-badge" id="master-txt-score">0 / 80</div>
+    </div>
+
+    <!-- TIMETABLE SELECTOR NODES -->
+    <div class="stage-map">
+        <button class="map-node-btn active" data-mode="6" onclick="switchGameMode(this, '6')">6x Quiz</button>
+        <button class="map-node-btn" data-mode="7" onclick="switchGameMode(this, '7')">7x Quiz</button>
+        <button class="map-node-btn" data-mode="8" onclick="switchGameMode(this, '8')">8x Quiz</button>
+        <button class="map-node-btn" data-mode="9" onclick="switchGameMode(this, '9')">9x Quiz</button>
+        <button class="map-node-btn" data-mode="mega" onclick="switchGameMode(this, 'mega')">🔥 MEGA 40</button>
+    </div>
+
+    <!-- MAIN GAME WORKSPACE CONSOLE -->
+    <div class="adventure-deck">
+        <div class="reward-tracker-ribbon">
+            <div class="badge-title" id="reward-lbl">Quest Track</div>
+            <div class="trail-path-bg">
+                <div id="reward-fill" class="trail-path-fill"></div>
+                <div id="reward-walker" class="walker-token">🏃</div>
+            </div>
+            <div class="destination-chest">🎁</div>
+        </div>
+
+        <div id="game-arena-content"></div>
+    </div>
+
+    <script>
+        let gameMode = '6'; // Options: '6', '7', '8', '9', 'mega'
+        let globalScorePoints = 0;
+        const totalPointsCap = 80; // 10 points each for tables 6-9 (40 max) + 40 points for Mega Quiz = 80 total
+
+        let sessionState = {
+            currentIndex: 0,
+            correctCount: 0,
+            totalCount: 10,
+            pool: []
+        };
+
+        const celebrationMotos = [
+            "⭐ Phenomenal Calculating! ⭐",
+            "🚀 Speed Demon! Correct! 🚀",
+            "🎉 Splendid Work! Keep crushing it! 🎉",
+            "💎 Diamond tier accuracy! 💎",
+            "⚡ Boom! Unstoppable! ⚡"
+        ];
+
+        const tokenEmojis = ["🟢", "🟡", "🔴", "🟣", "🦊", "⭐", "🍎", "⚡"];
+
+        function switchGameMode(buttonDOM, selectedMode) {
+            document.querySelectorAll('.stage-map .map-node-btn').forEach(btn => btn.classList.remove('active'));
+            if(buttonDOM) buttonDOM.classList.add('active');
+            
+            gameMode = selectedMode;
+            sessionState.totalCount = (gameMode === 'mega') ? 40 : 10;
+            
+            startNewQuestSession();
+        }
+
+        function startNewQuestSession() {
+            sessionState.currentIndex = 0;
+            sessionState.correctCount = 0;
+            sessionState.pool = generateQuestDataset(gameMode, sessionState.totalCount);
+            
+            renderMathCard();
+            updateMiniProgressTrack();
+            updateMasterLeaderboardUI();
+        }
+
+        function generateQuestDataset(mode, quantity) {
+            let sets = [];
+            let multiplierPool = [6, 7, 8, 9];
+            
+            for (let i = 0; i < quantity; i++) {
+                let factorA, factorB;
+                
+                if (mode === 'mega') {
+                    // Pick a random primary factor out of 6, 7, 8, 9
+                    factorA = multiplierPool[Math.floor(Math.random() * multiplierPool.length)];
+                } else {
+                    factorA = parseInt(mode, 10);
+                }
+                
+                // Secondary multiplier factor ranges from 1 to 10
+                factorB = Math.floor(Math.random() * 10) + 1;
+                
+                // Swap randomly to test variations (e.g., 6 x 8 vs 8 x 6)
+                if (Math.random() > 0.5) {
+                    let temp = factorA;
+                    factorA = factorB;
+                    factorB = temp;
+                }
+
+                let productAnswer = factorA * factorB;
+                
+                // Create multiple choice options
+                let variations = new Set([productAnswer]);
+                while(variations.size < 4) {
+                    let randomDeviation = (factorA * (factorB + (Math.floor(Math.random() * 5) - 2)));
+                    if (randomDeviation <= 0 || randomDeviation === productAnswer) {
+                        randomDeviation = productAnswer + (Math.floor(Math.random() * 20) - 10);
+                    }
+                    if (randomDeviation > 0) {
+                        variations.add(randomDeviation);
+                    }
+                }
+
+                sets.push({
+                    topNum: factorA,
+                    bottomNum: factorB,
+                    correctValue: productAnswer,
+                    choices: Array.from(variations).sort((x, y) => x - y)
+                });
+            }
+            return sets;
+        }
+
+        function renderMathCard() {
+            const rootDisplay = document.getElementById('game-arena-content');
+            const item = sessionState.pool[sessionState.currentIndex];
+
+            let customOptionsHTML = '';
+            item.choices.forEach(val => {
+                customOptionsHTML += `<button class="choice-btn" onclick="evaluateAnswer(${val}, ${item.correctValue})">${val}</button>`;
+            });
+
+            // Formulate concrete counter array pattern boxes
+            let chosenEmoji = tokenEmojis[item.topNum % tokenEmojis.length];
+            let counterVisualHTML = '<div class="visual-aid-arena">';
+            
+            // Generate rows (factor bottom) and items (factor top)
+            let limitRows = Math.min(item.bottomNum, 10); 
+            for(let r = 0; r < limitRows; r++) {
+                counterVisualHTML += `<div class="matrix-row">${chosenEmoji.repeat(Math.min(item.topNum, 12))}</div>`;
+            }
+            counterVisualHTML += '</div>';
+
+            let lineA = item.topNum.toString();
+            let lineB = item.bottomNum.toString();
+            let padLen = Math.max(lineA.length, lineB.length);
+
+            rootDisplay.innerHTML = `
+                <div class="question-box">
+                    <div class="progress-tag">Equation ${sessionState.currentIndex + 1} of ${sessionState.totalCount}</div>
+                    
+                    <div class="column-math-container">
+                        <div class="column-row">${lineA.padStart(padLen, ' ').replace(/ /g, '&nbsp;')}</div>
+                        <div class="column-row operator-row">
+                            <span class="column-operator">×</span>
+                            ${lineB.padStart(padLen, ' ').replace(/ /g, '&nbsp;')}
+                        </div>
+                        <div class="column-result-space">?</div>
+                    </div>
+
+                    <div class="answers-grid">${customOptionsHTML}</div>
+                    <div class="alert-cheer" id="quest-feedback-msg"></div>
+                    ${counterVisualHTML}
+                </div>
+            `;
+        }
+
+        function evaluateAnswer(selectedOption, answerKey) {
+            const wrapperBox = document.querySelector('.adventure-deck');
+            const infoBanner = document.getElementById('quest-feedback-msg');
+
+            if(selectedOption === answerKey) {
+                sessionState.correctCount++;
+                globalScorePoints++;
+                
+                wrapperBox.classList.add('celebrate-bounce');
+                setTimeout(() => wrapperBox.classList.remove('celebrate-bounce'), 250);
+                
+                infoBanner.innerText = celebrationMotos[Math.floor(Math.random() * celebrationMotos.length)];
+                infoBanner.style.display = "block";
+            } else {
+                if(infoBanner) infoBanner.style.display = "none";
+            }
+
+            sessionState.currentIndex++;
+            updateMiniProgressTrack();
+            updateMasterLeaderboardUI();
+
+            setTimeout(() => {
+                if(sessionState.currentIndex < sessionState.totalCount) {
+                    renderMathCard();
+                } else {
+                    displaySessionSummaryCard();
+                }
+            }, 500);
+        }
+
+        function updateMiniProgressTrack() {
+            const fillElement = document.getElementById('reward-fill');
+            const avatarToken = document.getElementById('reward-walker');
+            const descriptorLabel = document.getElementById('reward-lbl');
+
+            let runPercent = Math.round((sessionState.currentIndex / sessionState.totalCount) * 100);
+            fillElement.style.width = `${runPercent}%`;
+            avatarToken.style.left = `${runPercent}%`;
+
+            let correctHits = sessionState.correctCount;
+            if(runPercent === 0) {
+                avatarToken.innerText = "🏃";
+                descriptorLabel.innerText = "Track: Ready";
+            } else if (runPercent < 40) {
+                avatarToken.innerText = "👟";
+                descriptorLabel.innerText = `Answering... (${correctHits} Right)`;
+            } else if (runPercent < 80) {
+                avatarToken.innerText = "🚴";
+                descriptorLabel.innerText = "Gaining momentum!";
+            } else if (runPercent < 100) {
+                avatarToken.innerText = "🚀";
+                descriptorLabel.innerText = "Near the target!";
+            } else {
+                avatarToken.innerText = "🎁";
+                descriptorLabel.innerText = "Milestone hit!";
+            }
+        }
+
+        function updateMasterLeaderboardUI() {
+            const fillBar = document.getElementById('master-fill');
+            const floatingBadge = document.getElementById('master-trophy');
+            const scoreText = document.getElementById('master-txt-score');
+            const rankTitle = document.getElementById('global-rank');
+
+            let masterPercentage = Math.min(100, Math.round((globalScorePoints / totalPointsCap) * 100));
+            fillBar.style.width = `${masterPercentage}%`;
+            floatingBadge.style.left = `${masterPercentage}%`;
+            scoreText.innerText = `${globalScorePoints} / ${totalPointsCap}`;
+
+            // Scale Rank progression relative to total score points
+            if(globalScorePoints === 0) {
+                rankTitle.innerText = "Recruit 🎒"; rankTitle.style.backgroundColor = "#94A3B8";
+            } else if (globalScorePoints < 20) {
+                rankTitle.innerText = "Apprentice 🧭"; rankTitle.style.backgroundColor = "#3B82F6";
+            } else if (globalScorePoints < 40) {
+                rankTitle.innerText = "Knight ⚔️"; rankTitle.style.backgroundColor = "#F59E0B";
+            } else if (globalScorePoints < 60) {
+                rankTitle.innerText = "Elite Hero 🔥"; rankTitle.style.backgroundColor = "#EF4444";
+            } else if (globalScorePoints < 80) {
+                rankTitle.innerText = "Grandmaster ⚡"; rankTitle.style.backgroundColor = "#8B5CF6";
+            } else {
+                rankTitle.innerText = "CHAMPION 👑"; rankTitle.style.backgroundColor = "#10B981"; 
+                floatingBadge.innerText = "🏆";
+            }
+        }
+
+        function displaySessionSummaryCard() {
+            const displayBlock = document.getElementById('game-arena-content');
+            let successRatio = Math.round((sessionState.correctCount / sessionState.totalCount) * 100);
+            let responseCardHTML = '';
+
+            const globalRibbonContainer = document.getElementById('global-board');
+            globalRibbonContainer.classList.add('hall-fame-pop');
+            setTimeout(() => globalRibbonContainer.classList.remove('hall-fame-pop'), 400);
+
+            if(successRatio === 100) {
+                responseCardHTML = `<span style="font-size:4rem;">💎🥇💎</span><h2 style="color:var(--grass-green);">FLAWLESS QUEST COMPLETED!</h2><p>Incredible arithmetic skills! You score a perfect 100% and added <b>+${sessionState.correctCount} Stars</b> onto your Master Progression line!</p>`;
+            } else if (successRatio >= 70) {
+                responseCardHTML = `<span style="font-size:3.5rem;">✨🌟✨</span><h2>QUEST ACCOMMODATED!</h2><p>Excellent progress! You secured <b>+${sessionState.correctCount} Stars</b>. Replay or jump tabs to earn maximum crowns!</p>`;
+            } else {
+                responseCardHTML = `<span style="font-size:3rem;">⚡👍⚡</span><h2>POINTS SAVED</h2><p>Good attempt! You loaded <b>+${sessionState.correctCount} Stars</b> into your profile. Try running through the multiplier layout one more time!</p>`;
+            }
+
+            displayBlock.innerHTML = `
+                <div class="quiz-end-card">
+                    ${responseCardHTML}<br>
+                    <button class="action-start-btn" onclick="startNewQuestSession()">🔄 Restart Quest Mode</button>
+                </div>
+            `;
+        }
+
+        // Initialize game default run configuration
+        window.onload = () => { startNewQuestSession(); };
+    </script>
+</body>
+</html>
