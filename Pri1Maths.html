@@ -3,494 +3,265 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Primary 1 Math Adventure</title>
+    <title>Pokémon Primary 1 Math Adventure</title>
     <style>
         :root {
-            --primary: #4a90e2;
-            --success: #2ec4b6;
-            --background: #f7f9fc;
-            --text: #2d3748;
-            --accent: #ff9f1c;
+            --primary-color: #FFCB05;
+            --secondary-color: #3B4CCA;
+            --bg-color: #F6F8FC;
+            --card-bg: #FFFFFF;
+            --text-color: #2D3748;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--background);
-            color: var(--text);
-            line-height: 1.6;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             margin: 0;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .container {
+            width: 100%;
             max-width: 800px;
-            margin: 0 auto;
-            background: white;
-            padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            background: var(--card-bg);
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border: 4px solid var(--secondary-color);
         }
 
-        h1 {
+        header {
+            background-color: var(--secondary-color);
+            color: white;
             text-align: center;
-            color: var(--primary);
-            font-size: 2.2rem;
-            margin-bottom: 5px;
-        }
-
-        .subtitle {
-            text-align: center;
-            color: #718096;
-            margin-bottom: 30px;
-        }
-
-        /* Map / Master Tracker */
-        .map-container {
-            background: #edf2f7;
             padding: 20px;
-            border-radius: 12px;
-            margin-bottom: 40px;
-            text-align: center;
+            position: relative;
         }
 
-        .star-map {
+        header h1 {
+            margin: 0;
+            font-size: 24px;
+            letter-spacing: 1px;
+        }
+
+        /* Tabs Navigation - Completely Unrestricted */
+        .tabs {
             display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            margin-top: 15px;
-        }
-
-        .map-star {
-            font-size: 2rem;
-            color: #cbd5e0;
-            transition: transform 0.3s ease, color 0.3s ease;
-        }
-
-        .map-star.unlocked {
-            color: #ffd166;
-            transform: scale(1.2);
-            animation: bounce 0.5s ease-in-out;
-        }
-
-        /* Topic Blocks */
-        .topic-section {
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 40px;
-            background: #fff;
-        }
-
-        .topic-header {
-            color: var(--primary);
-            border-bottom: 2px solid #edf2f7;
-            padding-bottom: 10px;
-            margin-top: 0;
-        }
-
-        .guide-box {
-            background-color: #ebf8ff;
-            border-left: 4px solid var(--primary);
-            padding: 15px;
-            border-radius: 4px;
-            margin-bottom: 25px;
-            font-size: 0.95rem;
-        }
-
-        /* Questions */
-        .question-item {
-            margin-bottom: 20px;
-            padding: 12px;
-            border-radius: 8px;
-            transition: background-color 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
+            background: #E2E8F0;
+            padding: 10px 10px 0 10px;
             gap: 10px;
         }
 
+        .tab-btn {
+            flex: 1;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            cursor: pointer;
+            background: #CBD5E1;
+            color: #475569;
+            transition: all 0.2s ease;
+            text-align: center;
+        }
+
+        .tab-btn.active {
+            background: var(--card-bg);
+            color: var(--secondary-color);
+            border-top: 4px solid var(--primary-color);
+            box-shadow: 0 -4px 10px rgba(0,0,0,0.05);
+        }
+
+        .content-panel {
+            display: none;
+            padding: 30px;
+        }
+
+        .content-panel.active {
+            display: block;
+        }
+
+        .question-card {
+            background: #F8FAFC;
+            border: 2px solid #E2E8F0;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+
         .question-text {
-            font-size: 1.1rem;
-            font-weight: 500;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+
+        .pokemon-img-placeholder {
+            font-size: 40px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        /* Large Touch-Friendly Inputs */
+        .input-container {
+            display: flex;
+            gap: 15px;
+            align-items: center;
         }
 
         input[type="text"] {
-            padding: 8px 12px;
-            border: 2px solid #cbd5e0;
-            border-radius: 6px;
-            font-size: 1rem;
-            width: 140px;
+            width: 150px;
+            padding: 15px;
+            font-size: 20px;
+            border: 3px solid #CBD5E1;
+            border-radius: 10px;
             text-align: center;
+            font-weight: bold;
+            outline: none;
             transition: border-color 0.2s;
         }
 
         input[type="text"]:focus {
-            outline: none;
-            border-color: var(--primary);
+            border-color: var(--secondary-color);
         }
 
-        .correct-input {
-            border-color: var(--success) !important;
-            background-color: #e6fffa;
+        .check-btn {
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: bold;
+            background-color: var(--primary-color);
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.1s;
         }
 
-        /* Reward Corner */
-        .reward-corner {
-            margin-top: 30px;
-            padding: 20px;
-            background: #f0fff4;
-            border: 2px dashed #9ae6b4;
-            border-radius: 12px;
-            text-align: center;
+        .check-btn:active {
+            transform: scale(0.95);
+        }
+
+        .feedback {
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
             display: none;
         }
 
-        .reward-corner.active {
+        .feedback.correct {
+            color: #10B981;
             display: block;
-            animation: slideIn 0.4s ease-out;
         }
 
-        .big-star {
-            font-size: 3rem;
-            color: #ffd166;
-            margin-bottom: 10px;
-            display: inline-block;
-        }
-
-        .cheer-text {
-            font-size: 1.1rem;
-            font-weight: bold;
-            color: #22543d;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: scale(1.2); }
-            50% { transform: scale(1.5); }
-        }
-
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(100px); }
-            to { opacity: 1; transform: translateY(0); }
+        .feedback.wrong {
+            color: #EF4444;
+            display: block;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>🌟 Ultimate Math Adventure 🌟</h1>
-    <p class="subtitle">Primary 1 Masterclass: Numbers to 100</p>
+    <header>
+        <h1>Catch 'Em All with Math!</h1>
+    </header>
 
-    <!-- Master Tracker Dashboard -->
-    <div class="map-container">
-        <h3>Your Star Reward Map</h3>
-        <p>Answer all 20 questions in a section to unlock its star!</p>
-        <div class="star-map">
-            <span id="map-star-1" class="map-star">⭐<br><small style="font-size:10px; color:#4a5568">1.1</small></span>
-            <span id="map-star-2" class="map-star">⭐<br><small style="font-size:10px; color:#4a5568">1.2</small></span>
-            <span id="map-star-3" class="map-star">⭐<br><small style="font-size:10px; color:#4a5568">1.3</small></span>
-            <span id="map-star-4" class="map-star">⭐<br><small style="font-size:10px; color:#4a5568">1.4</small></span>
-            <span id="map-star-5" class="map-star">⭐<br><small style="font-size:10px; color:#4a5568">1.5</small></span>
-            <span id="map-star-6" class="map-star">⭐<br><small style="font-size:10px; color:#4a5568">1.6</small></span>
-            <span id="map-star-7" class="map-star">⭐<br><small style="font-size:10px; color:#4a5568">1.7</small></span>
-        </div>
+    <!-- Navigation Tabs (Completely Unlocked) -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('topic1_1')">Topic 1.1: Numbers to 10</button>
+        <button class="tab-btn" onclick="switchTab('topic1_2')">Topic 1.2: Number Bonds</button>
     </div>
 
-    <!-- TOPIC 1.1 -->
-    <div class="topic-section" id="topic-1">
-        <h2 class="topic-header">Topic 1.1: Counting to Tell the Number of Objects</h2>
-        <div class="guide-box">
-            <strong>📖 Learning Guide:</strong> When counting large groups of objects, cross them out with your pencil as you count so you don't count them twice! For stacks, count them in blocks of 10.
-        </div>
+    <!-- TOPIC 1.1 PANEL -->
+    <div id="topic1_1" class="content-panel active">
+        <h2>Counting & Number Words</h2>
         
-        <div class="questions-container" data-topic="1">
-            <!-- Dynamic compilation of the 20 questions -->
-            <div class="question-item"><span class="question-text">1. 🍎 🍎 🍎 🍎 🍎</span><input type="text" data-ans="5"></div>
-            <div class="question-item"><span class="question-text">2. 🚗 🚗 🚗 🚗 🚗 🚗 🚗</span><input type="text" data-ans="7"></div>
-            <div class="question-item"><span class="question-text">3. 🎈 🎈 🎈 🎈 🎈 🎈 🎈 🎈 🎈 🎈</span><input type="text" data-ans="10"></div>
-            <div class="question-item"><span class="question-text">4. ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐ ⭐</span><input type="text" data-ans="11"></div>
-            <div class="question-item"><span class="question-text">5. 🍦 🍦 🍦 🍦 🍦 🍦 🍦 🍦 🍦 🍦 🍦 🍦 🍦</span><input type="text" data-ans="13"></div>
-            <div class="question-item"><span class="question-text">6. 🐸 🐸 🐸 🐸 🐸 🐸 🐸 🐸 🐸 🐸 🐸 🐸 🐸 🐸 🐸</span><input type="text" data-ans="15"></div>
-            <div class="question-item"><span class="question-text">7. 🐱 🐱 🐱 🐱 🐱 🐱 🐱 🐱 🐱 🐱 🐱 🐱 🐱 🐱 🐱 🐱 🐱</span><input type="text" data-ans="17"></div>
-            <div class="question-item"><span class="question-text">8. 🐻 🐻 🐻 🐻 🐻 🐻 🐻 🐻 🐻 🐻 🐻 🐻 🐻 🐻 🐻 🐻 🐻 🐻 🐻 🐻</span><input type="text" data-ans="20"></div>
-            <div class="question-item"><span class="question-text">9. 🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀 🚀</span><input type="text" data-ans="22"></div>
-            <div class="question-item"><span class="question-text">10. 🍕 🍕 🍕 🍕 🍕 🍕 🍕 🍕 🍕 🍕 🍕 🍕 🍕 🍕 🍕 🍕 🍕 🍕 🍕 🍕 🍕 🍕 🍕 🍕 🍕</span><input type="text" data-ans="25"></div>
-            <div class="question-item"><span class="question-text">11. 1 ten-block stack + 3 loose blocks</span><input type="text" data-ans="13"></div>
-            <div class="question-item"><span class="question-text">12. 2 ten-block stacks + 5 loose blocks</span><input type="text" data-ans="25"></div>
-            <div class="question-item"><span class="question-text">13. 3 ten-block stacks + 2 loose blocks</span><input type="text" data-ans="32"></div>
-            <div class="question-item"><span class="question-text">14. 4 ten-block stacks + 6 loose blocks</span><input type="text" data-ans="46"></div>
-            <div class="question-item"><span class="question-text">15. 6 ten-block stacks + 0 loose blocks</span><input type="text" data-ans="60"></div>
-            <div class="question-item"><span class="question-text">16. 7 ten-block stacks + 8 loose blocks</span><input type="text" data-ans="78"></div>
-            <div class="question-item"><span class="question-text">17. 9 ten-block stacks + 1 loose block</span><input type="text" data-ans="91"></div>
-            <div class="question-item"><span class="question-text">18. Total dots: ●●●●● ●●●●● ●●●●● ●●●●● ●●●●● ●</span><input type="text" data-ans="26"></div>
-            <div class="question-item"><span class="question-text">19. Total dots: ●●●●● ●●●●● ●●●●● ●●●●● ●●●●● ●●●●● ●●</span><input type="text" data-ans="32"></div>
-            <div class="question-item"><span class="question-text">20. Total dots: 4 rows of 10 dots each</span><input type="text" data-ans="40"></div>
-        </div>
-
-        <div class="reward-corner" id="reward-1">
-            <span class="big-star">⭐</span>
-            <div class="cheer-text">"Fantastic start! You have great eyesight and wonderful focus. Keep shining bright like the stars you just counted!"</div>
-        </div>
-    </div>
-
-    <!-- TOPIC 1.2 -->
-    <div class="topic-section" id="topic-2">
-        <h2 class="topic-header">Topic 1.2: Number Notation & Place Values</h2>
-        <div class="guide-box">
-            <strong>📖 Learning Guide:</strong> Two-digit numbers are built using **Tens** (groups of 10) and **Ones** (single pieces). In **47**, 4 is Tens and 7 is Ones.
-        </div>
-        
-        <div class="questions-container" data-topic="2">
-            <div class="question-item"><span class="question-text">1. How many Tens are in 15?</span><input type="text" data-ans="1"></div>
-            <div class="question-item"><span class="question-text">2. How many Ones are in 15?</span><input type="text" data-ans="5"></div>
-            <div class="question-item"><span class="question-text">3. How many Tens are in 24?</span><input type="text" data-ans="2"></div>
-            <div class="question-item"><span class="question-text">4. How many Ones are in 24?</span><input type="text" data-ans="4"></div>
-            <div class="question-item"><span class="question-text">5. 38 = ___ Tens?</span><input type="text" data-ans="3"></div>
-            <div class="question-item"><span class="question-text">6. 38 = 3 Tens and ___ Ones?</span><input type="text" data-ans="8"></div>
-            <div class="question-item"><span class="question-text">7. 51 = ___ Tens and 1 One?</span><input type="text" data-ans="5"></div>
-            <div class="question-item"><span class="question-text">8. 69 = 6 Tens and ___ Ones?</span><input type="text" data-ans="9"></div>
-            <div class="question-item"><span class="question-text">9. 70 = ___ Tens and 0 Ones?</span><input type="text" data-ans="7"></div>
-            <div class="question-item"><span class="question-text">10. 96 = 9 Tens and ___ Ones?</span><input type="text" data-ans="6"></div>
-            <div class="question-item"><span class="question-text">11. What number is 1 Ten and 7 Ones?</span><input type="text" data-ans="17"></div>
-            <div class="question-item"><span class="question-text">12. What number is 3 Tens and 2 Ones?</span><input type="text" data-ans="32"></div>
-            <div class="question-item"><span class="question-text">13. What number is 4 Tens and 0 Ones?</span><input type="text" data-ans="40"></div>
-            <div class="question-item"><span class="question-text">14. What number is 5 Tens and 6 Ones?</span><input type="text" data-ans="56"></div>
-            <div class="question-item"><span class="question-text">15. What number is 7 Tens and 8 Ones?</span><input type="text" data-ans="78"></div>
-            <div class="question-item"><span class="question-text">16. What number is 9 Tens and 9 Ones?</span><input type="text" data-ans="99"></div>
-            <div class="question-item"><span class="question-text">17. Place value of 4 in 34 (Tens or Ones?)</span><input type="text" data-ans="ones"></div>
-            <div class="question-item"><span class="question-text">18. Place value of 5 in 52 (Tens or Ones?)</span><input type="text" data-ans="tens"></div>
-            <div class="question-item"><span class="question-text">19. Place value of 0 in 80 (Tens or Ones?)</span><input type="text" data-ans="ones"></div>
-            <div class="question-item"><span class="question-text">20. Place value of 9 in 97 (Tens or Ones?)</span><input type="text" data-ans="tens"></div>
-        </div>
-
-        <div class="reward-corner" id="reward-2">
-            <span class="big-star">⭐⭐</span>
-            <div class="cheer-text">"Super job! You are a place value expert. You completely understand how numbers are built!"</div>
-        </div>
-    </div>
-
-    <!-- TOPIC 1.3 -->
-    <div class="topic-section" id="topic-3">
-        <h2 class="topic-header">Topic 1.3: Reading & Writing Numbers (Numerals & Words)</h2>
-        <div class="guide-box">
-            <strong>📖 Learning Guide:</strong> Mind your spelling rules! Remember it is **fourteen** but **forty** (no 'u'). Write all answers in lowercase letters or basic digits.
-        </div>
-        
-        <div class="questions-container" data-topic="3">
-            <div class="question-item"><span class="question-text">1. Write 6 in words:</span><input type="text" data-ans="six"></div>
-            <div class="question-item"><span class="question-text">2. Write 11 in words:</span><input type="text" data-ans="eleven"></div>
-            <div class="question-item"><span class="question-text">3. Write 15 in words:</span><input type="text" data-ans="fifteen"></div>
-            <div class="question-item"><span class="question-text">4. Write 20 in words:</span><input type="text" data-ans="twenty"></div>
-            <div class="question-item"><span class="question-text">5. Write 32 in words:</span><input type="text" data-ans="thirty-two"></div>
-            <div class="question-item"><span class="question-text">6. Write 44 in words:</span><input type="text" data-ans="forty-four"></div>
-            <div class="question-item"><span class="question-text">7. Write 58 in words:</span><input type="text" data-ans="fifty-eight"></div>
-            <div class="question-item"><span class="question-text">8. Write 60 in words:</span><input type="text" data-ans="sixty"></div>
-            <div class="question-item"><span class="question-text">9. Write 77 in words:</span><input type="text" data-ans="seventy-seven"></div>
-            <div class="question-item"><span class="question-text">10. Write 93 in words:</span><input type="text" data-ans="ninety-three"></div>
-            <div class="question-item"><span class="question-text">11. Write 'twelve' in figures:</span><input type="text" data-ans="12"></div>
-            <div class="question-item"><span class="question-text">12. Write 'nineteen' in figures:</span><input type="text" data-ans="19"></div>
-            <div class="question-item"><span class="question-text">13. Write 'twenty-five' in figures:</span><input type="text" data-ans="25"></div>
-            <div class="question-item"><span class="question-text">14. Write 'thirty-seven' in figures:</span><input type="text" data-ans="37"></div>
-            <div class="question-item"><span class="question-text">15. Write 'forty-one' in figures:</span><input type="text" data-ans="41"></div>
-            <div class="question-item"><span class="question-text">16. Write 'fifty-six' in figures:</span><input type="text" data-ans="56"></div>
-            <div class="question-item"><span class="question-text">17. Write 'sixty-three' in figures:</span><input type="text" data-ans="63"></div>
-            <div class="question-item"><span class="question-text">18. Write 'eighty' in figures:</span><input type="text" data-ans="80"></div>
-            <div class="question-item"><span class="question-text">19. Write 'eighty-nine' in figures:</span><input type="text" data-ans="89"></div>
-            <div class="question-item"><span class="question-text">20. Write 'one hundred' in figures:</span><input type="text" data-ans="100"></div>
-        </div>
-
-        <div class="reward-corner" id="reward-3">
-            <span class="big-star">⭐⭐⭐</span>
-            <div class="cheer-text">"Spectacular spelling! Reading and writing numbers can be tricky, but you made it look so easy. Outstanding work!"</div>
-        </div>
-    </div>
-
-    <!-- TOPIC 1.4 -->
-    <div class="topic-section" id="topic-4">
-        <h2 class="topic-header">Topic 1.4: Comparing the Number of Objects in Sets</h2>
-        <div class="guide-box">
-            <strong>📖 Learning Guide:</strong> Type exactly: <strong>more than</strong>, <strong>fewer than</strong>, or <strong>as many as</strong> to compare the sets!
-        </div>
-        
-        <div class="questions-container" data-topic="4">
-            <!-- Setup contextual labels for 1-5 -->
-            <div style="background:#f7f9fc; padding:10px; margin-bottom:15px; border-radius:6px;">
-                <strong>Scenario A:</strong> Set A (5 items) | Set B (3 items) | Set C (5 items)
+        <!-- Q1 -->
+        <div class="question-card">
+            <div class="pokemon-img-placeholder">⚡ ⚡ ⚡ ⚡ ⚡</div>
+            <div class="question-text">1. Count the Pikachu icons above. Write the answer in <b>words</b>.</div>
+            <div class="input-container">
+                <input type="text" id="q1_input" placeholder="Your answer...">
+                <button class="check-btn" onclick="checkAnswer('q1_input', 'q1_feedback', 'five')">Check</button>
             </div>
-            <div class="question-item"><span class="question-text">1. Set A is [___] Set B</span><input type="text" data-ans="more than"></div>
-            <div class="question-item"><span class="question-text">2. Set B is [___] Set C</span><input type="text" data-ans="fewer than"></div>
-            <div class="question-item"><span class="question-text">3. Set C is [___] Set A</span><input type="text" data-ans="as many as"></div>
-            <div class="question-item"><span class="question-text">4. Which set has the most items? (A, B, or C)</span><input type="text" data-ans="a"></div>
-            <div class="question-item"><span class="question-text">5. Which set has the fewest items? (A, B, or C)</span><input type="text" data-ans="b"></div>
+            <div id="q1_feedback" class="feedback"></div>
+        </div>
 
-            <div style="background:#f7f9fc; padding:10px; margin-bottom:15px; border-radius:6px; margin-top:20px;">
-                <strong>Scenario B:</strong> Set X (8 items) | Set Y (10 items) | Set Z (8 items)
+        <!-- Q2 -->
+        <div class="question-card">
+            <div class="pokemon-img-placeholder">🔥 🔥 🔥 🔥 🔥 🔥 🔥</div>
+            <div class="question-text">2. How many Charmanders are there altogether? Write the answer in <b>numbers</b>.</div>
+            <div class="input-container">
+                <input type="text" id="q2_input" placeholder="Your answer...">
+                <button class="check-btn" onclick="checkAnswer('q2_input', 'q2_feedback', '7')">Check</button>
             </div>
-            <div class="question-item"><span class="question-text">6. Set Y is [___] Set X</span><input type="text" data-ans="more than"></div>
-            <div class="question-item"><span class="question-text">7. Set X is [___] Set Y</span><input type="text" data-ans="fewer than"></div>
-            <div class="question-item"><span class="question-text">8. Set Z is [___] Set X</span><input type="text" data-ans="as many as"></div>
-            <div class="question-item"><span class="question-text">9. Which set has the greatest number? (X, Y, or Z)</span><input type="text" data-ans="y"></div>
-            <div class="question-item"><span class="question-text">10. Set X has [___] items than Set Y</span><input type="text" data-ans="fewer"></div>
-
-            <div style="margin-top:20px;"><strong>Text Comparison Rules:</strong></div>
-            <div class="question-item"><span class="question-text">11. 12 marbles is [___] 9 marbles</span><input type="text" data-ans="more than"></div>
-            <div class="question-item"><span class="question-text">12. 25 stickers is [___] 30 stickers</span><input type="text" data-ans="fewer than"></div>
-            <div class="question-item"><span class="question-text">13. 40 keys is [___] 14 keys</span><input type="text" data-ans="more than"></div>
-            <div class="question-item"><span class="question-text">14. 67 coins is [___] 76 coins</span><input type="text" data-ans="fewer than"></div>
-            <div class="question-item"><span class="question-text">15. 99 blocks is [___] 100 blocks</span><input type="text" data-ans="fewer than"></div>
-            <div class="question-item"><span class="question-text">16. 15 apples is fewer than 18 apples (true/false)</span><input type="text" data-ans="true"></div>
-            <div class="question-item"><span class="question-text">17. 42 birds is more than 24 birds (true/false)</span><input type="text" data-ans="true"></div>
-            <div class="question-item"><span class="question-text">18. 50 sweets is fewer than 49 sweets (true/false)</span><input type="text" data-ans="false"></div>
-            <div class="question-item"><span class="question-text">19. 88 pencils is as many as 88 erasers (true/false)</span><input type="text" data-ans="true"></div>
-            <div class="question-item"><span class="question-text">20. 71 shells is more than 17 shells (true/false)</span><input type="text" data-ans="true"></div>
-        </div>
-
-        <div class="reward-corner" id="reward-4">
-            <span class="big-star">⭐⭐⭐⭐</span>
-            <div class="cheer-text">"Incredible tracking! You have a sharp eye for comparing things. You are doing an amazing job!"</div>
+            <div id="q2_feedback" class="feedback"></div>
         </div>
     </div>
 
-    <!-- TOPIC 1.5 -->
-    <div class="topic-section" id="topic-5">
-        <h2 class="topic-header">Topic 1.5: Comparing and Ordering Numbers</h2>
-        <div class="guide-box">
-            <strong>📖 Learning Guide:</strong> Check the Tens place first! For ordered questions, write numbers separated by commas (e.g. <strong>1, 2, 3</strong>).
-        </div>
+    <!-- TOPIC 1.2 PANEL -->
+    <div id="topic1_2" class="content-panel">
+        <h2>Making Number Bonds</h2>
         
-        <div class="questions-container" data-topic="5">
-            <div class="question-item"><span class="question-text">1. Which is greater: 14 or 41?</span><input type="text" data-ans="41"></div>
-            <div class="question-item"><span class="question-text">2. Which is greater: 36 or 29?</span><input type="text" data-ans="36"></div>
-            <div class="question-item"><span class="question-text">3. Which is greater: 50 or 55?</span><input type="text" data-ans="55"></div>
-            <div class="question-item"><span class="question-text">4. Which is greater: 78 or 87?</span><input type="text" data-ans="87"></div>
-            <div class="question-item"><span class="question-text">5. Which is greater: 92 or 90?</span><input type="text" data-ans="92"></div>
-            <div class="question-item"><span class="question-text">6. Greatest of: 63, 36, 66</span><input type="text" data-ans="66"></div>
-            <div class="question-item"><span class="question-text">7. Greatest of: 19, 91, 49</span><input type="text" data-ans="91"></div>
-            <div class="question-item"><span class="question-text">8. Which is smaller: 25 or 52?</span><input type="text" data-ans="25"></div>
-            <div class="question-item"><span class="question-text">9. Which is smaller: 13 or 30?</span><input type="text" data-ans="13"></div>
-            <div class="question-item"><span class="question-text">10. Which is smaller: 47 or 42?</span><input type="text" data-ans="42"></div>
-            <div class="question-item"><span class="question-text">11. Which is smaller: 89 or 98?</span><input type="text" data-ans="89"></div>
-            <div class="question-item"><span class="question-text">12. Which is smaller: 61 or 16?</span><input type="text" data-ans="16"></div>
-            <div class="question-item"><span class="question-text">13. Smallest of: 74, 47, 77</span><input type="text" data-ans="47"></div>
-            <div class="question-item"><span class="question-text">14. Smallest of: 80, 85, 18</span><input type="text" data-ans="18"></div>
-            <div class="question-item"><span class="question-text">15. Order smallest to greatest: 12, 5, 21</span><input type="text" data-ans="5,12,21"></div>
-            <div class="question-item"><span class="question-text">16. Order smallest to greatest: 43, 34, 45</span><input type="text" data-ans="34,43,45"></div>
-            <div class="question-item"><span class="question-text">17. Order smallest to greatest: 88, 18, 81, 8</span><input type="text" data-ans="8,18,81,88"></div>
-            <div class="question-item"><span class="question-text">18. Order greatest to smallest: 19, 29, 9</span><input type="text" data-ans="29,19,9"></div>
-            <div class="question-item"><span class="question-text">19. Order greatest to smallest: 60, 66, 16</span><input type="text" data-ans="66,60,16"></div>
-            <div class="question-item"><span class="question-text">20. Order greatest to smallest: 72, 95, 59, 27</span><input type="text" data-ans="95,72,59,27"></div>
-        </div>
-
-        <div class="reward-corner" id="reward-5">
-            <span class="big-star">⭐⭐⭐⭐⭐</span>
-            <div class="cheer-text">"Brilliant thinking! Putting things in order takes patience, and you nailed it. You are a natural mathematician!"</div>
-        </div>
-    </div>
-
-    <!-- TOPIC 1.6 -->
-    <div class="topic-section" id="topic-6">
-        <h2 class="topic-header">Topic 1.6: Patterns in Number Sequences</h2>
-        <div class="guide-box">
-            <strong>📖 Learning Guide:</strong> Look for the hidden rule! Am I counting up by 1s, 2s, 5s, or 10s? Or am I stepping backwards?
-        </div>
-        
-        <div class="questions-container" data-topic="6">
-            <div class="question-item"><span class="question-text">1. 1, 2, 3, 4, [___], 6</span><input type="text" data-ans="5"></div>
-            <div class="question-item"><span class="question-text">2. 10, 11, 12, [___], 14, 15</span><input type="text" data-ans="13"></div>
-            <div class="question-item"><span class="question-text">3. 25, 26, 27, 28, [___], 30</span><input type="text" data-ans="29"></div>
-            <div class="question-item"><span class="question-text">4. 54, 55, [___], 57, 58, 59</span><input type="text" data-ans="56"></div>
-            <div class="question-item"><span class="question-text">5. 95, 96, 97, 98, 99, [___]</span><input type="text" data-ans="100"></div>
-            <div class="question-item"><span class="question-text">6. 10, 20, 30, 40, [___], 60</span><input type="text" data-ans="50"></div>
-            <div class="question-item"><span class="question-text">7. 40, 50, 60, [___], 80, 90</span><input type="text" data-ans="70"></div>
-            <div class="question-item"><span class="question-text">8. 5, 10, 15, 20, [___], 30</span><input type="text" data-ans="25"></div>
-            <div class="question-item"><span class="question-text">9. 35, 40, 45, [___], 55, 60</span><input type="text" data-ans="50"></div>
-            <div class="question-item"><span class="question-text">10. 70, 75, 80, 85, [___], 95</span><input type="text" data-ans="90"></div>
-            <div class="question-item"><span class="question-text">11. 2, 4, 6, 8, [___], 12</span><input type="text" data-ans="10"></div>
-            <div class="question-item"><span class="question-text">12. 20, 22, 24, [___], 28, 30</span><input type="text" data-ans="26"></div>
-            <div class="question-item"><span class="question-text">13. 50, 52, 54, 56, [___], 60</span><input type="text" data-ans="58"></div>
-            <div class="question-item"><span class="question-text">14. Backwards: 10, 9, 8, 7, [___], 5</span><input type="text" data-ans="6"></div>
-            <div class="question-item"><span class="question-text">15. Backwards: 32, 31, 30, [___], 28, 27</span><input type="text" data-ans="29"></div>
-            <div class="question-item"><span class="question-text">16. Backwards: 90, 80, 70, [___], 50, 40</span><input type="text" data-ans="60"></div>
-            <div class="question-item"><span class="question-text">17. Backwards: 50, 45, 40, [___], 30, 25</span><input type="text" data-ans="35"></div>
-            <div class="question-item"><span class="question-text">18. Skip pattern: 13, 23, 33, 43, [___], 63</span><input type="text" data-ans="53"></div>
-            <div class="question-item"><span class="question-text">19. Counting by 3s: 3, 6, 9, 12, [___], 18</span><input type="text" data-ans="15"></div>
-            <div class="question-item"><span class="question-text">20. Double missing: 0, 10, 20, [___], 40, 50 (find the 4th value)</span><input type="text" data-ans="30"></div>
-        </div>
-
-        <div class="reward-corner" id="reward-6">
-            <span class="big-star">⭐⭐⭐⭐⭐⭐</span>
-            <div class="cheer-text">"Wow! You cracked the secret codes! Finding patterns shows how smart and observant you are. Keep it up!"</div>
-        </div>
-    </div>
-
-    <!-- TOPIC 1.7 -->
-    <div class="topic-section" id="topic-7">
-        <h2 class="topic-header">Topic 1.7: Ordinal Numbers and Symbols</h2>
-        <div class="guide-box">
-            <strong>📖 Learning Guide:</strong> Ordinals track order. Example shorthand labels: <strong>1st, 2nd, 3rd, 4th...</strong>
-        </div>
-        
-        <div class="questions-container" data-topic="7">
-            <div style="background:#f7f9fc; padding:10px; margin-bottom:15px; border-radius:6px;">
-                <strong>Line Order (facing Left 🚪):</strong> 🔴(Circle) | 🔺(Triangle) | ⭐(Star) | ⬜(Square) | 🔶(Diamond)
+        <!-- Q3 -->
+        <div class="question-card">
+            <div class="pokemon-img-placeholder">🐢 🐢 🐢 | 🐢 🐢</div>
+            <div class="question-text">1. 3 Squirtles and 2 Squirtles make _______ Squirtles altogether.</div>
+            <div class="input-container">
+                <input type="text" id="q3_input" placeholder="Your answer...">
+                <button class="check-btn" onclick="checkAnswer('q3_input', 'q3_feedback', '5')">Check</button>
             </div>
-            <div class="question-item"><span class="question-text">1. Which shape is 1st?</span><input type="text" data-ans="circle"></div>
-            <div class="question-item"><span class="question-text">2. Position of Triangle? (word format)</span><input type="text" data-ans="second"></div>
-            <div class="question-item"><span class="question-text">3. Which shape is 3rd?</span><input type="text" data-ans="star"></div>
-            <div class="question-item"><span class="question-text">4. Position of Square? (symbol format)</span><input type="text" data-ans="4th"></div>
-            <div class="question-item"><span class="question-text">5. Which shape is 5th?</span><input type="text" data-ans="diamond"></div>
-
-            <div style="margin-top:20px;"><strong>Shortcut symbols formatting:</strong></div>
-            <div class="question-item"><span class="question-text">6. Symbol for First?</span><input type="text" data-ans="1st"></div>
-            <div class="question-item"><span class="question-text">7. Symbol for Second?</span><input type="text" data-ans="2nd"></div>
-            <div class="question-item"><span class="question-text">8. Symbol for Third?</span><input type="text" data-ans="3rd"></div>
-            <div class="question-item"><span class="question-text">9. Symbol for Fourth?</span><input type="text" data-ans="4th"></div>
-            <div class="question-item"><span class="question-text">10. Symbol for Fifth?</span><input type="text" data-ans="5th"></div>
-            <div class="question-item"><span class="question-text">11. Symbol for Sixth?</span><input type="text" data-ans="6th"></div>
-            <div class="question-item"><span class="question-text">12. Symbol for Seventh?</span><input type="text" data-ans="7th"></div>
-            <div class="question-item"><span class="question-text">13. Symbol for Eighth?</span><input type="text" data-ans="8th"></div>
-            <div class="question-item"><span class="question-text">14. Symbol for Ninth?</span><input type="text" data-ans="9th"></div>
-            <div class="question-item"><span class="question-text">15. Symbol for Tenth?</span><input type="text" data-ans="10th"></div>
-
-            <div style="margin-top:20px;"><strong>Riddles and Applications:</strong></div>
-            <div class="question-item"><span class="question-text">16. If Amy wins the race, what place is she? (symbol)</span><input type="text" data-ans="1st"></div>
-            <div class="question-item"><span class="question-text">17. Letter B's alphabetic position number? (symbol)</span><input type="text" data-ans="2nd"></div>
-            <div class="question-item"><span class="question-text">18. March is what month of the year? (symbol)</span><input type="text" data-ans="3rd"></div>
-            <div class="question-item"><span class="question-text">19. Last person in a 10 person line is what? (symbol)</span><input type="text" data-ans="10th"></div>
-            <div class="question-item"><span class="question-text">20. Alphabet letter E is in what position? (symbol)</span><input type="text" data-ans="5th"></div>
+            <div id="q3_feedback" class="feedback"></div>
         </div>
 
-        <div class="reward-corner" id="reward-7">
-            <span class="big-star">🏆🎉</span>
-            <div class="cheer-text">"Phenomenal finish! You crossed the finish line in 1st place! You have successfully completed all 140 math practice questions. You are officially a Primary 1 Math Superstar!"</div>
+        <!-- Q4 -->
+        <div class="question-card">
+            <div class="question-text">2. Complete the number bond: 6 and _______ make 10.</div>
+            <div class="input-container">
+                <input type="text" id="q4_input" placeholder="Your answer...">
+                <button class="check-btn" onclick="checkAnswer('q4_input', 'q4_feedback', '4')">Check</button>
+            </div>
+            <div id="q4_feedback" class="feedback"></div>
         </div>
     </div>
 </div>
 
 <script>
-    document.querySelectorAll('.questions-container input').forEach(input => {
-        input.addEventListener('input', function() {
-            const rawUserValue = this.value.trim().toLowerCase().replace(/\s+/g, ' ');
-            const expectedAns = this.getAttribute('data-ans').toLowerCase();
-            
-            if(rawUserValue === expectedAns) {
-                this.classList.add('correct-input');
-                this.disabled = true;
-                checkSectionProgress(this.closest('.questions-container'));
-            }
+    // Unrestricted tab switching logic
+    function switchTab(tabId) {
+        // Remove active status from all panels and tabs
+        document.querySelectorAll('.content-panel').forEach(panel => {
+            panel.classList.remove('active');
         });
-    });
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.classList.remove('active');
+        });
 
-    function checkSectionProgress(container) {
-        const totalInputs = container.querySelectorAll('input').length;
-        const correctInputs = container.querySelectorAll('.correct-input').length;
-        const topicId = container.getAttribute('data-topic');
+        // Activate selected tab and panel instantly
+        document.getElementById(tabId).classList.add('active');
+        
+        // Match the button highlights
+        const btnIndex = tabId === 'topic1_1' ? 0 : 1;
+        document.querySelectorAll('.tab-btn')[btnIndex].classList.add('active');
+    }
 
-        if (correctInputs === totalInputs) {
-            // Unlock reward block
-            document.getElementById(`reward-${topicId}`).classList.add('active');
-            // Light up target Dashboard map star
-            document.getElementById(`map-star-${topicId}`).classList.add('unlocked');
+    // Auto-correcting input answer validator
+    function checkAnswer(inputId, feedbackId, correctAnswer) {
+        const userInput = document.getElementById(inputId).value.trim().toLowerCase();
+        const feedbackDiv = document.getElementById(feedbackId);
+
+        if (userInput === correctAnswer.toLowerCase()) {
+            feedbackDiv.textContent = "✨ Correct! Awesome job! 🎉";
+            feedbackDiv.className = "feedback correct";
+        } else {
+            feedbackDiv.textContent = "❌ Try again! You can do it!";
+            feedbackDiv.className = "feedback wrong";
         }
     }
 </script>
