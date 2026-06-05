@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🌈 Addition Adventure Quest! 🌈</title>
+    <title>⚡ Pokémon Addition Adventure! ⚡</title>
     <style>
         :root {
-            --sky-blue: #00A8E8;
-            --sunny-yellow: #FFD166;
-            --apple-red: #EF476F;
-            --grass-green: #06D6A0;
-            --royal-purple: #118AB2;
+            --pokemon-blue: #3B4CCA;
+            --pokemon-yellow: #FFDE00;
+            --pokemon-red: #CC0000;
+            --master-purple: #7038F8;
+            --master-pink: #ED125A;
             --bg-creme: #FDFBF7;
-            --text-main: #2B2D42;
+            --text-main: #2A2A2A;
             --master-gold: #FFB703;
         }
 
@@ -23,7 +23,7 @@
         }
 
         body {
-            background-color: #F0F7F4;
+            background-color: #EDEFF4;
             color: var(--text-main);
             margin: 0;
             padding: 15px;
@@ -39,7 +39,7 @@
             padding: 12px 25px;
             border-radius: 25px;
             box-shadow: 0 6px 0 #CBD5E1;
-            border: 3px solid var(--sky-blue);
+            border: 3px solid var(--pokemon-blue);
             width: 100%;
             max-width: 800px;
         }
@@ -47,53 +47,68 @@
         h1 {
             margin: 0;
             font-size: 2rem;
-            color: var(--royal-purple);
-            text-shadow: 2px 2px 0px var(--sunny-yellow);
+            color: var(--pokemon-blue);
+            text-shadow: 2px 2px 0px var(--pokemon-yellow);
         }
 
-        /* MASTER GLOBAL LEADERBOARD RIBBON */
+        /* MASTER POKEBALL LEADERBOARD */
         .master-hall-fame {
             width: 100%;
             max-width: 800px;
-            background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
-            border: 4px solid var(--master-gold);
+            background: linear-gradient(135deg, #4A2E80 0%, #20113B 100%);
+            border: 4px solid #FFFFFF;
             border-radius: 22px;
             padding: 12px 20px;
             display: flex;
             align-items: center;
             gap: 15px;
             margin-bottom: 15px;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
             color: white;
+            position: relative;
         }
+
+        .master-hall-fame::before, .master-hall-fame::after {
+            content: '';
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            background-color: var(--master-pink);
+            border-radius: 50%;
+            top: 6px;
+        }
+        .master-hall-fame::before { left: 120px; }
+        .master-hall-fame::after { right: 120px; }
 
         .master-label {
             font-size: 0.85rem;
             font-weight: bold;
-            color: #0F172A;
-            background: var(--master-gold);
+            color: white;
+            background: var(--master-purple);
             padding: 6px 12px;
             border-radius: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
             text-align: center;
-            min-width: 110px;
+            min-width: 120px;
+            border: 2px solid white;
+            box-shadow: 0 0 8px rgba(255,255,255,0.4);
         }
 
         .master-rail-bg {
             height: 24px;
             flex-grow: 1;
-            background: rgba(255, 255, 255, 0.2);
+            background: rgba(255, 255, 255, 0.15);
             border-radius: 12px;
             position: relative;
-            border: 1px solid rgba(255, 255, 255, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.4);
             overflow: visible;
         }
 
         .master-rail-fill {
             height: 100%;
             width: 0%;
-            background: linear-gradient(to right, #FFD166, #F77F00, #EF476F);
+            background: linear-gradient(to right, var(--master-pink), var(--master-purple), #A890F0);
             border-radius: 12px;
             position: absolute;
             left: 0;
@@ -105,17 +120,19 @@
             position: absolute;
             left: 0%;
             top: 50%;
-            transform: translate(-50%, -55%);
+            transform: translate(-50%, -50%);
             font-size: 2.2rem;
             transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 10;
-            filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.3));
+            filter: drop-shadow(0px 3px 4px rgba(0,0,0,0.4));
+            cursor: default;
         }
 
         .master-score-badge {
             font-size: 1.1rem;
             font-weight: bold;
-            color: var(--master-gold);
+            color: var(--pokemon-yellow);
+            text-shadow: 1px 1px 2px black;
             min-width: 75px;
             text-align: right;
         }
@@ -135,7 +152,7 @@
             background: white;
             border: 3px solid #64748B;
             padding: 10px 14px;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: bold;
             border-radius: 16px;
             cursor: pointer;
@@ -143,7 +160,7 @@
             transition: all 0.1s ease;
             color: #334155;
             flex: 1 1 calc(20% - 8px);
-            min-width: 90px;
+            min-width: 95px;
             text-align: center;
         }
 
@@ -152,11 +169,11 @@
             transform: translateY(3px);
         }
 
-        .map-node-btn[data-lvl="1"].active { background: #EF476F; border-color: #D62246; box-shadow: 0 1px 0 #D62246; }
-        .map-node-btn[data-lvl="2"].active { background: #F77F00; border-color: #C16200; box-shadow: 0 1px 0 #C16200; }
-        .map-node-btn[data-lvl="3"].active { background: #FFB703; border-color: #FB8500; box-shadow: 0 1px 0 #FB8500; color: #023047; }
-        .map-node-btn[data-lvl="4"].active { background: #06D6A0; border-color: #05B386; box-shadow: 0 1px 0 #05B386; }
-        .map-node-btn[data-lvl="5"].active { background: #7209B7; border-color: #56038D; box-shadow: 0 1px 0 #56038D; }
+        .map-node-btn[data-lvl="1"].active { background: #FF4236; border-color: #B31E15; box-shadow: 0 1px 0 #B31E15; }
+        .map-node-btn[data-lvl="2"].active { background: #26A1FF; border-color: #0060A3; box-shadow: 0 1px 0 #0060A3; }
+        .map-node-btn[data-lvl="3"].active { background: #FFCB05; border-color: #B38E00; box-shadow: 0 1px 0 #B38E00; color: #1D2A44; }
+        .map-node-btn[data-lvl="4"].active { background: #78C850; border-color: #4A852C; box-shadow: 0 1px 0 #4A852C; }
+        .map-node-btn[data-lvl="5"].active { background: #A040A0; border-color: #602060; box-shadow: 0 1px 0 #602060; }
 
         /* Main Display Workspace */
         .adventure-deck {
@@ -166,13 +183,13 @@
             width: 100%;
             padding: 20px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            border: 4px solid #E2E8F0;
+            border: 4px solid #CBD5E1;
         }
 
-        /* Horizontal Category Ribbon Component */
+        /* Pokeball Reward Path Tracker */
         .reward-tracker-ribbon {
             width: 100%;
-            background: #EDF2F7;
+            background: #E2E8F0;
             border: 3px solid #4A5568;
             border-radius: 20px;
             padding: 10px 15px;
@@ -204,7 +221,7 @@
         .trail-path-fill {
             height: 100%;
             width: 0%;
-            background: linear-gradient(to right, #06D6A0, #4CC9F0);
+            background: linear-gradient(to right, #FF4236, #26A1FF, #FFCB05);
             border-radius: 11px;
             position: absolute;
             left: 0;
@@ -216,14 +233,15 @@
             position: absolute;
             left: 0%;
             top: 50%;
-            transform: translate(-50%, -55%);
-            font-size: 2rem;
+            transform: translate(-50%, -50%);
+            font-size: 2.2rem;
             transition: left 0.3s ease;
             z-index: 10;
+            filter: drop-shadow(1px 2px 2px rgba(0,0,0,0.2));
         }
 
         .destination-chest {
-            font-size: 1.6rem;
+            font-size: 1.8rem;
             flex-shrink: 0;
         }
 
@@ -240,16 +258,17 @@
         }
 
         .progress-tag {
-            background: #E2E8F0;
+            background: #EDF2F7;
             padding: 4px 12px;
             border-radius: 8px;
             font-size: 0.9rem;
             font-weight: bold;
             display: inline-block;
             margin-bottom: 15px;
+            border: 1px solid #CBD5E1;
         }
 
-        /* AUTHENTIC MATH COLUMN METHOD STYLING */
+        /* Math column method styling */
         .column-math-container {
             display: inline-block;
             font-family: 'Courier New', Courier, monospace;
@@ -274,361 +293,4 @@
         }
 
         .column-row.operator-row {
-            border-bottom: 5px solid #1D3557;
-            padding-bottom: 4px;
-        }
-
-        .column-operator {
-            position: absolute;
-            left: 0;
-            bottom: 4px;
-            font-size: 3rem;
-        }
-
-        .column-result-space {
-            letter-spacing: 6px;
-            color: var(--sky-blue);
-            padding-top: 6px;
-            font-size: 3.5rem;
-            min-height: 4rem;
-            text-align: right;
-            font-weight: 900;
-        }
-
-        /* Option Selection Grids */
-        .answers-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 15px;
-            width: 100%;
-        }
-
-        .choice-btn {
-            background: white;
-            border: 3px solid #4A5568;
-            border-radius: 20px;
-            padding: 16px;
-            font-size: 2rem;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 5px 0 #4A5568;
-            transition: all 0.1s;
-        }
-        .choice-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #4A5568; }
-
-        /* DYNAMIC CONCRETE COUNTER COMPONENT */
-        .visual-aid-arena {
-            background: #FFF;
-            border: 2px dashed #BEE3F8;
-            border-radius: 15px;
-            padding: 15px;
-            margin-top: 25px;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 12px;
-            width: 100%;
-        }
-        
-        .counter-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 4px;
-            max-width: 45%;
-            justify-content: center;
-            padding: 8px;
-            border-radius: 10px;
-        }
-        .group-left { background-color: #EBF8FF; border: 1px solid #BEE3F8; }
-        .group-right { background-color: #FFFAF0; border: 1px solid #FEEBC8; }
-
-        .alert-cheer {
-            background: #E8F5E9;
-            color: #1B5E20;
-            border: 2px solid #C8E6C9;
-            padding: 12px;
-            border-radius: 15px;
-            margin-top: 15px;
-            font-weight: bold;
-            text-align: center;
-            display: none;
-            font-size: 1.1rem;
-            width: 100%;
-        }
-
-        .quiz-end-card { text-align: center; padding: 25px 10px; }
-        .action-start-btn {
-            background: #06D6A0;
-            color: white;
-            border: none;
-            font-size: 1.4rem;
-            font-weight: bold;
-            padding: 12px 35px;
-            border-radius: 18px;
-            box-shadow: 0 5px 0 #05B386;
-            cursor: pointer;
-        }
-        .action-start-btn:active { transform: translateY(2px); box-shadow: 0 3px 0 #05B386; }
-
-        .celebrate-bounce { animation: screenJump 0.2s ease-in-out 2; }
-        @keyframes screenJump { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-        
-        .hall-fame-pop { animation: goldFlash 0.4s ease-in-out; }
-        @keyframes goldFlash { 0%, 100% { background: #1E293B; } 50% { background: #FFB703; transform: scale(1.02); } }
-    </style>
-</head>
-<body>
-
-    <header>
-        <h1>🌈 Addition Adventure Quest! 🌈</h1>
-    </header>
-
-    <div class="master-hall-fame" id="global-board">
-        <div class="master-label" id="global-rank">Recruit</div>
-        <div class="master-rail-bg">
-            <div id="master-fill" class="master-rail-fill"></div>
-            <div id="master-trophy" class="master-trophy-token">🎖️</div>
-        </div>
-        <div class="master-score-badge" id="master-txt-score">0 / 50</div>
-    </div>
-
-    <div class="stage-map">
-        <button class="map-node-btn active" data-lvl="1" onclick="switchAdditionCategoryTab(this, 1)">+1 Quest</button>
-        <button class="map-node-btn" data-lvl="2" onclick="switchAdditionCategoryTab(this, 2)">+2 Quest</button>
-        <button class="map-node-btn" data-lvl="3" onclick="switchAdditionCategoryTab(this, 3)">+3 Quest</button>
-        <button class="map-node-btn" data-lvl="4" onclick="switchAdditionCategoryTab(this, 4)">+4 Quest</button>
-        <button class="map-node-btn" data-lvl="5" onclick="switchAdditionCategoryTab(this, 5)">+5 Quest</button>
-    </div>
-
-    <div class="adventure-deck">
-        <div class="reward-tracker-ribbon">
-            <div class="badge-title" id="reward-lbl">Quest Base</div>
-            <div class="trail-path-bg">
-                <div id="reward-fill" class="trail-path-fill"></div>
-                <div id="reward-walker" class="walker-token">🏃</div>
-            </div>
-            <div class="destination-chest">🎁</div>
-        </div>
-
-        <div id="game-arena-content"></div>
-    </div>
-
-    <script>
-        let currentLevelCategory = 1; 
-        
-        let globalTotalScore = 0;
-        let categoriesBeatenFlags = { 1: false, 2: false, 3: false, 4: false, 5: false };
-
-        let gameState = {
-            currentIdx: 0,
-            correctCount: 0,
-            totalCount: 10,
-            pool: []
-        };
-
-        const cheeringPhrases = [
-            "⭐ Fantastic! You found the answer! ⭐",
-            "🚀 Zoom! Rocket power correct! 🚀",
-            "🎈 Yay! Outstanding counting! 🎈",
-            "🎉 Brilliant! You are a math star! 🎉",
-            "💎 Diamond Sparkle Job! 💎"
-        ];
-
-        function switchAdditionCategoryTab(btnDom, targetCategoryNum) {
-            document.querySelectorAll('.stage-map .map-node-btn').forEach(b => b.classList.remove('active'));
-            if(btnDom) btnDom.classList.add('active');
-            currentLevelCategory = targetCategoryNum;
-            initiateQuestSession();
-        }
-
-        function initiateQuestSession() {
-            gameState.currentIdx = 0;
-            gameState.correctCount = 0;
-            gameState.pool = buildRandomAdditionDataset(currentLevelCategory, gameState.totalCount);
-            renderCurrentMathCard();
-            refreshVisualTrailProgress();
-            updateMasterGlobalRewardBar();
-        }
-
-        function buildRandomAdditionDataset(constantAdder, count) {
-            let questions = [];
-            
-            while(questions.length < count) {
-                let addendA = Math.floor(Math.random() * 10); 
-                let addendB = constantAdder; 
-
-                let sumResult = addendA + addendB;
-                
-                let choicesSet = new Set([sumResult]);
-                while(choicesSet.size < 4) {
-                    let offsetValue = sumResult + (Math.floor(Math.random() * 7) - 3);
-                    if(offsetValue >= 0 && offsetValue !== sumResult) {
-                        choicesSet.add(offsetValue);
-                    }
-                }
-                
-                questions.push({
-                    numA: addendA,
-                    numB: addendB,
-                    correct: sumResult,
-                    options: Array.from(choicesSet).sort((x,y) => x - y)
-                });
-            }
-            return questions;
-        }
-
-        function renderCurrentMathCard() {
-            const rootContainer = document.getElementById('game-arena-content');
-            const data = gameState.pool[gameState.currentIdx];
-
-            let buttonsHTML = '';
-            data.options.forEach(opt => {
-                buttonsHTML += `<button class="choice-btn" onclick="submitAdditionChoice(${opt}, ${data.correct})">${opt}</button>`;
-            });
-
-            let leftCounters = '🔷'.repeat(data.numA);
-            let rightCounters = '🔶'.repeat(data.numB);
-
-            let counterSectionHTML = `
-                <div class="visual-aid-arena">
-                    <div class="counter-group group-left">${leftCounters || '0'}</div>
-                    <span style="font-size:1.5rem; font-weight:bold; align-self:center;">+</span>
-                    <div class="counter-group group-right">${rightCounters || '0'}</div>
-                </div>
-            `;
-
-            let strA = data.numA.toString();
-            let strB = data.numB.toString();
-            let maxLength = Math.max(strA.length, strB.length);
-            
-            let formattedA = strA.padStart(maxLength, ' ');
-            let formattedB = strB.padStart(maxLength, ' ');
-
-            rootContainer.innerHTML = `
-                <div class="question-box">
-                    <div class="progress-tag">Question ${gameState.currentIdx + 1} of ${gameState.totalCount}</div>
-                    
-                    <div class="column-math-container">
-                        <div class="column-row">${formattedA.replace(/ /g, '&nbsp;')}</div>
-                        <div class="column-row operator-row">
-                            <span class="column-operator">+</span>
-                            ${formattedB.replace(/ /g, '&nbsp;')}
-                        </div>
-                        <div class="column-result-space">?</div>
-                    </div>
-
-                    <div class="answers-grid">${buttonsHTML}</div>
-                    <div class="alert-cheer" id="quest-cheer-box"></div>
-                    ${counterSectionHTML}
-                </div>
-            `;
-        }
-
-        function submitAdditionChoice(userClicked, correctValue) {
-            const workspaceContainer = document.querySelector('.adventure-deck');
-            const cheerBox = document.getElementById('quest-cheer-box');
-
-            if(userClicked === correctValue) {
-                gameState.correctCount++;
-                workspaceContainer.classList.add('celebrate-bounce');
-                setTimeout(() => workspaceContainer.classList.remove('celebrate-bounce'), 250);
-                
-                cheerBox.innerText = cheeringPhrases[Math.floor(Math.random() * cheeringPhrases.length)];
-                cheerBox.style.display = "block";
-            } else {
-                if(cheerBox) cheerBox.style.display = "none";
-            }
-
-            gameState.currentIdx++;
-            refreshVisualTrailProgress();
-
-            setTimeout(() => {
-                if(gameState.currentIdx < gameState.totalCount) {
-                    renderCurrentMathCard();
-                } else {
-                    processCategoryCompletionCalculations();
-                }
-            }, 600);
-        }
-
-        function refreshVisualTrailProgress() {
-            const fill = document.getElementById('reward-fill');
-            const walker = document.getElementById('reward-walker');
-            const label = document.getElementById('reward-lbl');
-
-            let fillPercentage = Math.round((gameState.currentIdx / gameState.totalCount) * 100);
-            fill.style.width = `${fillPercentage}%`;
-            walker.style.left = `${fillPercentage}%`;
-
-            let stepCount = gameState.correctCount;
-            if(stepCount === 0) { walker.innerText = "🏃"; label.innerText = `Track: Start`; }
-            else if(stepCount < 4) { walker.innerText = "👟"; label.innerText = "Marching!"; }
-            else if(stepCount < 7) { walker.innerText = "🚲"; label.innerText = "Halfway!"; }
-            else if(stepCount < 10) { walker.innerText = "🚀"; label.innerText = "Closing In!"; }
-            else { walker.innerText = "🎁"; label.innerText = "Set Cleared!"; }
-        }
-
-        function processCategoryCompletionCalculations() {
-            globalTotalScore += gameState.correctCount;
-            categoriesBeatenFlags[currentLevelCategory] = true;
-
-            const globalBoard = document.getElementById('global-board');
-            globalBoard.classList.add('hall-fame-pop');
-            setTimeout(() => globalBoard.classList.remove('hall-fame-pop'), 500);
-
-            updateMasterGlobalRewardBar();
-            renderQuestEndSummary();
-        }
-
-        function updateMasterGlobalRewardBar() {
-            const mFill = document.getElementById('master-fill');
-            const mTrophy = document.getElementById('master-trophy');
-            const mTxtScore = document.getElementById('master-txt-score');
-            const mRank = document.getElementById('global-rank');
-
-            let globalPercentage = Math.min(100, Math.round((globalTotalScore / 50) * 100));
-            mFill.style.width = `${globalPercentage}%`;
-            mTrophy.style.left = `${globalPercentage}%`;
-            mTxtScore.innerText = `${globalTotalScore} / 50`;
-
-            if(globalTotalScore === 0) {
-                mRank.innerText = "Recruit 🎒"; mRank.style.backgroundColor = "#94A3B8";
-            } else if (globalTotalScore < 15) {
-                mRank.innerText = "Explorer 🧭"; mRank.style.backgroundColor = "#3B82F6";
-            } else if (globalTotalScore < 30) {
-                mRank.innerText = "Knight ⚔️"; mRank.style.backgroundColor = "#F59E0B";
-            } else if (globalTotalScore < 45) {
-                mRank.innerText = "Hero 🔥"; mRank.style.backgroundColor = "#EF4444";
-            } else if (globalTotalScore < 50) {
-                mRank.innerText = "Mythic ⚡"; mRank.style.backgroundColor = "#8B5CF6";
-            } else {
-                mRank.innerText = "CHAMPION 👑"; mRank.style.backgroundColor = "#10B981"; mTrophy.innerText = "🏆";
-            }
-        }
-
-        function renderQuestEndSummary() {
-            const rootContainer = document.getElementById('game-arena-content');
-            let successRatio = Math.round((gameState.correctCount / gameState.totalCount) * 100);
-            let performanceHTML = '';
-
-            if(successRatio === 100) {
-                performanceHTML = `<span style="font-size:4.5rem;">💎🏆💎</span><h2 style="color:var(--grass-green);">PERFECT LEVEL ACCOMPLISHED!</h2><p>Terrific single digit addition calculating work! <b>+10 Points</b> have been wired straight to your Master Hall of Fame bar above!</p>`;
-            } else if (successRatio >= 70) {
-                performanceHTML = `<span style="font-size:4rem;">🌟🥈</span><h2>QUEST ATTAINED!</h2><p>Good job! You earned <b>+${gameState.correctCount} Points</b> for your Master Bar. Let's rerun the set to capture a flawless 10/10 prize!</p>`;
-            } else {
-                performanceHTML = `<span style="font-size:4rem;">🎒🏕️</span><h2>POINTS LOCKED IN</h2><p>You added <b>+${gameState.correctCount} Points</b> to your Master Bar. Let's do another run to boost your global score higher!</p>`;
-            }
-
-            rootContainer.innerHTML = `
-                <div class="quiz-end-card">
-                    ${performanceHTML}<br>
-                    <button class="action-start-btn" onclick="initiateQuestSession()">🔄 Replay This Category</button>
-                </div>
-            `;
-        }
-
-        window.onload = () => { initiateQuestSession(); };
-    </script>
-</body>
-</html>
+            border-bottom: 5px solid #1
