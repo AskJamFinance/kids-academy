@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>⚡ Pokémon Addition Adventure! ⚡</title>
+    <title>⚡ Pokémon Addition Adventure Quest! ⚡</title>
     <style>
         :root {
-            --pokemon-blue: #3B4CCA;
-            --pokemon-yellow: #FFDE00;
-            --pokemon-red: #CC0000;
-            --master-purple: #7038F8;
-            --master-pink: #ED125A;
+            --sky-blue: #00A8E8;
+            --sunny-yellow: #FFD166;
+            --apple-red: #EF476F;
+            --grass-green: #06D6A0;
+            --royal-purple: #118AB2;
             --bg-creme: #FDFBF7;
-            --text-main: #2A2A2A;
+            --text-main: #2B2D42;
             --master-gold: #FFB703;
         }
 
@@ -23,7 +23,7 @@
         }
 
         body {
-            background-color: #EDEFF4;
+            background-color: #F0F7F4;
             color: var(--text-main);
             margin: 0;
             padding: 15px;
@@ -39,7 +39,7 @@
             padding: 12px 25px;
             border-radius: 25px;
             box-shadow: 0 6px 0 #CBD5E1;
-            border: 3px solid var(--pokemon-blue);
+            border: 3px solid var(--sky-blue);
             width: 100%;
             max-width: 800px;
         }
@@ -47,68 +47,53 @@
         h1 {
             margin: 0;
             font-size: 2rem;
-            color: var(--pokemon-blue);
-            text-shadow: 2px 2px 0px var(--pokemon-yellow);
+            color: var(--royal-purple);
+            text-shadow: 2px 2px 0px var(--sunny-yellow);
         }
 
-        /* MASTER POKEBALL LEADERBOARD */
+        /* MASTER GLOBAL LEADERBOARD RIBBON */
         .master-hall-fame {
             width: 100%;
             max-width: 800px;
-            background: linear-gradient(135deg, #4A2E80 0%, #20113B 100%);
-            border: 4px solid #FFFFFF;
+            background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+            border: 4px solid var(--master-gold);
             border-radius: 22px;
             padding: 12px 20px;
             display: flex;
             align-items: center;
             gap: 15px;
             margin-bottom: 15px;
-            box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
             color: white;
-            position: relative;
         }
-
-        .master-hall-fame::before, .master-hall-fame::after {
-            content: '';
-            position: absolute;
-            width: 14px;
-            height: 14px;
-            background-color: var(--master-pink);
-            border-radius: 50%;
-            top: 6px;
-        }
-        .master-hall-fame::before { left: 120px; }
-        .master-hall-fame::after { right: 120px; }
 
         .master-label {
             font-size: 0.85rem;
             font-weight: bold;
-            color: white;
-            background: var(--master-purple);
+            color: #0F172A;
+            background: var(--master-gold);
             padding: 6px 12px;
             border-radius: 12px;
             text-transform: uppercase;
             letter-spacing: 1px;
             text-align: center;
-            min-width: 120px;
-            border: 2px solid white;
-            box-shadow: 0 0 8px rgba(255,255,255,0.4);
+            min-width: 140px;
         }
 
         .master-rail-bg {
             height: 24px;
             flex-grow: 1;
-            background: rgba(255, 255, 255, 0.15);
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 12px;
             position: relative;
-            border: 2px solid rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             overflow: visible;
         }
 
         .master-rail-fill {
             height: 100%;
             width: 0%;
-            background: linear-gradient(to right, var(--master-pink), var(--master-purple), #A890F0);
+            background: linear-gradient(to right, #FFD166, #F77F00, #EF476F);
             border-radius: 12px;
             position: absolute;
             left: 0;
@@ -120,30 +105,27 @@
             position: absolute;
             left: 0%;
             top: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -55%);
             font-size: 2.2rem;
             transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
             z-index: 10;
-            filter: drop-shadow(0px 3px 4px rgba(0,0,0,0.4));
-            cursor: default;
+            filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.3));
         }
 
         .master-score-badge {
             font-size: 1.1rem;
             font-weight: bold;
-            color: var(--pokemon-yellow);
-            text-shadow: 1px 1px 2px black;
-            min-width: 75px;
+            color: var(--master-gold);
+            min-width: 85px;
             text-align: right;
         }
 
-        /* Category Tabs Layout Split */
+        /* Category Tabs Layout Split (1 to 10 Quests) */
         .stage-map {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
             gap: 8px;
             margin-bottom: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
             width: 100%;
             max-width: 800px;
         }
@@ -151,29 +133,33 @@
         .map-node-btn {
             background: white;
             border: 3px solid #64748B;
-            padding: 10px 14px;
-            font-size: 1.1rem;
+            padding: 8px 4px;
+            font-size: 1rem;
             font-weight: bold;
-            border-radius: 16px;
+            border-radius: 14px;
             cursor: pointer;
             box-shadow: 0 4px 0 #64748B;
             transition: all 0.1s ease;
             color: #334155;
-            flex: 1 1 calc(20% - 8px);
-            min-width: 95px;
             text-align: center;
         }
 
         .map-node-btn.active {
             color: white;
             transform: translateY(3px);
+            box-shadow: 0 1px 0 transparent !important;
         }
 
-        .map-node-btn[data-lvl="1"].active { background: #FF4236; border-color: #B31E15; box-shadow: 0 1px 0 #B31E15; }
-        .map-node-btn[data-lvl="2"].active { background: #26A1FF; border-color: #0060A3; box-shadow: 0 1px 0 #0060A3; }
-        .map-node-btn[data-lvl="3"].active { background: #FFCB05; border-color: #B38E00; box-shadow: 0 1px 0 #B38E00; color: #1D2A44; }
-        .map-node-btn[data-lvl="4"].active { background: #78C850; border-color: #4A852C; box-shadow: 0 1px 0 #4A852C; }
-        .map-node-btn[data-lvl="5"].active { background: #A040A0; border-color: #602060; box-shadow: 0 1px 0 #602060; }
+        .map-node-btn[data-lvl="1"].active { background: #EF476F; border-color: #D62246; box-shadow: 0 1px 0 #D62246; }
+        .map-node-btn[data-lvl="2"].active { background: #F77F00; border-color: #C16200; box-shadow: 0 1px 0 #C16200; }
+        .map-node-btn[data-lvl="3"].active { background: #FFB703; border-color: #FB8500; box-shadow: 0 1px 0 #FB8500; color: #023047; }
+        .map-node-btn[data-lvl="4"].active { background: #06D6A0; border-color: #05B386; box-shadow: 0 1px 0 #05B386; }
+        .map-node-btn[data-lvl="5"].active { background: #7209B7; border-color: #56038D; box-shadow: 0 1px 0 #56038D; }
+        .map-node-btn[data-lvl="6"].active { background: #118AB2; border-color: #0B6A8A; box-shadow: 0 1px 0 #0B6A8A; }
+        .map-node-btn[data-lvl="7"].active { background: #073B4C; border-color: #021E26; box-shadow: 0 1px 0 #021E26; }
+        .map-node-btn[data-lvl="8"].active { background: #FF4D6D; border-color: #C9184A; box-shadow: 0 1px 0 #C9184A; }
+        .map-node-btn[data-lvl="9"].active { background: #FF758F; border-color: #FF4D6D; box-shadow: 0 1px 0 #FF4D6D; }
+        .map-node-btn[data-lvl="10"].active { background: #52B788; border-color: #2D6A4F; box-shadow: 0 1px 0 #2D6A4F; }
 
         /* Main Display Workspace */
         .adventure-deck {
@@ -183,114 +169,16 @@
             width: 100%;
             padding: 20px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            border: 4px solid #CBD5E1;
+            border: 4px solid #E2E8F0;
         }
 
-        /* Pokeball Reward Path Tracker */
+        /* Horizontal Category Ribbon Component */
         .reward-tracker-ribbon {
             width: 100%;
-            background: #E2E8F0;
+            background: #EDF2F7;
             border: 3px solid #4A5568;
             border-radius: 20px;
             padding: 10px 15px;
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .badge-title {
-            font-size: 0.8rem;
-            font-weight: bold;
-            color: white;
-            background: #4A5568;
-            padding: 5px 8px;
-            border-radius: 8px;
-            text-transform: uppercase;
-        }
-
-        .trail-path-bg {
-            height: 22px;
-            flex-grow: 1;
-            background: #CBD5E1;
-            border-radius: 11px;
-            position: relative;
-            border: 1px solid #94A3B8;
-        }
-
-        .trail-path-fill {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(to right, #FF4236, #26A1FF, #FFCB05);
-            border-radius: 11px;
-            position: absolute;
-            left: 0;
-            top: 0;
-            transition: width 0.3s ease;
-        }
-
-        .walker-token {
-            position: absolute;
-            left: 0%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 2.2rem;
-            transition: left 0.3s ease;
-            z-index: 10;
-            filter: drop-shadow(1px 2px 2px rgba(0,0,0,0.2));
-        }
-
-        .destination-chest {
-            font-size: 1.8rem;
-            flex-shrink: 0;
-        }
-
-        /* Question Frame Elements */
-        .question-box {
-            text-align: center;
-            background: white;
-            border: 3px dashed #CBD5E1;
-            border-radius: 20px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .progress-tag {
-            background: #EDF2F7;
-            padding: 4px 12px;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            font-weight: bold;
-            display: inline-block;
-            margin-bottom: 15px;
-            border: 1px solid #CBD5E1;
-        }
-
-        /* Math column method styling */
-        .column-math-container {
-            display: inline-block;
-            font-family: 'Courier New', Courier, monospace;
-            font-weight: bold;
-            font-size: 3.5rem;
-            color: #1D3557;
-            line-height: 1.1;
-            text-align: right;
-            margin: 10px 0 25px 0;
-            padding: 10px 20px;
-            background: #F8FAFC;
-            border-radius: 15px;
-            border: 2px solid #E2E8F0;
-        }
-
-        .column-row {
-            display: flex;
-            justify-content: flex-end;
-            letter-spacing: 6px;
-            position: relative;
-            min-width: 140px;
-        }
-
-        .column-row.operator-row {
-            border-bottom: 5px solid #1
+            gap: 12
