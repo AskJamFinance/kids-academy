@@ -112,7 +112,7 @@
         .portal-panel {
             display: none; /* Hidden by default, toggled with JavaScript */
             width: 100%;
-            max-width: 900px;
+            max-width: 1000px;
             animation: fadeIn 0.4s ease-out forwards;
         }
 
@@ -120,8 +120,16 @@
             display: block;
         }
 
-        /* Card Menu Grid layout */
+        /* Master menu grid holding the rows */
         .menu-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+            width: 100%;
+        }
+
+        /* Row organization for Addition vs Multiplication */
+        .game-row {
             display: flex;
             gap: 25px;
             flex-wrap: wrap;
@@ -207,7 +215,6 @@
         <p class="subtitle">Pick a category to explore your gaming levels!</p>
     </header>
 
-    <!-- THE 2 MAIN TABS -->
     <div class="portal-tabs-container">
         <button id="btnPhonic" class="main-tab-btn tab-phonic-btn active" onclick="switchTab('phonic')">
             <span>📚</span> Phonics
@@ -217,99 +224,101 @@
         </button>
     </div>
 
-    <!-- ==================== TAB 1: PHONICS PANEL ==================== -->
     <div id="panelPhonic" class="portal-panel active-panel">
         <div class="menu-grid">
-            <div class="game-card card-green">
-                <div>
-                    <span class="card-icon">📖</span>
-                    <h2>Phonics Academy</h2>
-                    <p class="card-desc">Master alphabet sounds, blending structures, and read out loud sentences!</p>
+            <div class="game-row">
+                <div class="game-card card-green">
+                    <div>
+                        <span class="card-icon">📖</span>
+                        <h2>Phonics Academy</h2>
+                        <p class="card-desc">Master alphabet sounds, blending structures, and read out loud sentences!</p>
+                    </div>
+                    <a href="Phonics.html" class="launch-btn btn-green">Play Reading! 🚀</a>
                 </div>
-                <!-- FIXED: Matches case-sensitive Phonics.html -->
-                <a href="Phonics.html" class="launch-btn btn-green">Play Reading! 🚀</a>
             </div>
         </div>
     </div>
 
-    <!-- ==================== TAB 2: MATHS PANEL ==================== -->
     <div id="panelMaths" class="portal-panel">
         <div class="menu-grid">
+            
+            <div class="game-row">
+                <div class="game-card card-blue">
+                    <div>
+                        <span class="card-icon">🎈</span>
+                        <h2>Magic Maths Quest</h2>
+                        <p class="card-desc">Practice column-method adding from 1 to 100 and fly your balloon to the crown!</p>
+                    </div>
+                    <a href="MathsQuest.html" class="launch-btn btn-blue">Launch Quest 🎈</a>
+                </div>
 
-         
-            <!-- GAME 2: MAGIC MATHS QUEST -->
-            <div class="game-card card-blue">
-                <div>
-                    <span class="card-icon">🎈</span>
-                    <h2>Magic Maths Quest</h2>
-                    <p class="card-desc">Practice column-method adding from 1 to 100 and fly your balloon to the crown!</p>
+                <div class="game-card card-pink">
+                    <div>
+                        <span class="card-icon">⚔️</span>
+                        <h2>Addition Arena</h2>
+                        <p class="card-desc">Battle addition equations and level up your math power points!</p>
+                    </div>
+                    <a href="Addition_Arena.html" class="launch-btn btn-pink">Start Battle ⚔️</a>
                 </div>
-                <a href="MathsQuest.html" class="launch-btn btn-blue">Launch Quest 🎈</a>
-            </div>
-   <!-- GAME 1: ADDITION ARENA -->
-            <div class="game-card card-pink">
-                <div>
-                    <span class="card-icon">⚔️</span>
-                    <h2>Addition Arena</h2>
-                    <p class="card-desc">Battle addition equations and level up your math power points!</p>
-                </div>
-                <a href="Addition_Arena.html" class="launch-btn btn-pink">Start Battle ⚔️</a>
-            </div>
-
-            <!-- GAME 3: PIKACHU MULTIPLICATION LAND -->
-            <div class="game-card card-yellow">
-                <div>
-                    <span class="card-icon">⚡</span>
-                    <h2>Multiplication Land</h2>
-                    <p class="card-desc">Learn your 2 to 5 times tables alongside Pikachu and win the Mega Quiz!</p>
-                </div>
-                <a href="Multiplication.html" class="launch-btn btn-blue" style="background-color: #E2A000;">Pika Math! ⚡</a>
             </div>
 
-            <!-- GAME 4: MULTIPLICATION ADVENTURE 2 -->
-            <div class="game-card card-purple">
-                <div>
-                    <span class="card-icon">🏰</span>
-                    <h2>Multiplication 2</h2>
-                    <p class="card-desc">Learn your 6 to 9 times tables alongside Pikachu and win the Mega Quiz!</p>
+            <div class="game-row">
+                <div class="game-card card-yellow">
+                    <div>
+                        <span class="card-icon">⚡</span>
+                        <h2>Multiplication Land</h2>
+                        <p class="card-desc">Learn your 2 to 5 times tables alongside Pikachu and win the Mega Quiz!</p>
+                    </div>
+                    <a href="Multiplication.html" class="launch-btn btn-blue" style="background-color: #E2A000;">Pika Math! ⚡</a>
                 </div>
-                <a href="Multiplication2.html" class="launch-btn btn-purple">Play Level 2 🏰</a>
-            </div>
-   <!-- GAME 4: MULTIPLICATION ADVENTURE 3 -->
-            <div class="game-card card-purple">
-                <div>
-                    <span class="card-icon">🏰</span>
-                    <h2>Multiplication 2</h2>
-                    <p class="card-desc">Learn your 10 to 13 times tables alongside Pikachu and win the Mega Quiz!</p>
+
+                <div class="game-card card-purple">
+                    <div>
+                        <span class="card-icon">🏰</span>
+                        <h2>Multiplication 2</h2>
+                        <p class="card-desc">Learn your 6 to 9 times tables alongside Pikachu and win the Mega Quiz!</p>
+                    </div>
+                    <a href="Multiplication2.html" class="launch-btn btn-purple">Play Level 2 🏰</a>
                 </div>
-                <a href="Multiplication3.html" class="launch-btn btn-purple">Play Level 2 🏰</a>
+
+                <div class="game-card card-blue">
+                    <div>
+                        <span class="card-icon">🏰</span>
+                        <h2>Multiplication 3</h2>
+                        <p class="card-desc">Learn your 10 to 13 times tables alongside Pikachu and win the Mega Quiz!</p>
+                    </div>
+                    <a href="Multiplication3.html" class="launch-btn btn-blue">Play Level 3 🏰</a>
+                </div>
             </div>
+
+            <div class="game-row">
+                <div class="game-card card-pink" style="width: 320px;"> <div>
+                        <span class="card-icon">🏆</span>
+                        <h2>Mega Multiplication</h2>
+                        <p class="card-desc">The ultimate grand arena! Test your skills across all times tables from 2 to 13 in a giant showdown!</p>
+                    </div>
+                    <a href="MegaMultiplication.html" class="launch-btn btn-pink">Launch Mega Quiz! 🏆</a>
+                </div>
+            </div>
+
         </div>
     </div>
 
     <script>
-        // Simple and smart function to handle Switching Category Tabs instantly
         function switchTab(targetTab) {
-            // Get all buttons and panels
             const phonicBtn = document.getElementById('btnPhonic');
             const mathsBtn = document.getElementById('btnMaths');
             const phonicPanel = document.getElementById('panelPhonic');
             const mathsPanel = document.getElementById('panelMaths');
 
             if (targetTab === 'phonic') {
-                // Highlight Phonics Tab
                 phonicBtn.classList.add('active');
                 mathsBtn.classList.remove('active');
-                
-                // Switch Display views
                 phonicPanel.classList.add('active-panel');
                 mathsPanel.classList.remove('active-panel');
             } else if (targetTab === 'maths') {
-                // Highlight Maths Tab
                 mathsBtn.classList.add('active');
                 phonicBtn.classList.remove('active');
-                
-                // Switch Display views
                 mathsPanel.classList.add('active-panel');
                 phonicPanel.classList.remove('active-panel');
             }
