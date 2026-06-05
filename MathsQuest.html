@@ -120,7 +120,7 @@
             text-align: right;
         }
 
-        /* Category Tabs Layout Split (1 to 10 Quests) */
+        /* Category Tabs Layout Grid (1 to 10 Quests) */
         .stage-map {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -181,4 +181,472 @@
             padding: 10px 15px;
             display: flex;
             align-items: center;
-            gap: 12
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .badge-title {
+            font-size: 0.8rem;
+            font-weight: bold;
+            color: white;
+            background: #4A5568;
+            padding: 5px 8px;
+            border-radius: 8px;
+            text-transform: uppercase;
+        }
+
+        .trail-path-bg {
+            height: 22px;
+            flex-grow: 1;
+            background: #CBD5E1;
+            border-radius: 11px;
+            position: relative;
+            border: 1px solid #94A3B8;
+        }
+
+        .trail-path-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(to right, #FFD166, #EF476F);
+            border-radius: 11px;
+            position: absolute;
+            left: 0;
+            top: 0;
+            transition: width 0.3s ease;
+        }
+
+        .walker-token {
+            position: absolute;
+            left: 0%;
+            top: 50%;
+            transform: translate(-50%, -55%);
+            font-size: 2rem;
+            transition: left 0.3s ease;
+            z-index: 10;
+        }
+
+        .destination-chest {
+            font-size: 1.8rem;
+            flex-shrink: 0;
+        }
+
+        /* Question Frame Elements */
+        .question-box {
+            text-align: center;
+            background: white;
+            border: 3px dashed #CBD5E1;
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .progress-tag {
+            background: #E2E8F0;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        /* AUTHENTIC MATH COLUMN METHOD STYLING */
+        .column-math-container {
+            display: inline-block;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            font-size: 3.5rem;
+            color: #1D3557;
+            line-height: 1.1;
+            text-align: right;
+            margin: 10px 0 25px 0;
+            padding: 10px 20px;
+            background: #F8FAFC;
+            border-radius: 15px;
+            border: 2px solid #E2E8F0;
+        }
+
+        .column-row {
+            display: flex;
+            justify-content: flex-end;
+            letter-spacing: 6px;
+            position: relative;
+            min-width: 140px;
+        }
+
+        .column-row.operator-row {
+            border-bottom: 5px solid #1D3557;
+            padding-bottom: 4px;
+        }
+
+        .column-operator {
+            position: absolute;
+            left: 0;
+            bottom: 4px;
+            font-size: 3rem;
+        }
+
+        .column-result-space {
+            letter-spacing: 6px;
+            color: var(--sky-blue);
+            padding-top: 6px;
+            font-size: 3.5rem;
+            min-height: 4rem;
+            text-align: right;
+            font-weight: 900;
+        }
+
+        /* Option Selection Grids */
+        .answers-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+            width: 100%;
+        }
+
+        .choice-btn {
+            background: white;
+            border: 3px solid #4A5568;
+            border-radius: 20px;
+            padding: 16px;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 5px 0 #4A5568;
+            transition: all 0.1s;
+        }
+        .choice-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #4A5568; }
+
+        /* DYNAMIC CONCRETE COUNTER COMPONENT */
+        .visual-aid-arena {
+            background: #FFF;
+            border: 2px dashed #BEE3F8;
+            border-radius: 15px;
+            padding: 15px;
+            margin-top: 25px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            width: 100%;
+        }
+        
+        .counter-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            max-width: 45%;
+            justify-content: center;
+            padding: 8px;
+            border-radius: 10px;
+            font-size: 1.5rem;
+        }
+        .group-left { background-color: #EBF8FF; border: 1px solid #BEE3F8; }
+        .group-right { background-color: #FFFAF0; border: 1px solid #FEEBC8; }
+
+        .alert-cheer {
+            background: #E8F5E9;
+            color: #1B5E20;
+            border: 2px solid #C8E6C9;
+            padding: 12px;
+            border-radius: 15px;
+            margin-top: 15px;
+            font-weight: bold;
+            text-align: center;
+            display: none;
+            font-size: 1.1rem;
+            width: 100%;
+        }
+
+        .quiz-end-card { text-align: center; padding: 25px 10px; }
+        .action-start-btn {
+            background: #06D6A0;
+            color: white;
+            border: none;
+            font-size: 1.4rem;
+            font-weight: bold;
+            padding: 12px 35px;
+            border-radius: 18px;
+            box-shadow: 0 5px 0 #05B386;
+            cursor: pointer;
+        }
+        .action-start-btn:active { transform: translateY(2px); box-shadow: 0 3px 0 #05B386; }
+
+        .celebrate-bounce { animation: screenJump 0.2s ease-in-out 2; }
+        @keyframes screenJump { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+        
+        .hall-fame-pop { animation: goldFlash 0.4s ease-in-out; }
+        @keyframes goldFlash { 0%, 100% { background: #1E293B; } 50% { background: #FFB703; transform: scale(1.02); } }
+
+        /* Responsive Layout Tweaks for 10 Buttons Grid */
+        @media (max-width: 600px) {
+            .stage-map {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>⚡ Pokémon Addition Adventure Quest! ⚡</h1>
+    </header>
+
+    <div class="master-hall-fame" id="global-board">
+        <div class="master-label" id="global-rank">Novice Trainer</div>
+        <div class="master-rail-bg">
+            <div id="master-fill" class="master-rail-fill"></div>
+            <div id="master-trophy" class="master-trophy-token">🎒</div>
+        </div>
+        <div class="master-score-badge" id="master-txt-score">0 / 100</div>
+    </div>
+
+    <div class="stage-map">
+        <button class="map-node-btn active" data-lvl="1" onclick="switchAdditionCategoryTab(this, 1)">+1 Quest</button>
+        <button class="map-node-btn" data-lvl="2" onclick="switchAdditionCategoryTab(this, 2)">+2 Quest</button>
+        <button class="map-node-btn" data-lvl="3" onclick="switchAdditionCategoryTab(this, 3)">+3 Quest</button>
+        <button class="map-node-btn" data-lvl="4" onclick="switchAdditionCategoryTab(this, 4)">+4 Quest</button>
+        <button class="map-node-btn" data-lvl="5" onclick="switchAdditionCategoryTab(this, 5)">+5 Quest</button>
+        <button class="map-node-btn" data-lvl="6" onclick="switchAdditionCategoryTab(this, 6)">+6 Quest</button>
+        <button class="map-node-btn" data-lvl="7" onclick="switchAdditionCategoryTab(this, 7)">+7 Quest</button>
+        <button class="map-node-btn" data-lvl="8" onclick="switchAdditionCategoryTab(this, 8)">+8 Quest</button>
+        <button class="map-node-btn" data-lvl="9" onclick="switchAdditionCategoryTab(this, 9)">+9 Quest</button>
+        <button class="map-node-btn" data-lvl="10" onclick="switchAdditionCategoryTab(this, 10)">+10 Quest</button>
+    </div>
+
+    <div class="adventure-deck">
+        <div class="reward-tracker-ribbon">
+            <div class="badge-title" id="reward-lbl">Catch Track</div>
+            <div class="trail-path-bg">
+                <div id="reward-fill" class="trail-path-fill"></div>
+                <div id="reward-walker" class="walker-token">⚡🐹</div>
+            </div>
+            <div class="destination-chest">🔴</div>
+        </div>
+
+        <div id="game-arena-content"></div>
+    </div>
+
+    <script>
+        let currentLevelCategory = 1; 
+        let globalTotalScore = 0;
+        let categoriesBeatenFlags = { 1: false, 2: false, 3: false, 4: false, 5: false, 6: false, 7: false, 8: false, 9: false, 10: false };
+
+        let gameState = {
+            currentIdx: 0,
+            correctCount: 0,
+            totalCount: 10,
+            questionsList: []
+        };
+
+        const cheeringPhrases = [
+            "⚡ Pikachu says: Pika-pi! Excellent job! ⚡",
+            "🔴 Gotcha! That's a perfect strike! 🔴",
+            "🔥 Charizard cheers! Rocket power correct! 🔥",
+            "⭐ Brilliant strategy! You're a true Master! ⭐",
+            "✨ Sparkle Attack! Brilliant calculation! ✨"
+        ];
+
+        function switchAdditionCategoryTab(btnDom, targetCategoryNum) {
+            document.querySelectorAll('.stage-map .map-node-btn').forEach(b => b.classList.remove('active'));
+            if(btnDom) btnDom.classList.add('active');
+            currentLevelCategory = targetCategoryNum;
+            initiateQuestSession();
+        }
+
+        function initiateQuestSession() {
+            gameState.currentIdx = 0;
+            gameState.correctCount = 0;
+            gameState.questionsList = buildRandomAdditionDataset(currentLevelCategory, gameState.totalCount);
+            renderCurrentMathCard();
+            refreshVisualTrailProgress();
+            updateMasterGlobalRewardBar();
+        }
+
+        function buildRandomAdditionDataset(constantAdder, count) {
+            let questions = [];
+            while(questions.length < count) {
+                let addendA = Math.floor(Math.random() * 10); 
+                let addendB = constantAdder; 
+                let sumResult = addendA + addendB;
+                
+                let choicesSet = new Set([sumResult]);
+                while(choicesSet.size < 4) {
+                    let offsetValue = sumResult + (Math.floor(Math.random() * 7) - 3);
+                    if(offsetValue >= 0 && offsetValue !== sumResult) {
+                        choicesSet.add(offsetValue);
+                    }
+                }
+                
+                questions.push({
+                    numA: addendA,
+                    numB: addendB,
+                    correct: sumResult,
+                    options: Array.from(choicesSet).sort((x,y) => x - y)
+                });
+            }
+            return questions;
+        }
+
+        function renderCurrentMathCard() {
+            const rootContainer = document.getElementById('game-arena-content');
+            if (!gameState.questionsList || gameState.questionsList.length === 0) return;
+            
+            const data = gameState.questionsList[gameState.currentIdx];
+
+            let buttonsHTML = '';
+            data.options.forEach(opt => {
+                buttonsHTML += `<button class="choice-btn" onclick="submitAdditionChoice(${opt}, ${data.correct})">${opt}</button>`;
+            });
+
+            let leftCounters = '⚡'.repeat(data.numA);
+            let rightCounters = '🔴'.repeat(data.numB);
+
+            let counterSectionHTML = `
+                <div class="visual-aid-arena">
+                    <div class="counter-group group-left">${leftCounters || '0'}</div>
+                    <span style="font-size:1.5rem; font-weight:bold; align-self:center;">+</span>
+                    <div class="counter-group group-right">${rightCounters || '0'}</div>
+                </div>
+            `;
+
+            let strA = data.numA.toString();
+            let strB = data.numB.toString();
+            let maxLength = Math.max(strA.length, strB.length);
+            
+            let formattedA = strA.padStart(maxLength, ' ');
+            let formattedB = strB.padStart(maxLength, ' ');
+
+            rootContainer.innerHTML = `
+                <div class="question-box">
+                    <div class="progress-tag">Battle ${gameState.currentIdx + 1} of ${gameState.totalCount}</div>
+                    
+                    <div class="column-math-container">
+                        <div class="column-row">${formattedA.replace(/ /g, '&nbsp;')}</div>
+                        <div class="column-row operator-row">
+                            <span class="column-operator">+</span>
+                            ${formattedB.replace(/ /g, '&nbsp;')}
+                        </div>
+                        <div class="column-result-space">?</div>
+                    </div>
+
+                    <div class="answers-grid">${buttonsHTML}</div>
+                    <div class="alert-cheer" id="quest-cheer-box"></div>
+                    ${counterSectionHTML}
+                </div>
+            `;
+        }
+
+        function submitAdditionChoice(userClicked, correctValue) {
+            const workspaceContainer = document.querySelector('.adventure-deck');
+            const cheerBox = document.getElementById('quest-cheer-box');
+
+            if(userClicked === correctValue) {
+                gameState.correctCount++;
+                workspaceContainer.classList.add('celebrate-bounce');
+                setTimeout(() => workspaceContainer.classList.remove('celebrate-bounce'), 250);
+                
+                cheerBox.innerText = cheeringPhrases[Math.floor(Math.random() * cheeringPhrases.length)];
+                cheerBox.style.display = "block";
+            } else {
+                if(cheerBox) cheerBox.style.display = "none";
+            }
+
+            gameState.currentIdx++;
+            refreshVisualTrailProgress();
+
+            setTimeout(() => {
+                if(gameState.currentIdx < gameState.totalCount) {
+                    renderCurrentMathCard();
+                } else {
+                    processCategoryCompletionCalculations();
+                }
+            }, 600);
+        }
+
+        function refreshVisualTrailProgress() {
+            const fill = document.getElementById('reward-fill');
+            const walker = document.getElementById('reward-walker');
+            const label = document.getElementById('reward-lbl');
+
+            let fillPercentage = Math.round((gameState.currentIdx / gameState.totalCount) * 100);
+            fill.style.width = `${fillPercentage}%`;
+            walker.style.left = `${fillPercentage}%`;
+
+            if(fillPercentage === 0) { walker.innerText = "⚡🐹"; label.innerText = `Track: Ready`; }
+            else if(fillPercentage < 40) { walker.innerText = "🏃"; label.innerText = "Chasing Wild Pokémon!"; }
+            else if(fillPercentage < 70) { walker.innerText = "💨"; label.innerText = "Getting Closer!"; }
+            else if(fillPercentage < 100) { walker.innerText = "🔥"; label.innerText = "Almost Caught It!"; }
+            else { walker.innerText = "🔴"; label.innerText = "Gotcha! Caught!"; }
+        }
+
+        function processCategoryCompletionCalculations() {
+            globalTotalScore += gameState.correctCount;
+            categoriesBeatenFlags[currentLevelCategory] = true;
+
+            const globalBoard = document.getElementById('global-board');
+            globalBoard.classList.add('hall-fame-pop');
+            setTimeout(() => globalBoard.classList.remove('hall-fame-pop'), 500);
+
+            updateMasterGlobalRewardBar();
+            renderQuestEndSummary();
+        }
+
+        function updateMasterGlobalRewardBar() {
+            const mFill = document.getElementById('master-fill');
+            const mTrophy = document.getElementById('master-trophy');
+            const mTxtScore = document.getElementById('master-txt-score');
+            const mRank = document.getElementById('global-rank');
+
+            let maxPoints = 100;
+            let globalPercentage = Math.min(100, Math.round((globalTotalScore / maxPoints) * 100));
+            mFill.style.width = `${globalPercentage}%`;
+            mTrophy.style.left = `${globalPercentage}%`;
+            mTxtScore.innerText = `${globalTotalScore} / ${maxPoints}`;
+
+            if(globalTotalScore === 0) {
+                mRank.innerText = "Novice Trainer 🎒"; mRank.style.backgroundColor = "#94A3B8";
+                mTrophy.innerText = "🎒";
+            } else if (globalTotalScore < 30) {
+                mRank.innerText = "Gym Battler 🥊"; mRank.style.backgroundColor = "#3B82F6";
+                mTrophy.innerText = "🎫";
+            } else if (globalTotalScore < 60) {
+                mRank.innerText = "Badge Master 🏅"; mRank.style.backgroundColor = "#F59E0B";
+                mTrophy.innerText = "🏅";
+            } else if (globalTotalScore < 90) {
+                mRank.innerText = "Elite Four 🔥"; mRank.style.backgroundColor = "#EF4444";
+                mTrophy.innerText = "👑";
+            } else {
+                mRank.innerText = "CHAMPION 👑"; mRank.style.backgroundColor = "#10B981"; 
+                mTrophy.innerText = "🏆";
+            }
+        }
+
+        function renderQuestEndSummary() {
+            const rootContainer = document.getElementById('game-arena-content');
+            let successRatio = Math.round((gameState.correctCount / gameState.totalCount) * 100);
+            let performanceHTML = '';
+
+            if(successRatio === 100) {
+                performanceHTML = `<span style="font-size:4.5rem;">🔴🏆⚡</span><h2 style="color:var(--grass-green);">PERFECT BATTLE ACCOMPLISHED!</h2><p>Terrific calculating work, Trainer! <b>+10 Points</b> are loaded straight into your Master Hall of Fame bar above!</p>`;
+            } else if (successRatio >= 70) {
+                performanceHTML = `<span style="font-size:4rem;">⭐🥈</span><h2>QUEST COMPLETED!</h2><p>Great focus! You added <b>+${gameState.correctCount} Points</b> to your Rank progress rail. Battle again to aim for a flawless 10/10 prize!</p>`;
+            } else {
+                performanceHTML = `<span style="font-size:4rem;">🎒🔴</span><h2>EXP SAVED</h2><p>You added <b>+${gameState.correctCount} Points</b> to your Journey bar. Rerun this battle layer to boost your score ranking higher!</p>`;
+            }
+
+            rootContainer.innerHTML = `
+                <div class="quiz-end-card">
+                    ${performanceHTML}<br>
+                    <button class="action-start-btn" onclick="initiateQuestSession()">🔄 Battle This Level Again</button>
+                </div>
+            `;
+        }
+
+        window.onload = () => { initiateQuestSession(); };
+    </script>
+</body>
+</html>
