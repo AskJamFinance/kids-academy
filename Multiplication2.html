@@ -121,7 +121,7 @@
             text-align: right;
         }
 
-        /* CONSOLIDATED REWARDS MAP BOX */
+        /* CONSOLIDATED REWARDS MAP BOX (FORCED 1 ROW SINGLE ROW) */
         .rewards-summary-dashboard {
             width: 100%;
             max-width: 800px;
@@ -131,23 +131,30 @@
             padding: 10px 15px;
             margin-bottom: 15px;
             display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 10px;
+            justify-content: space-between;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            gap: 6px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.03);
+            overflow-x: auto;
         }
 
         .dashboard-pill {
             background: #F1F5F9;
-            padding: 6px 12px;
+            padding: 6px 8px;
             border-radius: 10px;
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: bold;
             display: flex;
             align-items: center;
-            gap: 6px;
+            justify-content: center;
+            gap: 4px;
             border: 1px solid #E2E8F0;
+            flex: 1 1 0;
+            white-space: nowrap;
+            min-width: 0;
         }
+        
         .dashboard-pill.completed {
             background: #E8F5E9;
             border-color: #A5D6A7;
@@ -423,6 +430,7 @@
         <h1>⚡ Multiplication Quest Adventure ⚡</h1>
     </header>
 
+    <!-- GLOBAL LEADERBOARD BAR (Calculated out of 80 potential milestones) -->
     <div class="master-hall-fame" id="global-board">
         <div class="master-label" id="global-rank">Recruit</div>
         <div class="master-rail-bg">
@@ -432,14 +440,16 @@
         <div class="master-score-badge" id="master-txt-score">0 / 80</div>
     </div>
 
+    <!-- CONSOLIDATED REWARDS MAP BOX (FIXED ONE ROW CONFIGURATION) -->
     <div class="rewards-summary-dashboard">
-        <div class="dashboard-pill" id="pill-6">6x Quiz: <span class="score-val">0/10</span></div>
-        <div class="dashboard-pill" id="pill-7">7x Quiz: <span class="score-val">0/10</span></div>
-        <div class="dashboard-pill" id="pill-8">8x Quiz: <span class="score-val">0/10</span></div>
-        <div class="dashboard-pill" id="pill-9">9x Quiz: <span class="score-val">0/10</span></div>
-        <div class="dashboard-pill" id="pill-mega">🔥 MEGA: <span class="score-val">0/40</span></div>
+        <div class="dashboard-pill" id="pill-6">6x: <span class="score-val">0/10</span></div>
+        <div class="dashboard-pill" id="pill-7">7x: <span class="score-val">0/10</span></div>
+        <div class="dashboard-pill" id="pill-8">8x: <span class="score-val">0/10</span></div>
+        <div class="dashboard-pill" id="pill-9">9x: <span class="score-val">0/10</span></div>
+        <div class="dashboard-pill" id="pill-mega">MEGA: <span class="score-val">0/40</span></div>
     </div>
 
+    <!-- TIMETABLE SELECTOR NODES -->
     <div class="stage-map">
         <button class="map-node-btn active" data-mode="6" onclick="switchGameMode(this, '6')">6x Quiz</button>
         <button class="map-node-btn" data-mode="7" onclick="switchGameMode(this, '7')">7x Quiz</button>
@@ -448,6 +458,7 @@
         <button class="map-node-btn" data-mode="mega" onclick="switchGameMode(this, 'mega')">🔥 MEGA 40</button>
     </div>
 
+    <!-- MAIN GAME WORKSPACE CONSOLE -->
     <div class="adventure-deck">
         <div class="reward-tracker-ribbon">
             <div class="badge-title" id="reward-lbl">Quest Track</div>
@@ -737,5 +748,3 @@
     </script>
 </body>
 </html>
-
-```
